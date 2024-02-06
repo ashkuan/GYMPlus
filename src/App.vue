@@ -1,15 +1,10 @@
 <script>
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { RouterLink, RouterView } from 'vue-router';
-import HelloWorld from './components/HelloWorld.vue';
 import SwiperComponents from './components/SwiperComponents.vue';
 
 export default {
   components: {
-    RouterLink,
-    HelloWorld,
-    RouterView,
     SwiperComponents,
   },
   data() {
@@ -42,10 +37,7 @@ export default {
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
       <!-- 測試區塊開始 -->
       <button type="button" class="btn btn-primary">Primary</button>
       <VForm novalidate @submit="onSubmit">
@@ -79,8 +71,6 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import './assets/all.scss';
-
 $primary: blue;
 
 .box {

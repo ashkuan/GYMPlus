@@ -6,7 +6,7 @@ import eslintPlugin from 'vite-plugin-eslint';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/2023-vue-test/',
+  base: '/GYMPlus/',
   plugins: [
     vue(),
     eslintPlugin({
