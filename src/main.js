@@ -6,7 +6,9 @@ import { createPinia } from 'pinia';
 import VueAxios from 'vue-axios';
 import axios from 'axios';
 
-import { Field, Form, ErrorMessage, defineRule, configure } from 'vee-validate';
+import {
+  Field, Form, ErrorMessage, defineRule, configure,
+} from 'vee-validate';
 import * as rules from '@vee-validate/rules';
 import { localize, setLocale } from '@vee-validate/i18n';
 import zhTw from '@vee-validate/i18n/dist/locale/zh_TW.json';

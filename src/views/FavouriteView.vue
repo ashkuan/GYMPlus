@@ -1,5 +1,5 @@
 <script></script>
 
 <template>
-  <h1>首頁</h1>
+  <h1>我的最愛</h1>
 </template>

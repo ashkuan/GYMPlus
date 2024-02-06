@@ -1,5 +1,5 @@
 <script></script>
 
 <template>
-  <h1>首頁</h1>
+  <h1>健身文章列表</h1>
 </template>
