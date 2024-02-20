@@ -83,27 +83,27 @@ const router = createRouter({
         {
           path: '',
           name: 'admin-courses',
-          component: () => import('../views/dashboard/CoursesView.vue'),
+          component: () => import('../views/dashboard/AdminCourses.vue'),
         },
         {
           path: 'orders',
           name: 'admin-orders',
-          component: () => import('../views/dashboard/OrdersView.vue'),
+          component: () => import('../views/dashboard/AdminOrders.vue'),
         },
         {
           path: 'coupons',
           name: 'admin-coupons',
-          component: () => import('../views/dashboard/CouponsView.vue'),
+          component: () => import('../views/dashboard/AdminCoupons.vue'),
         },
         {
           path: 'articles',
           name: 'admin-articles',
-          component: () => import('../views/dashboard/ArticlesView.vue'),
+          component: () => import('../views/dashboard/AdminArticles.vue'),
         },
         {
           path: 'customer-service',
           name: 'customer-service',
-          component: () => import('../views/dashboard/CustomerService.vue'),
+          component: () => import('../views/dashboard/AdminCustomerService.vue'),
         },
       ],
     },
