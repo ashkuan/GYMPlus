@@ -319,7 +319,9 @@ $theme-colors: (
   "dark": $dark,
   "white": $white,
   // custom
-  "gary-1": $gray-900,
+  "gray-1": $gray-900,
+  // custom
+  "gray-3": $gray-500,
   // custom
   ) !default;
 // scss-docs-end theme-colors-map
@@ -882,8 +884,7 @@ $input-btn-padding-y-lg: .5rem !default;
 $input-btn-padding-x-lg: 1rem !default;
 $input-btn-font-size-lg: $font-size-lg !default;
 
-// $input-btn-border-width: var(--#{$prefix}border-width) !default;
-$input-btn-border-width: 0 !default; // custom
+$input-btn-border-width: var(--#{$prefix}border-width) !default;
 // scss-docs-end input-btn-variables
 
 
@@ -926,9 +927,11 @@ $btn-link-focus-shadow-rgb: to-rgb(mix(color-contrast($link-color), $link-color,
 
 // Allows for customizing button radius independently from global border radius
 // $btn-border-radius: var(--#{$prefix}border-radius) !default;
-$btn-border-radius: 1.5rem !default; // custom
-$btn-border-radius-sm: var(--#{$prefix}border-radius-sm) !default;
-$btn-border-radius-lg: var(--#{$prefix}border-radius-lg) !default;
+$btn-border-radius: 50rem !default; // custom
+// $btn-border-radius-sm: var(--#{$prefix}border-radius-sm) !default;
+$btn-border-radius-sm: $btn-border-radius !default; // custom
+// $btn-border-radius-lg: var(--#{$prefix}border-radius-lg) !default;
+$btn-border-radius-lg: $btn-border-radius !default; // custom
 
 $btn-transition: color .15s ease-in-out,
   background-color .15s ease-in-out,

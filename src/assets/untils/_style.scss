@@ -16,20 +16,19 @@ $linear: linear-gradient(110.77deg, #655AEA -6.41%, #95E2FF 107.79%);
 button.btn,
 .btn {
   &.btn-primary {
+    border-width: 0;
     &:hover {
       background: $linear;
     }
   }
   &.btn-white {
     color: $gray-900;
-    border: 1px solid $white;
     &:hover {
       background: linear-gradient(0deg, #E8EEFF, #E8EEFF);
       border-color: #88C0FF;
-
     }
   }
-  &.btn-gary-1 {
+  &.btn-gray-1 {
     &:hover {
       background: $primary;
     }

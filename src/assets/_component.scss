@@ -1,0 +1,28 @@
+// logo 圖片取代文字
+// 使用方式 <h1 class="logo">GYMPlus</h1>
+h1.logo {
+  background: no-repeat url(logo.svg);
+  background-size: cover;
+  width: 140px;
+  height: 80px;
+  text-indent: 101%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+// 讀取圖示：line-md--loading-twotone-loop
+// 使用方式 <span class="line-loading-loop"></span>
+.line-loading-loop {
+  display: inline-block;
+  width: 1.4rem;
+  height: 1.4rem;
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round' stroke-width='3'%3E%3Cpath stroke-dasharray='60' stroke-dashoffset='60' stroke-opacity='0.3' d='M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' dur='1.17s' values='60;0'/%3E%3C/path%3E%3Cpath stroke-dasharray='15' stroke-dashoffset='15' d='M12 3C16.9706 3 21 7.02944 21 12'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' dur='0.27s' values='15;0'/%3E%3CanimateTransform attributeName='transform' dur='1.35s' repeatCount='indefinite' type='rotate' values='0 12 12;360 12 12'/%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+  background-color: $white;
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  vertical-align: -0.35em;
+}
