@@ -13,8 +13,7 @@ $linear: linear-gradient(110.77deg, #655AEA -6.41%, #95E2FF 107.79%);
 }
 
 // 按鈕互動效果
-button.btn,
-.btn {
+button.btn,.btn {
   &.btn-primary {
     border-width: 0;
     &:hover {
@@ -43,6 +42,15 @@ button.btn,
   &.disbaled {
     background: $gray-300;
     color: $gray-500;
+  }
+}
+
+// 連結互動效果
+a.link{
+  &-gray-1{
+    &:hover, &:focus {
+      color: $primary !important;
+    }
   }
 }
 

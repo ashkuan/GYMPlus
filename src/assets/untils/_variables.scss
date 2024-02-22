@@ -1249,7 +1249,8 @@ $zindex-levels: (
 $nav-link-padding-y: .5rem !default;
 $nav-link-padding-x: 1rem !default;
 $nav-link-font-size: null !default;
-$nav-link-font-weight: null !default;
+// $nav-link-font-weight: null !default;
+$nav-link-font-weight: $font-weight-medium !default; // custom
 $nav-link-color: var(--#{$prefix}link-color) !default;
 $nav-link-hover-color: var(--#{$prefix}link-hover-color) !default;
 $nav-link-transition: color .15s ease-in-out,
