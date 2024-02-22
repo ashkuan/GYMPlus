@@ -319,7 +319,9 @@ $theme-colors: (
   "dark": $dark,
   "white": $white,
   // custom
-  "gary-1": $gray-900,
+  "gray-1": $gray-900,
+  // custom
+  "gray-3": $gray-500,
   // custom
   ) !default;
 // scss-docs-end theme-colors-map
@@ -882,8 +884,7 @@ $input-btn-padding-y-lg: .5rem !default;
 $input-btn-padding-x-lg: 1rem !default;
 $input-btn-font-size-lg: $font-size-lg !default;
 
-// $input-btn-border-width: var(--#{$prefix}border-width) !default;
-$input-btn-border-width: 0 !default; // custom
+$input-btn-border-width: var(--#{$prefix}border-width) !default;
 // scss-docs-end input-btn-variables
 
 
@@ -910,7 +911,8 @@ $btn-font-size-lg: $input-btn-font-size-lg !default;
 
 $btn-border-width: $input-btn-border-width !default;
 
-$btn-font-weight: $font-weight-normal !default;
+// $btn-font-weight: $font-weight-normal !default;
+$btn-font-weight: $font-weight-medium !default; // custom
 $btn-box-shadow: inset 0 1px 0 rgba($white, .15),
   0 1px 1px rgba($black, .075) !default;
 $btn-focus-width: $input-btn-focus-width !default;
@@ -925,9 +927,11 @@ $btn-link-focus-shadow-rgb: to-rgb(mix(color-contrast($link-color), $link-color,
 
 // Allows for customizing button radius independently from global border radius
 // $btn-border-radius: var(--#{$prefix}border-radius) !default;
-$btn-border-radius: 1.5rem !default; // custom
-$btn-border-radius-sm: var(--#{$prefix}border-radius-sm) !default;
-$btn-border-radius-lg: var(--#{$prefix}border-radius-lg) !default;
+$btn-border-radius: 50rem !default; // custom
+// $btn-border-radius-sm: var(--#{$prefix}border-radius-sm) !default;
+$btn-border-radius-sm: $btn-border-radius !default; // custom
+// $btn-border-radius-lg: var(--#{$prefix}border-radius-lg) !default;
+$btn-border-radius-lg: $btn-border-radius !default; // custom
 
 $btn-transition: color .15s ease-in-out,
   background-color .15s ease-in-out,
@@ -956,8 +960,10 @@ $form-text-color: var(--#{$prefix}secondary-color) !default;
 // scss-docs-end form-text-variables
 
 // scss-docs-start form-label-variables
-$form-label-margin-bottom: .5rem !default;
-$form-label-font-size: null !default;
+// $form-label-margin-bottom: .5rem !default;
+$form-label-margin-bottom: 0 !default; // custom
+// $form-label-font-size: null !default;
+$form-label-font-size: $font-size-base * .875 !default; // custom
 $form-label-font-style: null !default;
 $form-label-font-weight: null !default;
 $form-label-color: null !default;
@@ -967,7 +973,8 @@ $form-label-color: null !default;
 $input-padding-y: $input-btn-padding-y !default;
 $input-padding-x: $input-btn-padding-x !default;
 $input-font-family: $input-btn-font-family !default;
-$input-font-size: $input-btn-font-size !default;
+// $input-font-size: $input-btn-font-size !default;
+$input-font-size: $font-size-base * .875 !default; // custom
 $input-font-weight: $font-weight-base !default;
 $input-line-height: $input-btn-line-height !default;
 
