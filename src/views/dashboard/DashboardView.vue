@@ -10,41 +10,44 @@ export default {
     };
   },
   methods: {
-    ...mapActions(AlertStore, ['iconSinpleContent']),
+    ...mapActions(AlertStore, ['basicContent', 'closedAction']),
     checkIdentity() {
       // 全頁讀取
       const loader = this.$loading.show();
-      const iconAlert = this.$swal.mixin(this.iconSinpleStyle);
       this.axios
         .post(`${this.url}/api/user/check`)
         .then((res) => {
           loader.hide();
           const { success, message } = res.data;
           if (!success) {
-            iconAlert.fire({
-              ...this.iconSinpleContent('error', message.replace(', ', '，')),
-              didClose: () => {
-                this.$router.replace('/admin-login');
-              },
+            this.alertStyles.basic.fire({
+              ...this.basicContent(message.replace(', ', '，'), 2),
+              ...this.closedAction('replace', 'admin-login'),
             });
           }
         })
         .catch((err) => {
           loader.hide();
-          iconAlert.fire({
-            ...this.iconSinpleContent('error', `錯誤${err.response.status}，請洽客服`),
-            didClose: () => {
-              this.$router.replace('/admin-login');
-            },
+          this.alertStyles.basic.fire({
+            ...this.basicContent(`錯誤${err.response.status}，請洽客服`, 2),
+            ...this.closedAction('replace', 'admin-login'),
           });
         });
     },
     logout() {
       console.log('登出');
+      this.axios
+        .post(`${this.url}/logout`)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
     },
   },
   computed: {
-    ...mapState(AlertStore, ['iconSinpleStyle']),
+    ...mapState(AlertStore, ['alertStyles']),
     sidebarWidth() {
       return this.isColse ? 0 : 260;
     },
