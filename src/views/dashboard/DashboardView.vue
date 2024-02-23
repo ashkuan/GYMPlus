@@ -7,6 +7,7 @@ export default {
     return {
       url: '',
       isColse: false,
+      isLoading: false,
     };
   },
   methods: {
@@ -35,14 +36,19 @@ export default {
         });
     },
     logout() {
-      console.log('登出');
+      this.isLoading = !this.isLoading;
       this.axios
         .post(`${this.url}/logout`)
         .then((res) => {
-          console.log(res.data);
+          this.isLoading = !this.isLoading;
+          this.alertStyles.basic.fire({
+            ...this.basicContent(res.data.message, 1),
+            ...this.closedAction('replace', 'admin-login'),
+          });
         })
         .catch((err) => {
-          console.log(err.response);
+          this.isLoading = !this.isLoading;
+          this.alertStyles.basic.fire(this.basicContent(`錯誤${err.response.status}，請洽客服`, 2));
         });
     },
   },
@@ -139,7 +145,10 @@ export default {
                 <router-link to="/" class="nav-link link-gray-1">返回前台</router-link>
               </li>
               <li class="nav-item mx-md-3">
-                <a class="nav-link link-gray-1" href="#" @click.prevent="logout">管理者登出</a>
+                <a class="nav-link link-gray-1" href="#" @click.prevent="logout">
+                  <span v-show="isLoading" class="line-loading-loop bg-primary"></span>
+                  管理者登出
+                </a>
               </li>
             </ul>
           </div>
