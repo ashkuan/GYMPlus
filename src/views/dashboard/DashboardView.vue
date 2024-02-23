@@ -1,24 +1,60 @@
 <script>
+import { mapActions, mapState } from 'pinia';
+import AlertStore from '../../stores/AlertStore';
+
 export default {
   data() {
     return {
+      url: '',
       isColse: false,
-      sidebarBtn: 260,
     };
   },
   methods: {
+    ...mapActions(AlertStore, ['iconSinpleContent']),
+    checkIdentity() {
+      // 全頁讀取
+      const loader = this.$loading.show();
+      const iconAlert = this.$swal.mixin(this.iconSinpleStyle);
+      this.axios
+        .post(`${this.url}/api/user/check`)
+        .then((res) => {
+          loader.hide();
+          const { success, message } = res.data;
+          if (!success) {
+            iconAlert.fire({
+              ...this.iconSinpleContent('error', message.replace(', ', '，')),
+              didClose: () => {
+                this.$router.replace('/admin-login');
+              },
+            });
+          }
+        })
+        .catch((err) => {
+          loader.hide();
+          iconAlert.fire({
+            ...this.iconSinpleContent('error', `錯誤${err.response.status}，請洽客服`),
+            didClose: () => {
+              this.$router.replace('/admin-login');
+            },
+          });
+        });
+    },
     logout() {
       console.log('登出');
     },
-    sidebarToggle() {
-      console.log(123);
-      this.isColse = !this.isColse;
-      if (this.sidebarBtn) {
-        this.sidebarBtn = 0;
-      } else {
-        this.sidebarBtn = 260;
-      }
+  },
+  computed: {
+    ...mapState(AlertStore, ['iconSinpleStyle']),
+    sidebarWidth() {
+      return this.isColse ? 0 : 260;
     },
+  },
+  created() {
+    this.url = import.meta.env.VITE_API_URL;
+    // 權限驗證
+    const token = document.cookie.replace(/(?:(?:^|.*;\s*)adminToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
+    this.axios.defaults.headers.common.Authorization = token;
+    this.checkIdentity();
   },
 };
 </script>
@@ -27,10 +63,10 @@ export default {
   <button
     type="button"
     class="admin-sidebar-btn btn btn-outline-light border-3 rounded-3 z-1"
-    :style="`left: ${sidebarBtn - 4}px`"
-    @click="sidebarToggle"
+    :style="`left: ${sidebarWidth - 4}px`"
+    @click="isColse = !isColse"
   >
-    <span class="icon-base icon-d-arrow" :class="{ hide: !isColse }"></span>
+    <span class="icon-base icon-d-arrow" :class="{ hide: isColse }"></span>
   </button>
   <div class="admin-sidebar bg-light z-2" :class="{ hide: isColse }">
     <router-link to="/" class="mb-2">
@@ -69,7 +105,7 @@ export default {
       </li>
     </ul>
   </div>
-  <div class="sidebar-transition" :style="`margin-left: ${sidebarBtn}px`">
+  <div class="sidebar-transition" :style="`margin-left: ${sidebarWidth}px`">
     <header class="mb-6 shadow-sm">
       <nav class="navbar navbar-expand-md navbar-light">
         <div class="container-fluid justify-content-end">
@@ -165,13 +201,15 @@ export default {
     position: absolute;
     top: 4px;
     padding: 8px 12px;
-    transform: rotate(0deg);
     @media (min-width: 375px) {
       top: 17.25px;
     }
-    .hide {
+    .icon-base {
       transform: rotate(180deg);
       transition: all 0.5s ease-out;
+      &.hide {
+        transform: rotate(0deg);
+      }
     }
   }
   a {
