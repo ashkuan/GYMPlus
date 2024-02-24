@@ -71,11 +71,11 @@ export default {
 <template>
   <button
     type="button"
-    class="admin-sidebar-btn btn btn-outline-light border-3 rounded-3 z-1"
+    class="admin-sidebar-btn btn btn-secondary rounded-start z-1 shadow"
     :style="`left: ${sidebarWidth - 4}px`"
     @click="isColse = !isColse"
   >
-    <span class="icon-base icon-d-arrow" :class="{ hide: isColse }"></span>
+    <span class="icon-base icon-d-arrow bg-white" :class="{ hide: isColse }"></span>
   </button>
   <div class="admin-sidebar bg-light z-2" :class="{ hide: isColse }">
     <router-link to="/" class="mb-2">
@@ -114,12 +114,12 @@ export default {
       </li>
     </ul>
   </div>
-  <div class="sidebar-transition" :style="`margin-left: ${sidebarWidth}px`">
+  <div class="main-view" :class="{ shrink: !isColse }">
     <header class="mb-6 shadow-sm">
       <nav class="navbar navbar-expand-md navbar-light">
         <div class="container-fluid justify-content-end">
           <button
-            class="menu-btn btn border-0 rounded-0 p-0 align-bottom d-md-none"
+            class="menu-btn btn border-0 rounded-0 p-0 align-bottom d-md-none collapsed"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#adminHeader"
@@ -127,7 +127,7 @@ export default {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span class="menu-icon"></span>
+            <span class="icon-base menu-icon"></span>
           </button>
           <div
             class="collapse navbar-collapse justify-content-end"
@@ -161,15 +161,20 @@ export default {
 
 <style lang="scss">
 .menu-btn {
-  &.collapsed .menu-icon {
-    background: url(icons/menu.svg);
-  }
-  .menu-icon {
-    background: url(icons/close.svg);
+  span {
     width: 40px;
     height: 40px;
     display: inline-block;
     vertical-align: bottom;
+    transition: all 0.5s ease-out;
+    &.menu-icon {
+      --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='m6.4 18.308l-.708-.708l5.6-5.6l-5.6-5.6l.708-.708l5.6 5.6l5.6-5.6l.708.708l-5.6 5.6l5.6 5.6l-.708.708l-5.6-5.6z'/%3E%3C/svg%3E");
+    }
+  }
+  &.collapsed {
+    .menu-icon {
+      --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath fill='%23000' d='M6.6665 28.7833V27.1167H33.3332V28.7833H6.6665ZM6.6665 20.8333V19.1667H33.3332V20.8333H6.6665ZM6.6665 12.8833V11.2167H33.3332V12.8833H6.6665Z'/%3E%3C/svg%3E");
+    }
   }
 }
 
@@ -187,12 +192,9 @@ export default {
   }
   &-btn {
     transition: all 0.5s ease-out;
-    position: absolute;
-    top: 4px;
-    padding: 8px 12px;
-    @media (min-width: 375px) {
-      top: 17.25px;
-    }
+    position: fixed;
+    top: 8px;
+    padding: 8px 8px 8px 4px;
     .icon-base {
       transform: rotate(180deg);
       transition: all 0.5s ease-out;
@@ -211,7 +213,12 @@ export default {
     }
   }
 }
-.sidebar-transition {
+.main-view {
   transition: all 0.5s ease-out;
+  &.shrink {
+    @media (min-width: 1140px) {
+      margin-left: 260px;
+    }
+  }
 }
 </style>

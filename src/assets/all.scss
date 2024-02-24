@@ -3,8 +3,10 @@
 @import "bootstrap/scss/functions";
 
 @import "untils/variables";
-@import "untils/style";
+@import "untils/basic";
+@import "untils/text";
 @import "untils/icons";
+@import "untils/button";
 @import "component";
 
 @import "bootstrap/scss/bootstrap";

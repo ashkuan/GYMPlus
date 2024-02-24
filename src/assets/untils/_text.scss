@@ -1,0 +1,76 @@
+// letter spacing
+h1,.h1, .fs-1,
+h2,.h2, .fs-2 {
+  letter-spacing: 4px;
+}
+h3,.h3, .fs-3,
+h4,.h4, .fs-4 {
+  letter-spacing: 3px;
+}
+h5,.h5, .fs-5,
+h6,.h6, .fs-6,
+.btn {
+  letter-spacing: 2px;
+}
+body, small, .small {
+  letter-spacing: 1px;
+}
+.display-1,.display-2,.display-3,.display-4,.display-5,.display-6 {
+  letter-spacing: 0;
+}
+
+// RWD
+body {
+  @media (min-width: 768px) {
+    .fs-md-1 {
+    font-size: $h1-font-size !important;
+    }
+    .fs-md-2 {
+    font-size: $h2-font-size !important;
+    }
+    .fs-md-3 {
+    font-size: $h3-font-size !important;
+    }
+    .fs-md-4 {
+    font-size: $h4-font-size !important;
+    }
+    .fs-md-5 {
+    font-size: $h5-font-size !important;
+    }
+    .fs-md-6 {
+    font-size: $h6-font-size !important;
+    }
+    .fs-md-7 {
+    font-size: $font-size-base !important;
+    }
+    .fs-md-8 {
+    font-size: $font-size-base * .75 !important;
+    }
+  }
+  @media (min-width: 992px) {
+    .fs-lg-1 {
+    font-size: $h1-font-size !important;
+    }
+    .fs-lg-2 {
+    font-size: $h2-font-size !important;
+    }
+    .fs-lg-3 {
+    font-size: $h3-font-size !important;
+    }
+    .fs-lg-4 {
+    font-size: $h4-font-size !important;
+    }
+    .fs-lg-5 {
+    font-size: $h5-font-size !important;
+    }
+    .fs-lg-6 {
+    font-size: $h6-font-size !important;
+    }
+    .fs-lg-7 {
+    font-size: $font-size-base !important;
+    }
+    .fs-lg-8 {
+    font-size: $font-size-base * .75 !important;
+    }
+  }
+}

@@ -489,7 +489,8 @@ $icon-link-icon-transform: translate3d(.25em, 0, 0) !default;
 //
 // Style p element.
 
-$paragraph-margin-bottom: 1rem !default;
+// $paragraph-margin-bottom: 1rem !default;
+$paragraph-margin-bottom: 0 !default; // custom
 
 
 // Grid breakpoints
@@ -853,6 +854,7 @@ $table-variants: (
   "danger": shift-color($danger, $table-bg-scale),
   "light": $light,
   "dark": $dark,
+  "gray-4": shift-color($gray-300, $table-bg-scale), // custom
   ) !default;
 // scss-docs-end table-loop
 
