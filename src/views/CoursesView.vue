@@ -45,24 +45,24 @@
         </ol>
       </nav>
       <div class="row justify-content-center">
-        <div class="btn-group mb-4 mx-auth col-lg-6">
-          <button type="button" class="btn btn-primary active">全部課程</button>
-          <button type="button" class="btn btn-primary">瑜珈</button>
-          <button type="button" class="btn btn-primary">有氧運動</button>
-          <button type="button" class="btn btn-primary">重量訓練</button>
+        <div class="btn-group mb-4 mx-auth col-12 col-lg-6">
+          <button type="button" class="btn btn-primary" :class="{'active': item === category}"
+           v-for="(item,index) in categorys" :key="index"
+           @click.prevent="checkCategory(item)">{{ item }}</button>
         </div>
       </div>
       <div class="d-flex justify-content-center">
         <div class="d-flex flex-column border border-3 rounded w-100 px-2">
           <p>進一步指定你的教練</p>
-          <div class="row g-0">
-            <div class="col d-flex justify-content-center">
+          <div class="row row-cols-1 row-cols-md-5 gy-3 gy-md-0">
+            <div class="col d-flex justify-content-start justify-content-md-center">
               <div class="form-check">
                 <input
                   class="form-check-input"
                   type="checkbox"
                   value="Alex"
                   id="Alex"
+                  v-model="coach"
                 />
                 <label class="form-check-label" for="Alex"> Alex </label>
                 <svg
@@ -82,13 +82,14 @@
                 </svg>
               </div>
             </div>
-            <div class="col d-flex justify-content-center">
+            <div class="col d-flex justify-content-start justify-content-md-center">
               <div class="form-check">
                 <input
                   class="form-check-input"
                   type="checkbox"
                   value="Olivia Chang"
                   id="Olivia Chang"
+                  v-model="coach"
                 />
                 <label class="form-check-label" for="Olivia Chang">
                   Olivia Chang
@@ -110,13 +111,14 @@
                 </svg>
               </div>
             </div>
-            <div class="col d-flex justify-content-center">
+            <div class="col d-flex justify-content-start justify-content-md-center">
               <div class="form-check">
                 <input
                   class="form-check-input"
                   type="checkbox"
                   value="Jackson Liu"
                   id="Jackson Liu"
+                  v-model="coach"
                 />
                 <label class="form-check-label" for="Jackson Liu">
                   Jackson Liu
@@ -138,13 +140,14 @@
                 </svg>
               </div>
             </div>
-            <div class="col d-flex justify-content-center">
+            <div class="col d-flex justify-content-start justify-content-md-center">
               <div class="form-check">
                 <input
                   class="form-check-input"
                   type="checkbox"
                   value="Emma"
                   id="Emma"
+                  v-model="coach"
                 />
                 <label class="form-check-label" for="Emma"> Emma </label>
                 <svg
@@ -164,13 +167,14 @@
                 </svg>
               </div>
             </div>
-            <div class="col">
+            <div class="col d-flex justify-content-start justify-content-md-center">
               <div class="form-check">
                 <input
                   class="form-check-input"
                   type="checkbox"
                   value="Dhalsim"
                   id="Dhalsim"
+                  v-model="coach"
                 />
                 <label class="form-check-label" for="Dhalsim"> Dhalsim </label>
                 <svg
@@ -193,77 +197,67 @@
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-end align-items-center my-3">
-        <label for="class" class="mx-2">排序方式</label>
-        <select
-          class="form-select w-25"
+      <div class="row justify-content-end align-items-center my-3">
+        <div class="col-12 col-md-5">
+          <div class="row justify-content-end align-items-center">
+            <div class="col-12 col-md-auto">
+              <label for="class" class="mx-2">排序方式</label>
+            </div>
+            <div class="col-12 col-md-6">
+              <select
+          class="form-select"
           aria-label="Disabled select example"
           id="class"
+          v-model="sortOrder"
         >
           <option selected>熱門課程</option>
-          <option value="1">價格由低到高</option>
-          <option value="2">價格由高到低</option>
+          <option value="asc">價格由低到高</option>
+          <option value="desc">價格由高到低</option>
         </select>
+            </div>
+          </div>
+        </div>
       </div>
-      <section class="row row-cols-1 row-cols-lg-3 g-5 gx-lg-4">
-        <div class="col" v-for="(item) in products" :key="item.id">
+      <section class="row row-cols-1 row-cols-lg-3 g-5 gx-lg-4"
+       v-if="filteredProducts.length !== 0">
+        <div class="col" v-for="(item) in filteredProducts" :key="item.id">
           <div class="card">
             <a href="#" class="position-relative" @click.prevent="pushPage(item.id)">
               <img
               :src="item.imageUrl"
-              class="card-img-top img-fluid" style="height: 350px; object-fit: cover;"
+              class="card-img-top" style="height: 350px; object-fit: cover;"
               :alt="item.content"
             />
             <div class="card-img-overlay d-flex flex-column justify-content-between">
-    <button type="button" class="border-0 align-self-end bg-transparent"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bookmark-star" viewBox="0 0 16 16">
-  <path d="M7.84 4.1a.178.178 0 0 1 .32 0l.634 1.285a.18.18 0 0 0
-   .134.098l1.42.206c.145.021.204.2.098.303L9.42 6.993a.18.18
-    0 0 0-.051.158l.242 1.414a.178.178 0 0 1-.258.187l-1.27-.668a.18.18
-     0 0 0-.165 0l-1.27.668a.178.178 0 0 1-.257-.187l.242-1.414a.18.18 0
-      0 0-.05-.158l-1.03-1.001a.178.178 0 0 1 .098-.303l1.42-.206a.18.18 0 0 0 .134-.098z"/>
-  <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8
-   13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5
-    0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
-</svg></button>
-    <div class="d-flex flex-column">
+    <button type="button" class="bookmark">
+      <img src="../assets/icon/bookmark.svg" alt="bookmark"></button>
+    <div class="d-flex overlay-text">
+      <img src="../assets/icon/user.svg" alt="user" class="overlay-img m-2">
       <h6 class="font-bold text-white">{{ item.coach }} 教練</h6>
-      <p class="card-text text-white">{{ item.title }}</p>
     </div>
   </div>
             </a>
             <div
               class="card-body d-flex justify-content-between align-items-center"
             >
+              <div class="d-flex flex-column" v-if="item.price !== 0">
+                <p class="card-text mb-0">{{ item.title }}</p>
               <p class="card-text mb-0">
                 NT$ {{ item.price }}
                 <span class="text-decoration-line-through">{{ item.origin_price }}</span>
               </p>
-              <button type="button" class="border-0 bg-transparent">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-cart-plus"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0
-                    1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z"
-                  />
-                  <path
-                    d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498
-                    7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0
-                    0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0
-                     .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0
-                      0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1
-                       1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"
-                  />
-                </svg>
-              </button>
+              </div>
+              <div class="d-flex flex-column" v-else>
+                <p class="card-text mb-0">{{ item.title }}</p>
+                <p class="card-text mb-0">免費</p>
+              </div>
+              <button type="button" class="btn btn-primary">加入購物車</button>
             </div>
           </div>
         </div>
+      </section>
+      <section v-else>
+        <h5>未查詢到此篩選結果</h5>
       </section>
       <section class="d-flex justify-content-center mt-5">
         <nav aria-label="Page navigation example">
@@ -298,6 +292,10 @@ export default {
       url: '',
       path: '',
       products: [],
+      coach: [],
+      sortOrder: 'asc', // 默認從小到大
+      category: '全部課程',
+      categorys: ['全部課程', '瑜珈', '有氧運動', '重量訓練'],
     };
   },
   methods: {
@@ -306,12 +304,45 @@ export default {
         .get(`${this.url}${this.path}/products/all`)
         .then((res) => {
           this.products = Object.values(res.data.products);
+          this.product = this.products;
         });
     },
     pushPage(id) {
       this.$router.push(`course/${id}`);
     },
+    checkCategory(type) {
+      this.category = type;
+    },
   },
+  computed: {
+    filteredProducts() {
+      let filtered = this.products;
+      if (this.category !== '全部課程') {
+        filtered = filtered.filter((item) => item.category === this.category);
+      }
+      if (this.coach.length !== 0) {
+        filtered = filtered.filter((item) => this.coach.includes(item.coach));
+      }
+      if (this.sortOrder === 'asc') { // 判定價格 默認從小到大
+        filtered.sort((a, b) => a.price - b.price);
+      } else {
+        filtered.sort((a, b) => b.price - a.price);
+      }
+      return filtered;
+    },
+  },
+  /* watch: {
+    category() {
+      if (this.category === '全部課程') {
+        this.product = this.products;
+        return;
+      }
+      this.product = this.products.filter((item) => item.category.match(this.category));
+    },
+    coach() {
+
+    },
+  }, */
   mounted() {
     this.url = import.meta.env.VITE_API_URL;
     this.path = import.meta.env.VITE_API_PATH;

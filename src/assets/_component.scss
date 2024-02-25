@@ -71,3 +71,44 @@ h2.logo {
     }
   }
 }
+.bookmark{
+  border-radius: 50%;
+  align-self: flex-end;
+  border: 0;
+  background-color: $dark;
+  width: 48px;
+  height: 48px;
+  z-index: 1000;
+}
+.overlay-text {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: #fff;
+  border-top-left-radius: var(--bs-card-inner-border-radius);
+  border-top-right-radius: var(--bs-card-inner-border-radius);
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  opacity: 0;
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(50%, rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0)));
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0) 100%);
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  & .overlay-img{
+    border-radius: 50%;
+    border: 0px solid;
+    border-image: linear-gradient(110.77deg, #655AEA -6.41%, #95E2FF 107.79%);
+    background: linear-gradient(110.77deg, #655AEA -6.41%, #95E2FF 107.79%);
+    width: 48px;
+    height: 48px;
+  }
+}
+.card .overlay-text:hover{
+  opacity: 1;
+}
