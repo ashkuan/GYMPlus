@@ -9,6 +9,15 @@ h1.logo {
   overflow: hidden;
   white-space: nowrap;
 }
+h2.logo {
+  background: no-repeat url(logo_white.svg);
+  background-size: cover;
+  width: 140px;
+  height: 80px;
+  text-indent: 101%;
+  overflow: hidden;
+  white-space: nowrap;
+}
 
 // 讀取圖示：line-md--loading-twotone-loop
 // 使用方式 <span class="line-loading-loop"></span>
@@ -25,4 +34,40 @@ h1.logo {
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   vertical-align: -0.35em;
+}
+.banner{
+  height: 460px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.information{
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-around;
+  align-items: center;
+  background-color: $primary;
+  width: 100%;
+  position: relative;
+}
+@media (min-width: 768px) {
+  .information{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: $primary;
+    width: 75%;
+    position: relative;
+    &::after{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -30px;
+      background-color: $primary;
+      border-radius: 40px 0 0 0;
+      height: 100%;
+      width: 30px;
+    }
+  }
 }
