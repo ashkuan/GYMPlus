@@ -77,7 +77,7 @@ export default {
   >
     <span class="icon-base icon-d-arrow bg-white" :class="{ hide: isColse }"></span>
   </button>
-  <div class="admin-sidebar bg-light z-2" :class="{ hide: isColse }">
+  <div class="admin-sidebar bg-light" :class="{ hide: isColse }">
     <router-link to="/" class="mb-2">
       <h1 class="logo mb-0" style="width: 105px; height: 60px">GYMPlus</h1>
     </router-link>
@@ -185,6 +185,7 @@ export default {
   position: fixed;
   padding: 16px;
   transition: all 0.5s ease-out;
+  z-index: 10;
   width: 260px;
   height: 100vh;
   &.hide {

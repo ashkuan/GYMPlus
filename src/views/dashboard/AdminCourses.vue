@@ -1,10 +1,16 @@
 <script>
+import { mapActions, mapState } from 'pinia';
+import getDataStore from '@/stores/GetDataStore';
+import PaginationComponent from '@/components/PaginationComponent.vue';
+
 export default {
+  components: { PaginationComponent },
   data() {
     return {
       url: '',
       path: '',
       courses: [],
+      pageInfo: {},
       badgeStyles: {
         yoga: 'bg-primary bg-opacity-50',
         strength: 'bg-gray-1 bg-opacity-50',
@@ -14,18 +20,7 @@ export default {
     };
   },
   methods: {
-    getCourses() {
-      this.axios
-        .get(`${this.url}/api/${this.path}/admin/products`)
-        .then((res) => {
-          // console.log(res.data);
-          this.courses = res.data.products;
-          console.log(this.courses);
-        })
-        .catch((err) => {
-          console.log(err.response);
-        });
-    },
+    ...mapActions(getDataStore, ['getRemoteData']),
     // uploadImage(index, event) {
     //   const file = event.target.files[0];
     //   const formData = new FormData();
@@ -34,7 +29,7 @@ export default {
     //   this.axios
     //     .post(`${this.url}/api/${this.path}/admin/upload`, formData)
     //     .then((res) => {
-    //       console.log(res.data);
+    //       console.log(res.data.imageUrl);
     //     })
     //     .catch((err) => {
     //       console.log(err.response);
@@ -53,11 +48,18 @@ export default {
       }
     },
   },
-  computed: {},
+  computed: {
+    ...mapState(getDataStore, ['targetData']),
+  },
+  watch: {
+    targetData(vaule) {
+      this.courses = vaule;
+    },
+  },
   mounted() {
     this.url = import.meta.env.VITE_API_URL;
     this.path = import.meta.env.VITE_API_PATH;
-    this.getCourses();
+    this.getRemoteData('products', 1, false);
   },
 };
 </script>
@@ -73,21 +75,21 @@ export default {
         <span>新增課程</span>
       </button>
     </div>
-    <div class="table-responsive mb-6">
+    <div v-if="courses.length !== 0" class="table-responsive mb-5">
       <table
         class="table table-hover text-center align-middle"
-        style="letter-spacing: 0px; min-width: 660px"
+        style="letter-spacing: 0px; min-width: 700px"
       >
         <thead>
           <tr class="table-gray-4">
-            <th scope="col" width="60px"></th>
+            <th scope="col" width="52px"></th>
             <th scope="col" class="d-none d-lg-table-cell">縮圖</th>
             <th scope="col">分類</th>
             <th scope="col">標題</th>
             <th scope="col">教練</th>
             <th scope="col">上課時間</th>
             <th scope="col">售價</th>
-            <th scope="col">開課狀況</th>
+            <th scope="col" width="90px">開課狀況</th>
             <th scope="col" width="70px"></th>
           </tr>
         </thead>
@@ -135,6 +137,10 @@ export default {
         </tbody>
       </table>
     </div>
+    <div v-else>
+      <h2 class="display-1 text-center">資料讀取中請稍後</h2>
+    </div>
+    <PaginationComponent :now-target="'products'" :is-user="false"></PaginationComponent>
   </div>
 </template>
 
