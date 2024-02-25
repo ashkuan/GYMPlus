@@ -2,18 +2,36 @@
 
 <template>
   <header>
-    <h1>前台</h1>
-    <nav>
-      <RouterLink to="/">Home</RouterLink> |
-      <RouterLink to="/courses">Courses</RouterLink> |
-      <RouterLink to="/course/:id">Course</RouterLink> | <RouterLink to="/cart">Cart</RouterLink> |
-      <RouterLink to="/checkout">Checkout</RouterLink> |
-      <RouterLink to="/order-creation">Order-Creation</RouterLink> |
-      <RouterLink to="/favourite">Favourite</RouterLink> |
-      <RouterLink to="/articles">Articles</RouterLink> |
-      <RouterLink to="/article/:id">Article</RouterLink> |
-      <RouterLink to="/coaches">Coaches</RouterLink> |
-      <RouterLink to="/about">About</RouterLink>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <router-link to="/">
+          <h1 class="logo mb-0" style="width: 105px; height: 60px">GYMPlus</h1>
+        </router-link>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarNavAltMarkup"
+        >
+          <div class="navbar-nav">
+            <router-link to="/courses" class="mx-2">購買課程</router-link>
+            <router-link to="/coaches" class="mx-2">認識教練</router-link>
+            <router-link to="/about" class="mx-2">關於我們</router-link>
+            <router-link to="/articles" class="mx-2">健身文章</router-link>
+            <router-link to="/favourite" class="mx-2">我的最愛</router-link>
+            <router-link to="/cart" class="mx-2">購物車</router-link>
+          </div>
+        </div>
+      </div>
     </nav>
   </header>
   <router-view></router-view>
