@@ -191,15 +191,15 @@
        v-if="filteredProducts.length !== 0">
         <div class="col" v-for="(item) in filteredProducts" :key="item.id">
           <div class="card">
-            <a href="#" class="position-relative" @click.prevent="pushPage(item.id)">
+            <button type="button" class="position-absolute bookmark">
+      <img src="../assets/icon/bookmark.svg" alt="bookmark"></button>
+            <a href="#" class="position-relative ground-floor" @click.prevent="pushPage(item.id)">
               <img
               :src="item.imageUrl"
               class="card-img-top" style="height: 350px; object-fit: cover;"
               :alt="item.content"
             />
             <div class="card-img-overlay d-flex flex-column justify-content-between">
-    <button type="button" class="bookmark">
-      <img src="../assets/icon/bookmark.svg" alt="bookmark"></button>
     <div class="d-flex overlay-text">
       <img src="../assets/icon/user.svg" alt="user" class="overlay-img m-2">
       <h6 class="font-bold text-white">{{ item.coach }} 教練</h6>

@@ -75,10 +75,19 @@ h2.logo {
   border-radius: 50%;
   align-self: flex-end;
   border: 0;
+  top: 10px;
+  right: 10px;
   background-color: $dark;
   width: 48px;
   height: 48px;
   z-index: 1000;
+  &::after{
+    content: '';
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
 }
 .overlay-text {
   position: absolute;
@@ -111,4 +120,63 @@ h2.logo {
 }
 .card .overlay-text:hover{
   opacity: 1;
+}
+.timeLine{
+  position: relative;
+  &::after{
+    position: absolute;
+    content: '';
+    background-color: $gray-500;
+    width: 0%;
+    left: 0;
+    top:9px;
+    height: 2px;
+    z-index: 2;
+  }
+  &::before{
+    position: absolute;
+    content: '';
+    background-color: #e3e3e3;
+    width: 100%;
+    left: 0;
+    top: 9px;
+    height: 2px;
+  }
+}
+
+.step{
+  position: relative;
+  &.active{
+    color: #68715f;
+    &::before{
+      background-color: #68715F;
+      border-color: #68715F;
+      color:#fff;
+    }
+  }
+  &::before{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #e3e3e3;
+    top: -50px;
+    left:50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    font-size: 24px;
+    line-height: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &.step_1::before{
+    content: '1';
+  }
+  &.step_2::before{
+    content: '2';
+  }
+  &.step_3::before{
+    content: '3';
+  }
 }
