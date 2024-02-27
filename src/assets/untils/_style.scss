@@ -1,0 +1,20 @@
+$linear: linear-gradient(110.77deg, #655AEA -6.41%, #95E2FF 107.79%);
+
+// 顏色
+.bg-linear {
+  background: $linear;
+}
+
+.text-linear {
+  background: $linear;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+.ground-floor{
+  z-index: 1;
+}
+.high-floor{
+  z-index: 1000;
+}
