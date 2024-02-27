@@ -50,7 +50,25 @@ export default defineStore('adminCourseStore', {
           alertStyles.basic.fire({
             ...basicContent(res.data.message, 1),
             didClose: () => {
-              this.$reset();
+              this.resetTemp();
+              modalDom.hide();
+            },
+          });
+          GetDataStore().getRemoteData('products', 1, false);
+        })
+        .catch((err) => {
+          alertStyles.basic.fire(basicContent(`錯誤${err.response.status}，請洽客服`, 2));
+        });
+    },
+    delCourse(id, modalDom) {
+      console.log(id);
+      axios
+        .delete(`${url}/api/${path}/admin/product/${id}`)
+        .then((res) => {
+          alertStyles.basic.fire({
+            ...basicContent(res.data.message, 1),
+            didClose: () => {
+              this.resetTemp();
               modalDom.hide();
             },
           });

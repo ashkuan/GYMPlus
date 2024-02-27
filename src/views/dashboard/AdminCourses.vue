@@ -4,9 +4,10 @@ import getDataStore from '@/stores/GetDataStore';
 import AdminCourseStore from '@/stores/dashboard/AdminCourseStore';
 import PaginationComponent from '@/components/PaginationComponent.vue';
 import CourseEditModal from '@/components/dashboard/CourseEditModal.vue';
+import CourseDelModal from '@/components/dashboard/CourseDelModal.vue';
 
 export default {
-  components: { PaginationComponent, CourseEditModal },
+  components: { PaginationComponent, CourseEditModal, CourseDelModal },
   data() {
     return {
       url: '',
@@ -24,20 +25,6 @@ export default {
   methods: {
     ...mapActions(getDataStore, ['getRemoteData']),
     ...mapActions(AdminCourseStore, ['getCourse']),
-    // uploadImage(index, event) {
-    //   const file = event.target.files[0];
-    //   const formData = new FormData();
-    //   formData.append('file-to-upload', file);
-    //   console.log(file);
-    //   this.axios
-    //     .post(`${this.url}/api/${this.path}/admin/upload`, formData)
-    //     .then((res) => {
-    //       console.log(res.data.imageUrl);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err.response);
-    //     });
-    // },
     chooseBadgeStyle(zhName) {
       switch (zhName) {
         case '瑜珈':
@@ -104,7 +91,13 @@ export default {
         <tbody>
           <tr v-for="course in courses" :key="course.id">
             <td>
-              <button type="button" class="btn btn-sm btn-outline-danger border-0 p-1">
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-danger border-0 p-1"
+                data-bs-toggle="modal"
+                data-bs-target="#courseDelModal"
+                @click="getCourse(course.id)"
+              >
                 <span class="icon-base icon-sm icon-trash"></span>
               </button>
             </td>
@@ -158,7 +151,8 @@ export default {
     </div>
     <PaginationComponent :now-target="'products'" :is-user="false"></PaginationComponent>
   </div>
-  <CourseEditModal></CourseEditModal>
+  <CourseEditModal />
+  <CourseDelModal />
 </template>
 
 <style lang="scss"></style>
