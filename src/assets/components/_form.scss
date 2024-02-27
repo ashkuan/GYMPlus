@@ -1,0 +1,13 @@
+// sm select 調整
+.form-select-sm {
+  background-position: right 0.5rem center;
+  padding-right: 34px;
+}
+
+// 後台表單用樣式
+.admin-form {
+  .form-check-input:checked {
+    background-color: #002ebc;
+    border-color: #002ebc;
+  }
+}

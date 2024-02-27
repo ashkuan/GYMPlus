@@ -17,4 +17,7 @@ module.exports = {
     },
     'import/core-modules': ['vite', '@vitejs/plugin-vue'],
   },
+  rules: {
+    'linebreak-style': ['error', (process.platform === 'win32' ? 'windows' : 'unix')], // https://stackoverflow.com/q/39114446/2771889
+  },
 };

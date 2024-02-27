@@ -1,0 +1,52 @@
+// 按鈕互動效果
+button.btn,.btn {
+  &.btn-primary {
+    border-width: 0;
+    &:hover {
+      background: $linear;
+    }
+  }
+  &.btn-white {
+    color: $gray-900;
+    &:hover {
+      background: linear-gradient(0deg, #E8EEFF, #E8EEFF);
+      border-color: #88C0FF;
+    }
+  }
+  &.btn-gray-1 {
+    &:hover {
+      background: $primary;
+    }
+  }
+  &.btn-link {
+    &:disabled,
+    &.disbaled {
+      background: transparent;
+    }
+  }
+  &:disabled,
+  &.disbaled {
+    background: $gray-300;
+    color: $gray-500;
+  }
+}
+
+// 連結互動效果
+a.link{
+  &-gray-1{
+    &:hover, &:focus {
+      color: $primary !important;
+    }
+  }
+}
+
+// 按鈕 icon 樣式
+.btn-outline-danger {
+  &:hover,
+  &:active,
+  &:focus-visible {
+    .icon-base {
+      background-color: #fff;
+    }
+  }
+}

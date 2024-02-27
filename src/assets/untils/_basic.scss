@@ -1,10 +1,20 @@
+// 自訂變數
 $linear: linear-gradient(110.77deg, #655AEA -6.41%, #95E2FF 107.79%);
+
+// 全站設定
+img {
+  object-position: center;
+  object-fit: cover;
+}
+
+table thead th {
+  font-weight: 500;
+}
 
 // 顏色
 .bg-linear {
   background: $linear;
 }
-
 .text-linear {
   background: $linear;
   background-clip: text;
@@ -12,9 +22,6 @@ $linear: linear-gradient(110.77deg, #655AEA -6.41%, #95E2FF 107.79%);
   display: inline-block;
 }
 
-.ground-floor{
-  z-index: 1;
-}
-.high-floor{
-  z-index: 1000;
+.bg-linear-danger {
+  background: linear-gradient(110.77deg, $danger -6.41%, #ff7f7f 107.79%);
 }
