@@ -33,42 +33,23 @@
           <div class="col-12 col-md-8">
             <div class="card">
               <div class="card-body">
-                <div class="row mb-2 border-bottom">
+                <div class="row mb-2 border-bottom" v-for="item in carts" :key="item.id">
                   <div class="col-2 d-flex align-items-center">
                     <button type="button" class="btn">X</button>
                   </div>
                   <div class="col-7 d-flex align-items-center">
                     <img
-                      src="https://storage.googleapis.com/vue-course-api.appspot.com/gymplus/1708756288385.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=WLskNJ2gkOdikUIYZuHrb2MQLW3czCBSfDFkZGkOjpbnpPVD%2BsJRx9wuIemdY862GhtBuXmHVoxSvMGtunvCxNgnmVYIkOVngWJb0CkwkgVOUVFhZFd9FiD9o70druBo2i8ijYkia0dpENc3Mindor9Y0VQlATxP2i4B%2FDTNrVehQ5Yml%2BZCjFbjWFXbCqdq7VjAqGgDYVbRIPvpSzk1OYPLwv2Cs3tzLymllU59WQ%2B5VtpkRkVScekzFX5FOEnc15YFDu3O0hXtXq4wt%2Fx9ggBL7O9YtrBglXQfznuFWimKV6WEJNelRI%2FUT69bVbTXbs6V4m97rqaZWTpSjWpV5Q%3D%3D"
+                      :src="item?.product?.imageUrl"
                       alt="img"
                       class="img-fluid w-50"
                     />
-                    <h4 class="mx-2 mb-0">基礎瑜珈</h4>
+                    <h4 class="mx-2 mb-0">{{ item?.product?.title }}</h4>
                   </div>
                   <div class="col-3 d-flex align-items-center">
                     <p class="card-text mb-0 text-decoration-line-through">
-                      $ 500
+                      $ {{ item?.product?.origin_price }}
                     </p>
-                    <span class="mx-3">$ 350</span>
-                  </div>
-                </div>
-                <div class="row mb-2 border-bottom">
-                  <div class="col-2 d-flex align-items-center">
-                    <button type="button" class="btn">X</button>
-                  </div>
-                  <div class="col-7 d-flex align-items-center">
-                    <img
-                      src="https://storage.googleapis.com/vue-course-api.appspot.com/gymplus/1708756288385.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=WLskNJ2gkOdikUIYZuHrb2MQLW3czCBSfDFkZGkOjpbnpPVD%2BsJRx9wuIemdY862GhtBuXmHVoxSvMGtunvCxNgnmVYIkOVngWJb0CkwkgVOUVFhZFd9FiD9o70druBo2i8ijYkia0dpENc3Mindor9Y0VQlATxP2i4B%2FDTNrVehQ5Yml%2BZCjFbjWFXbCqdq7VjAqGgDYVbRIPvpSzk1OYPLwv2Cs3tzLymllU59WQ%2B5VtpkRkVScekzFX5FOEnc15YFDu3O0hXtXq4wt%2Fx9ggBL7O9YtrBglXQfznuFWimKV6WEJNelRI%2FUT69bVbTXbs6V4m97rqaZWTpSjWpV5Q%3D%3D"
-                      alt="img"
-                      class="img-fluid w-50"
-                    />
-                    <h4 class="mx-2 mb-0">基礎瑜珈</h4>
-                  </div>
-                  <div class="col-3 d-flex align-items-center">
-                    <p class="card-text mb-0 text-decoration-line-through">
-                      $ 500
-                    </p>
-                    <span class="mx-3">$ 350</span>
+                    <span class="mx-3">$ {{ item?.product?.price }}</span>
                   </div>
                 </div>
               </div>
@@ -163,4 +144,31 @@
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  data() {
+    return {
+      url: '',
+      path: '',
+      carts: [],
+    };
+  },
+  methods: {
+    getData() {
+      this.axios
+        .get(`${this.url}${this.path}/cart`)
+        .then((res) => {
+          this.carts = res.data.data.carts;
+          // this.products = Object.values(res.data.products);
+          // this.product = this.products;
+        });
+    },
+  },
+  mounted() {
+    this.url = import.meta.env.VITE_API_URL;
+    this.path = import.meta.env.VITE_API_PATH;
+    this.getData();
+  },
+};
+
+</script>

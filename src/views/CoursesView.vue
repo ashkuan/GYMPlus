@@ -220,7 +220,15 @@
                 <p class="card-text mb-0">{{ item.title }}</p>
                 <p class="card-text mb-0">免費</p>
               </div>
-              <button type="button" class="btn btn-primary">加入購物車</button>
+              <button type="button" class="btn btn-primary"
+              :disabled="this.status.loadingItem === item.id"
+               @click.prevent="addCart(item.id)">
+               <div class="spinner-border spinner-border-sm text-secondary" role="status"
+               v-if="this.status.loadingItem === item.id"
+               >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+               加入購物車</button>
             </div>
           </div>
         </div>
@@ -262,6 +270,9 @@ export default {
       path: '',
       products: [],
       coach: [],
+      status: {
+        loadingItem: '',
+      },
       sortOrder: 'asc', // 默認從小到大
       category: '全部課程',
       categorys: ['全部課程', '瑜珈', '有氧運動', '重量訓練'],
@@ -281,6 +292,17 @@ export default {
     },
     checkCategory(type) {
       this.category = type;
+    },
+    addCart(id) {
+      this.status.loadingItem = id;
+      const cart = {
+        product_id: id,
+        qty: 1,
+      };
+      this.axios.post(`${this.url}${this.path}/cart`, { data: cart })
+        .then(() => {
+          this.status.loadingItem = '';
+        });
     },
   },
   computed: {
