@@ -1,10 +1,12 @@
 <script>
 import { mapActions, mapState } from 'pinia';
 import getDataStore from '@/stores/GetDataStore';
+import AdminCourseStore from '@/stores/dashboard/AdminCourseStore';
 import PaginationComponent from '@/components/PaginationComponent.vue';
+import CourseEditModal from '@/components/dashboard/CourseEditModal.vue';
 
 export default {
-  components: { PaginationComponent },
+  components: { PaginationComponent, CourseEditModal },
   data() {
     return {
       url: '',
@@ -21,6 +23,7 @@ export default {
   },
   methods: {
     ...mapActions(getDataStore, ['getRemoteData']),
+    ...mapActions(AdminCourseStore, ['getCourse']),
     // uploadImage(index, event) {
     //   const file = event.target.files[0];
     //   const formData = new FormData();
@@ -70,7 +73,12 @@ export default {
       <span>課程管理</span>
     </h2>
     <div class="text-center text-md-end mb-3">
-      <button type="button" class="btn btn-gray-3 py-1 shadow-sm">
+      <button
+        type="button"
+        class="btn btn-gray-3 py-1 shadow-sm"
+        data-bs-toggle="modal"
+        data-bs-target="#courseEditModal"
+      >
         <span class="icon-base icon-sm icon-add me-1 bg-white align-text-top"></span>
         <span>新增課程</span>
       </button>
@@ -131,7 +139,15 @@ export default {
               </p>
             </td>
             <td>
-              <button type="button" class="btn btn-sm btn-outline-dark fw-normal">編輯</button>
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-dark fw-normal"
+                data-bs-toggle="modal"
+                data-bs-target="#courseEditModal"
+                @click="getCourse(course.id)"
+              >
+                編輯
+              </button>
             </td>
           </tr>
         </tbody>
@@ -142,6 +158,7 @@ export default {
     </div>
     <PaginationComponent :now-target="'products'" :is-user="false"></PaginationComponent>
   </div>
+  <CourseEditModal></CourseEditModal>
 </template>
 
 <style lang="scss"></style>
