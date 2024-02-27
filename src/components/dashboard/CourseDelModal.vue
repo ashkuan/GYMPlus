@@ -23,7 +23,14 @@
                 </ul>
               </div>
               <div class="col-sm-5">
-                <img :src="temp.imageUrl" :alt="temp.title" class="img-fluid" />
+                <div class="position-relative" style="height: 120px">
+                  <img
+                    :src="temp.imageUrl"
+                    :alt="temp.title"
+                    class="img-fluid w-100 h-100 rounded-2"
+                  />
+                  <div class="img-mask"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -72,11 +79,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.bg-linear-danger {
-  background: linear-gradient(110.77deg, #dc3545 -6.41%, #ff7f7f 107.79%);
-}
-.ls-0 {
-  letter-spacing: 0 !important;
-}
-</style>
+<style lang="scss"></style>

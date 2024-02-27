@@ -155,7 +155,10 @@ export default {
         </div>
       </nav>
     </header>
-    <router-view class="container"></router-view>
+    <!-- 在元件上直接下 class="" 會出現報錯 -->
+    <div class="contaner">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 

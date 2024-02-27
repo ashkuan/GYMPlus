@@ -18,6 +18,11 @@ body, small, .small {
 .display-1,.display-2,.display-3,.display-4,.display-5,.display-6 {
   letter-spacing: 0;
 }
+// 取消文字間距
+.ls-0 {
+  letter-spacing: 0 !important;
+}
+
 
 // RWD
 body {

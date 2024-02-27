@@ -334,31 +334,6 @@ export default {
 </script>
 
 <style lang="scss">
-.form-select-sm {
-  background-position: right 0.5rem center;
-  padding-right: 34px;
-}
-.img-mask {
-  background: rgba(0, 0, 0, 0.1);
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-  transition: all 0.2s;
-  &:hover {
-    background: none;
-  }
-}
-.admin-form {
-  .form-check-input:checked {
-    background-color: #002ebc;
-    border-color: #002ebc;
-  }
-}
 .admin-img-delBtn {
   border-width: 0;
   padding: 4px;

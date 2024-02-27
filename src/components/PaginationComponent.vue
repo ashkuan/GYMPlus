@@ -64,7 +64,6 @@ export default {
   watch: {
     pagination(value) {
       this.nowPage = value.current_page;
-      console.log(this.nowPage);
     },
   },
 };

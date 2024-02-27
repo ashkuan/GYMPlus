@@ -61,7 +61,6 @@ export default defineStore('adminCourseStore', {
         });
     },
     delCourse(id, modalDom) {
-      console.log(id);
       axios
         .delete(`${url}/api/${path}/admin/product/${id}`)
         .then((res) => {

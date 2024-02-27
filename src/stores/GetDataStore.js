@@ -1,5 +1,10 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import alertStore from './AlertStore';
+
+const url = import.meta.env.VITE_API_URL;
+const path = import.meta.env.VITE_API_PATH;
+const { alertStyles, basicContent } = alertStore();
 
 export default defineStore('getDataStore', {
   state: () => ({
@@ -8,8 +13,6 @@ export default defineStore('getDataStore', {
   }),
   actions: {
     getRemoteData(target, page = 1, isUser = true) {
-      const url = import.meta.env.VITE_API_URL;
-      const path = import.meta.env.VITE_API_PATH;
       const apiPath = `${url}/api/${path}${isUser ? '' : '/admin'}/${target}?page=${page}`;
       axios
         .get(apiPath)
@@ -18,8 +21,7 @@ export default defineStore('getDataStore', {
           this.targetData = res.data[target];
         })
         .catch((err) => {
-          // 待辦：錯誤回饋
-          console.log(err.response);
+          alertStyles.basic.fire(basicContent(`錯誤${err.response.status}，請洽客服`, 2));
         });
     },
   },

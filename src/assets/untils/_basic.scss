@@ -21,3 +21,7 @@ table thead th {
   color: transparent;
   display: inline-block;
 }
+
+.bg-linear-danger {
+  background: linear-gradient(110.77deg, $danger -6.41%, #ff7f7f 107.79%);
+}
