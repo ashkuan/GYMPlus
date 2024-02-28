@@ -1,4 +1,5 @@
 <template>
+  <LoadingPlugin :active="isLoading"></LoadingPlugin>
   <div class="bg-light" style="min-height: 100vh">
     <div class="container">
       <nav aria-label="breadcrumb" class="pt-5">
@@ -33,46 +34,75 @@
           <div class="col-12 col-md-8">
             <div class="card">
               <div class="card-body">
-                <div class="row mb-2 border-bottom" v-for="item in carts" :key="item.id">
-                  <div class="col-2 d-flex align-items-center">
-                    <button type="button" class="btn">X</button>
-                  </div>
-                  <div class="col-7 d-flex align-items-center">
+                <div class="d-flex flex-column justify-content-center align-items-center"
+                v-if="this.carts.length === 0">
+                  <img src="../assets/icon/cartIcon.svg" alt="cartIcon" class="w-25">
+                  <h3>尚未加入課程</h3>
+                </div>
+                <table class="table align-middle table-hover" v-else>
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th></th>
+                      <th class="text-start">課程名稱</th>
+                      <th>金額</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in carts" :key="item.id">
+                      <td><button type="button" class="btn btn-outline-danger rounded"
+                    @click.prevent="delCart(item.id, item?.product?.title)">
+                    <img src="../assets/icon/delecticon.svg" alt="deleteIcon">
+                  </button></td>
+                  <td style="width: 200px;">
                     <img
                       :src="item?.product?.imageUrl"
                       alt="img"
-                      class="img-fluid w-50"
+                      class="img-fluid"
                     />
-                    <h4 class="mx-2 mb-0">{{ item?.product?.title }}</h4>
-                  </div>
-                  <div class="col-3 d-flex align-items-center">
-                    <p class="card-text mb-0 text-decoration-line-through">
+                  </td>
+                  <td>
+                    <h4 class="mx-2 mb-0 h5 text-start">{{ item?.product?.title }}</h4></td>
+                  <td class="text-end">
+                    <div class="d-flex">
+                      <p class="card-text mb-0 text-decoration-line-through text-nowrap">
                       $ {{ item?.product?.origin_price }}
                     </p>
-                    <span class="mx-3">$ {{ item?.product?.price }}</span>
-                  </div>
-                </div>
+                    <span class="px-3 text-nowrap">$ {{ item?.product?.price }}</span>
+                    </div>
+                  </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
                 <div class="container row align-items-center mb-4">
-                  <div class="col-6">
+                  <div class="col-12 col-md-6 ">
                     <div class="input-group">
   <input type="text" class="form-control"
    placeholder="請輸入優惠卷代碼"
-    aria-label="Recipient's username" aria-describedby="button-addon2">
-  <button class="btn btn-outline-secondary" type="button" id="button-addon2">套用</button>
+    aria-label="Recipient's username" aria-describedby="button-addon2" v-model="this.code"
+    :disabled="this.isconponStatus">
+  <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+  @click.prevent="addCouponCode" :disabled="this.isconponStatus">套用</button>
 </div>
                   </div>
-                  <div class="col-6">
-                    <p class="mb-0">未套用優惠卷</p>
+                  <div class="col-12 col-md-6 my-2 my-md-0">
+                    <p class="mb-0 text-center text-md-start"
+                    :class="[ this.conponTitle === '' ? '' : 'text-success' ]">
+                      {{ this.conponTitle === '' ? '未套用優惠券' : this.conponTitle}}</p>
                   </div>
                   <div class="col-12 d-flex flex-column align-items-end">
-                      <p>商品合計: <span>NT$ 750</span></p>
-                      <p>訂單總計: <span>NT$ 750</span></p>
+                      <p>商品合計: <span
+                      :class="[ this.total === this.final_total
+                       ? '' : 'text-decoration-line-through']">
+                        NT$ {{ this.total }}</span></p>
+                      <p>訂單總計: <span>NT$ {{ this.final_total }}</span></p>
                   </div>
                 </div>
-                <div class="d-flex justify-content-center pb-5">
-                  <button type="button" class="btn btn-secondary w-25 mx-3">返回購物</button>
-                  <button type="button" class="btn btn-danger w-25 mx-3">填寫資料</button>
+                <div class="d-flex justify-content-between py-4">
+                  <button type="button" class="btn btn-secondary btn-lg mx-3"
+                  @click.prevent="pushCoursesView">返回購物</button>
+                  <button type="button" class="btn btn-outline-danger btn-lg mx-3">填寫資料</button>
                 </div>
             </div>
           </div>
@@ -151,17 +181,70 @@ export default {
       url: '',
       path: '',
       carts: [],
+      total: 0,
+      final_total: 0,
+      code: '',
+      conponTitle: '',
+      isLoading: true,
+      isconponStatus: false,
     };
   },
   methods: {
     getData() {
+      this.carts = [];
       this.axios
         .get(`${this.url}${this.path}/cart`)
         .then((res) => {
           this.carts = res.data.data.carts;
-          // this.products = Object.values(res.data.products);
-          // this.product = this.products;
+          this.total = this.carts.reduce((acc, curr) => acc + parseInt(curr.total, 10), 0);
+          // eslint-disable-next-line max-len
+          this.final_total = this.carts.reduce((acc, curr) => acc + parseInt(curr.final_total, 10), 0);
+          this.isLoading = false;
         });
+    },
+    delCart(id, title) {
+      this.$swal({
+        icon: 'warning',
+        title: '確定刪除課程?',
+        text: title,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '確定',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.axios.delete(`${this.url}${this.path}/cart/${id}`)
+            .then((res) => {
+              this.$swal({
+                icon: 'success',
+                title: res.data.message,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              setTimeout(() => {
+                this.isLoading = true;
+                this.getData();
+              }, 1500);
+            });
+        }
+      });
+    },
+    addCouponCode() {
+      const conpon = {
+        code: this.code,
+      };
+      this.axios.post(`${this.url}${this.path}/coupon`, { data: conpon })
+        .then((res) => {
+          this.conponTitle = res.data.message;
+          this.isconponStatus = true;
+          setTimeout(() => {
+            this.isLoading = true;
+            this.getData();
+          }, 1500);
+        });
+    },
+    pushCoursesView() {
+      this.$router.push('/courses');
     },
   },
   mounted() {

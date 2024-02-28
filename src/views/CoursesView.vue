@@ -1,4 +1,5 @@
 <template>
+  <LoadingPlugin :active="isLoading"></LoadingPlugin>
   <div class="bg-linght" style="min-height: 100vh">
     <div
       class="banner"
@@ -276,6 +277,7 @@ export default {
       sortOrder: 'asc', // 默認從小到大
       category: '全部課程',
       categorys: ['全部課程', '瑜珈', '有氧運動', '重量訓練'],
+      isLoading: true,
     };
   },
   methods: {
@@ -284,7 +286,7 @@ export default {
         .get(`${this.url}${this.path}/products/all`)
         .then((res) => {
           this.products = Object.values(res.data.products);
-          this.product = this.products;
+          this.isLoading = false;
         });
     },
     pushPage(id) {
