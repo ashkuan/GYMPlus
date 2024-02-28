@@ -195,7 +195,7 @@ export default {
     getData() {
       this.carts = [];
       this.axios
-        .get(`${this.url}${this.path}/cart`)
+        .get(`${this.url}/api/${this.path}/cart`)
         .then((res) => {
           this.carts = res.data.data.carts;
           this.total = this.carts.reduce((acc, curr) => acc + parseInt(curr.total, 10), 0);
@@ -215,7 +215,7 @@ export default {
         confirmButtonText: '確定',
       }).then((result) => {
         if (result.isConfirmed) {
-          this.axios.delete(`${this.url}${this.path}/cart/${id}`)
+          this.axios.delete(`${this.url}/api/${this.path}/cart/${id}`)
             .then((res) => {
               this.$swal({
                 icon: 'success',
@@ -242,7 +242,7 @@ export default {
           text: '優惠卷欄位不可填空!',
         });
       } else {
-        this.axios.post(`${this.url}${this.path}/coupon`, { data: conpon })
+        this.axios.post(`${this.url}/api/${this.path}/coupon`, { data: conpon })
           .then((res) => {
             setTimeout(() => {
               this.isLoading = true;

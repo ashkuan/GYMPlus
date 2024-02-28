@@ -210,7 +210,7 @@ export default {
         product_id: id,
         qty: 1,
       };
-      this.axios.post(`${this.url}${this.path}/cart`, { data: cart })
+      this.axios.post(`${this.url}/api/${this.path}/cart`, { data: cart })
         .then(() => {
           this.status.loadingItem = '';
         });
