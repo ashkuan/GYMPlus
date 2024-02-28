@@ -270,7 +270,7 @@ export default {
   methods: {
     getData() {
       this.axios
-        .get(`${this.url}${this.path}/products/all`)
+        .get(`${this.url}/api/${this.path}/products/all`)
         .then((res) => {
           this.products = Object.values(res.data.products);
           this.product = this.products;
