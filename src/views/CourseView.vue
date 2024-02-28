@@ -40,7 +40,13 @@
           NT$ {{ product?.origin_price }}</span>
         <p class="card-text align-self-end mb-0 fs-3">NT$ {{ product?.price }}</p>
         <button type="button" class="btn btn-outline-danger
-         rounded align-self-end w-50">購買課程</button>
+         rounded align-self-end w-50" @click.prevent="addCart(this.product.id)"
+         :disabled="this.product.id === this.status.loadingItem">
+         <div class="spinner-border spinner-border-sm text-secondary" role="status"
+         v-if="this.product.id === this.status.loadingItem">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+         購買課程</button>
       </div>
     </div>
   </div>
@@ -170,6 +176,9 @@ export default {
       path: '',
       product: {},
       products: [],
+      status: {
+        loadingItem: '',
+      },
       isLoading: true,
     };
   },
@@ -194,6 +203,17 @@ export default {
       setTimeout(() => {
         window.location.reload();
       }, 500);
+    },
+    addCart(id) {
+      this.status.loadingItem = id;
+      const cart = {
+        product_id: id,
+        qty: 1,
+      };
+      this.axios.post(`${this.url}${this.path}/cart`, { data: cart })
+        .then(() => {
+          this.status.loadingItem = '';
+        });
     },
   },
   computed: {

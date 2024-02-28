@@ -1,4 +1,5 @@
 <template>
+  <LoadingPlugin :active="isLoading"></LoadingPlugin>
   <div class="bg-linght" style="min-height: 100vh">
     <div
       class="banner"
@@ -191,15 +192,15 @@
        v-if="filteredProducts.length !== 0">
         <div class="col" v-for="(item) in filteredProducts" :key="item.id">
           <div class="card">
-            <a href="#" class="position-relative" @click.prevent="pushPage(item.id)">
+            <button type="button" class="position-absolute bookmark">
+      <img src="../assets/icon/bookmark.svg" alt="bookmark"></button>
+            <a href="#" class="position-relative ground-floor" @click.prevent="pushPage(item.id)">
               <img
               :src="item.imageUrl"
               class="card-img-top" style="height: 350px; object-fit: cover;"
               :alt="item.content"
             />
             <div class="card-img-overlay d-flex flex-column justify-content-between">
-    <button type="button" class="bookmark">
-      <img src="../assets/icon/bookmark.svg" alt="bookmark"></button>
     <div class="d-flex overlay-text">
       <img src="../assets/icon/user.svg" alt="user" class="overlay-img m-2">
       <h6 class="font-bold text-white">{{ item.coach }} 教練</h6>
@@ -220,7 +221,15 @@
                 <p class="card-text mb-0">{{ item.title }}</p>
                 <p class="card-text mb-0">免費</p>
               </div>
-              <button type="button" class="btn btn-primary">加入購物車</button>
+              <button type="button" class="btn btn-primary"
+              :disabled="this.status.loadingItem === item.id"
+               @click.prevent="addCart(item.id, item.title)">
+               <div class="spinner-border spinner-border-sm text-secondary" role="status"
+               v-if="this.status.loadingItem === item.id"
+               >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+               加入購物車</button>
             </div>
           </div>
         </div>
@@ -262,9 +271,13 @@ export default {
       path: '',
       products: [],
       coach: [],
+      status: {
+        loadingItem: '',
+      },
       sortOrder: 'asc', // 默認從小到大
       category: '全部課程',
       categorys: ['全部課程', '瑜珈', '有氧運動', '重量訓練'],
+      isLoading: true,
     };
   },
   methods: {
@@ -273,7 +286,7 @@ export default {
         .get(`${this.url}/api/${this.path}/products/all`)
         .then((res) => {
           this.products = Object.values(res.data.products);
-          this.product = this.products;
+          this.isLoading = false;
         });
     },
     pushPage(id) {
@@ -281,6 +294,26 @@ export default {
     },
     checkCategory(type) {
       this.category = type;
+    },
+    addCart(id, title) {
+      this.status.loadingItem = id;
+      const cart = {
+        product_id: id,
+        qty: 1,
+      };
+      this.axios.post(`${this.url}${this.path}/cart`, { data: cart })
+        .then(() => {
+          this.$swal({
+            icon: 'success',
+            title: '課程新增',
+            text: `已成功新增${title}課程`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setTimeout(() => {
+            this.status.loadingItem = '';
+          }, 1500);
+        });
     },
   },
   computed: {
