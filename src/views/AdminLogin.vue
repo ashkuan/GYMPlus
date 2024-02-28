@@ -11,11 +11,10 @@ export default {
     };
   },
   methods: {
-    ...mapActions(AlertStore, ['iconSinpleContent']),
+    ...mapActions(AlertStore, ['basicContent', 'closedAction']),
     login(value) {
       const { username, password } = value;
       const user = { username, password };
-      const iconAlert = this.$swal.mixin(this.iconSinpleStyle);
       this.isLoading = true;
       this.axios
         .post(`${this.url}/admin/signin`, user)
@@ -24,29 +23,30 @@ export default {
           if (responce.error) {
             switch (responce.error.code) {
               case 'auth/user-not-found':
-                iconAlert.fire(this.iconSinpleContent('error', '查無此帳號'));
+                this.alertStyles.basic.fire(this.basicContent('查無此帳號', 2));
                 break;
               case 'auth/wrong-password':
-                iconAlert.fire(this.iconSinpleContent('error', '密碼輸入錯誤'));
+                this.alertStyles.basic.fire(this.basicContent('密碼輸入錯誤', 2));
                 break;
               default:
-                iconAlert.fire(this.iconSinpleContent('error', '登入失敗，請洽客服'));
+                this.alertStyles.basic.fire(this.basicContent('登入失敗，請洽客服', 2));
                 break;
             }
           } else {
             const { token, expired } = responce;
             document.cookie = `adminToken=${token}; expires=${new Date(expired)};`;
-            iconAlert.fire({
-              ...this.iconSinpleContent('success', responce.message),
-              didClose: () => {
-                this.$router.replace('/admin');
-              },
+            this.alertStyles.basic.fire({
+              ...this.basicContent(responce.message, 1),
+              ...this.closedAction('replace', 'admin'),
+              // didClose: () => {
+              //   this.$router.replace('/admin');
+              // },
             });
           }
           this.isLoading = false;
         })
         .catch((err) => {
-          iconAlert.fire(this.iconSinpleContent('error', `錯誤${err.response.status}，請洽客服`));
+          this.alertStyles.basic.fire(this.basicContent(`錯誤${err.response.status}，請洽客服`, 2));
           this.isLoading = false;
         });
     },
@@ -56,7 +56,7 @@ export default {
     this.path = import.meta.env.VITE_API_PATH;
   },
   computed: {
-    ...mapState(AlertStore, ['iconSinpleStyle']),
+    ...mapState(AlertStore, ['alertStyles']),
   },
 };
 </script>

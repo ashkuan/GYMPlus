@@ -1,74 +1,7 @@
-$linear: linear-gradient(110.77deg, #655AEA -6.41%, #95E2FF 107.79%);
-
-// 顏色
-.bg-linear {
-  background: $linear;
-}
-
-.text-linear {
-  background: $linear;
-  background-clip: text;
-  color: transparent;
-  display: inline-block;
-}
-
-// 按鈕互動效果
-button.btn,
-.btn {
-  &.btn-primary {
-    border-width: 0;
-    &:hover {
-      background: $linear;
-    }
-  }
-  &.btn-white {
-    color: $gray-900;
-    &:hover {
-      background: linear-gradient(0deg, #E8EEFF, #E8EEFF);
-      border-color: #88C0FF;
-    }
-  }
-  &.btn-gray-1 {
-    &:hover {
-      background: $primary;
-    }
-  }
-  &.btn-link {
-    &:disabled,
-    &.disbaled {
-      background: transparent;
-    }
-  }
-  &:disabled,
-  &.disbaled {
-    background: $gray-300;
-    color: $gray-500;
-  }
-}
-
-// letter spacing
-h1,.h1, .fs-1,
-h2,.h2, .fs-2 {
-  letter-spacing: 4px;
-}
-h3,.h3, .fs-3,
-h4,.h4, .fs-4 {
-  letter-spacing: 3px;
-}
-h5,.h5, .fs-5,
-h6,.h6, .fs-6,
-.btn {
-  letter-spacing: 2px;
-}
-body, small, .small {
-  letter-spacing: 1px;
-}
-.display-1,.display-2,.display-3,.display-4,.display-5,.display-6 {
-  letter-spacing: 0;
-}
-.ground-floor{
+.ground-floor {
   z-index: 1;
 }
-.high-floor{
+
+.high-floor {
   z-index: 1000;
 }
