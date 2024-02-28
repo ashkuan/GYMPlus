@@ -1,9 +1,181 @@
-<script></script>
-
 <template>
-  <div>
-    <h1>訂單列表</h1>
+  <div class="container">
+    <h2 class="display-1 mb-md-0 text-center">
+      <span>訂單管理</span>
+    </h2>
+    <div class="text-center text-md-end mb-3">
+      <button
+        type="button"
+        class="btn btn-outline-danger py-1 shadow-sm"
+        data-bs-toggle="modal"
+        data-bs-target="#"
+      >
+        <span class="icon-base icon-sm icon-trash align-text-top me-1 bg-danger"></span>
+        <span>清空訂單</span>
+      </button>
+    </div>
+    <div v-if="orders.length !== 0" class="table-responsive mb-5">
+      <table class="table table-hover text-center align-middle" style="min-width: 760px">
+        <thead>
+          <tr class="table-gray-4">
+            <th scope="col" width="52px"></th>
+            <th scope="col" width="200px">訂單編號</th>
+            <th scope="col" class="d-none d-lg-table-cell">成立日期</th>
+            <th scope="col">訂購人</th>
+            <th scope="col">訂單狀態</th>
+            <th scope="col">付款狀態</th>
+            <th scope="col" width="90px">訂單總額</th>
+            <th scope="col" width="70px"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(order, index) in orders" :key="order.id">
+            <td>
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-danger border-0 p-1"
+                data-bs-toggle="modal"
+                data-bs-target="#courseDelModal"
+                @click="getOrder(order.id)"
+              >
+                <span class="icon-base icon-sm icon-trash"></span>
+              </button>
+            </td>
+            <td>
+              <h3 class="small fs-lg-7 fw-normal text-start ls-0 mb-0">{{ order.id }}</h3>
+            </td>
+            <td class="small fs-lg-7 d-none d-lg-table-cell ls-0">{{ UnixtoText[index] }}</td>
+            <td class="small fs-lg-7 text-start ls-0">{{ order.user.name }}</td>
+            <td>
+              <p class="fs-7 fs-lg-6">
+                <span
+                  class="badge mx-1"
+                  :class="{
+                    'bg-warning': !perOrderStates[index].isfinished,
+                    'bg-gray-3 bg-opacity-75': perOrderStates[index].isfinished,
+                  }"
+                >
+                  {{ perOrderStates[index].isfinished ? '結案' : '未結案' }}
+                </span>
+                <span
+                  v-if="perOrderStates[index].isTeaching"
+                  class="badge bg-success bg-opacity-75 mx-1"
+                >
+                  授課中
+                </span>
+                <span
+                  v-if="perOrderStates[index].isComeingSoon"
+                  class="badge bg-primary bg-opacity-50 mx-1"
+                >
+                  即將開課
+                </span>
+                <span
+                  v-else-if="
+                    !perOrderStates[index].isComeingSoon && !perOrderStates[index].isfinished
+                  "
+                  class="badge bg-gray-3 bg-opacity-50 mx-1"
+                >
+                  等待開課
+                </span>
+              </p>
+            </td>
+            <td>
+              <p class="fs-7 fs-lg-6">
+                <span
+                  class="badge"
+                  :class="{ 'bg-danger': !order.is_paid, 'bg-success': order.is_paid }"
+                >
+                  {{ order.is_paid ? '完成付款' : '未付款' }}
+                </span>
+              </p>
+            </td>
+            <td class="text-end fw-semibold">
+              {{ addSeparator(order.total) }}
+            </td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-dark fw-normal"
+                data-bs-toggle="modal"
+                data-bs-target="#courseEditModal"
+                @click="getOrder(order.id)"
+              >
+                編輯
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div v-else>
+      <h2 class="display-1 text-center">資料讀取中請稍後</h2>
+    </div>
+    <PaginationComponent :now-target="'orders'" :is-user="false"></PaginationComponent>
   </div>
 </template>
+
+<script>
+import { mapActions, mapState } from 'pinia';
+import getDataStore from '@/stores/GetDataStore';
+
+import PaginationComponent from '@/components/PaginationComponent.vue';
+
+export default {
+  components: { PaginationComponent },
+  data() {
+    return {
+      orders: [],
+    };
+  },
+  methods: {
+    ...mapActions(getDataStore, ['getRemoteData', 'addSeparator']),
+    getOrder(id) {
+      console.log(id);
+    },
+  },
+  computed: {
+    ...mapState(getDataStore, ['targetData']),
+    UnixtoText() {
+      return this.targetData.map((order) => {
+        const date = new Date(order.create_at * 1000);
+        let dateTextArr = date.toLocaleDateString().split('/');
+        dateTextArr = dateTextArr.map((time) => (time.length < 4 ? time.padStart(2, '0') : time));
+        return dateTextArr.join('-');
+      });
+    },
+    perOrderCourses() {
+      return this.targetData.map((order) => {
+        console.log(order);
+        const coursesArr = Object.values(order.products).map((ele) => ele.product);
+        return coursesArr;
+      });
+    },
+    perOrderStates() {
+      return this.perOrderCourses.map((order) => {
+        const coursesTime = order.map((productInfo) => productInfo['time-unix']).sort();
+        const nowTime = this.nowUnix;
+        const isfinished = !(coursesTime[coursesTime.length - 1] > nowTime);
+        const isTeaching = !!coursesTime.find((time) => time === nowTime);
+        const WithinSevenDays = coursesTime.filter(
+          (time) => time - 86400 * 7 < nowTime && time > nowTime,
+        );
+        const isComeingSoon = WithinSevenDays.length !== 0;
+        return { isfinished, isTeaching, isComeingSoon };
+      });
+    },
+    nowUnix() {
+      return Math.floor(new Date() / 1000);
+    },
+  },
+  watch: {
+    targetData(vaule) {
+      this.orders = vaule;
+    },
+  },
+  mounted() {
+    this.getRemoteData('orders', 1, false);
+  },
+};
+</script>
 
 <style lang="scss"></style>

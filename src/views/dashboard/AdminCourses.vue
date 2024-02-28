@@ -47,8 +47,8 @@ export default {
     },
   },
   mounted() {
-    this.url = import.meta.env.VITE_API_URL;
-    this.path = import.meta.env.VITE_API_PATH;
+    // this.url = import.meta.env.VITE_API_URL;
+    // this.path = import.meta.env.VITE_API_PATH;
     this.getRemoteData('products', 1, false);
   },
 };

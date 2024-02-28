@@ -46,7 +46,7 @@ a.link{
   &:active,
   &:focus-visible {
     .icon-base {
-      background-color: #fff;
+      background-color: #fff !important;
     }
   }
 }
