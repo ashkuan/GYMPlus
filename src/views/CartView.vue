@@ -81,9 +81,10 @@
   <input type="text" class="form-control"
    placeholder="請輸入優惠卷代碼"
     aria-label="Recipient's username" aria-describedby="button-addon2" v-model="this.code"
-    :disabled="this.isconponStatus">
+    :disabled="this.isconponStatus || this.carts.length === 0">
   <button class="btn btn-outline-secondary" type="button" id="button-addon2"
-  @click.prevent="addCouponCode" :disabled="this.isconponStatus">套用</button>
+  @click.prevent="addCouponCode"
+   :disabled="this.isconponStatus || this.carts.length === 0">套用</button>
 </div>
                   </div>
                   <div class="col-12 col-md-6 my-2 my-md-0">
@@ -102,7 +103,8 @@
                 <div class="d-flex justify-content-between py-4">
                   <button type="button" class="btn btn-secondary btn-lg mx-3"
                   @click.prevent="pushCoursesView">返回購物</button>
-                  <button type="button" class="btn btn-outline-danger btn-lg mx-3">填寫資料</button>
+                  <button type="button" class="btn btn-outline-danger btn-lg mx-3"
+                  :disabled="this.carts.length === 0">填寫資料</button>
                 </div>
             </div>
           </div>
@@ -233,15 +235,23 @@ export default {
       const conpon = {
         code: this.code,
       };
-      this.axios.post(`${this.url}${this.path}/coupon`, { data: conpon })
-        .then((res) => {
-          this.conponTitle = res.data.message;
-          this.isconponStatus = true;
-          setTimeout(() => {
-            this.isLoading = true;
-            this.getData();
-          }, 1500);
+      if (this.code === '') {
+        this.$swal({
+          icon: 'error',
+          title: '錯誤',
+          text: '優惠卷欄位不可填空!',
         });
+      } else {
+        this.axios.post(`${this.url}${this.path}/coupon`, { data: conpon })
+          .then((res) => {
+            setTimeout(() => {
+              this.isLoading = true;
+              this.getData();
+              this.isconponStatus = true;
+              this.conponTitle = res.data.message;
+            }, 1500);
+          });
+      }
     },
     pushCoursesView() {
       this.$router.push('/courses');

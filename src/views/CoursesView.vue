@@ -223,7 +223,7 @@
               </div>
               <button type="button" class="btn btn-primary"
               :disabled="this.status.loadingItem === item.id"
-               @click.prevent="addCart(item.id)">
+               @click.prevent="addCart(item.id, item.title)">
                <div class="spinner-border spinner-border-sm text-secondary" role="status"
                v-if="this.status.loadingItem === item.id"
                >
@@ -295,7 +295,7 @@ export default {
     checkCategory(type) {
       this.category = type;
     },
-    addCart(id) {
+    addCart(id, title) {
       this.status.loadingItem = id;
       const cart = {
         product_id: id,
@@ -303,7 +303,16 @@ export default {
       };
       this.axios.post(`${this.url}${this.path}/cart`, { data: cart })
         .then(() => {
-          this.status.loadingItem = '';
+          this.$swal({
+            icon: 'success',
+            title: '課程新增',
+            text: `已成功新增${title}課程`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setTimeout(() => {
+            this.status.loadingItem = '';
+          }, 1500);
         });
     },
   },

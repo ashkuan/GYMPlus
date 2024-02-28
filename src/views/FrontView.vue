@@ -1,7 +1,5 @@
-<script></script>
-
 <template>
-  <header>
+  <header class="bg-transparent" :class="[this.scrollPosition > 0 ? 'fixed-top' : '']">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
         <router-link to="/">
@@ -107,3 +105,25 @@
       </div>
     </footer>
 </template>
+
+<script>
+
+export default {
+  data() {
+    return {
+      scrollPosition: 0,
+    };
+  },
+  methods: {
+    handleScroll() {
+      this.scrollPosition = window.scrollY;
+    },
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  created() {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
+};
+</script>
