@@ -40,7 +40,8 @@
           NT$ {{ product?.origin_price }}</span>
         <p class="card-text align-self-end mb-0 fs-3">NT$ {{ product?.price }}</p>
         <button type="button" class="btn btn-outline-danger
-         rounded align-self-end w-50" @click.prevent="addCart(this.product.id)"
+         rounded align-self-end w-50"
+          @click.prevent="addCart(this.product.id, this.product.title)"
          :disabled="this.product.id === this.status.loadingItem">
          <div class="spinner-border spinner-border-sm text-secondary" role="status"
          v-if="this.product.id === this.status.loadingItem">
@@ -204,7 +205,7 @@ export default {
         window.location.reload();
       }, 500);
     },
-    addCart(id) {
+    addCart(id, title) {
       this.status.loadingItem = id;
       const cart = {
         product_id: id,
@@ -212,7 +213,16 @@ export default {
       };
       this.axios.post(`${this.url}${this.path}/cart`, { data: cart })
         .then(() => {
-          this.status.loadingItem = '';
+          this.$swal({
+            icon: 'success',
+            title: '課程新增',
+            text: `已成功新增${title}課程`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setTimeout(() => {
+            this.status.loadingItem = '';
+          }, 1500);
         });
     },
   },

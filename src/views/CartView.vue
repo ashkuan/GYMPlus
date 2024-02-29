@@ -203,6 +203,11 @@ export default {
           this.final_total = this.carts.reduce((acc, curr) => acc + parseInt(curr.final_total, 10), 0);
           this.isLoading = false;
         });
+      if (this.carts.length === 0) {
+        this.code = '';
+        this.isconponStatus = false;
+        this.conponTitle = '';
+      }
     },
     delCart(id, title) {
       this.$swal({

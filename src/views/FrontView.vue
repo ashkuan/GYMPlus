@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-transparent" :class="[this.scrollPosition > 0 ? 'fixed-top' : '']">
+  <header class="bg-transparent" :class="[this.scrollPosition > 0 ? 'fixed-top shadow-sm' : '']">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
         <router-link to="/">
