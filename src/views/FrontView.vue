@@ -30,7 +30,7 @@
         </button>
         <div class="collapse navbar-collapse pe-lg-0" id="navbarNavAltMarkup">
           <ul
-            class="navbar-nav container-md align-items-lg-center justify-content-end py-3 py-lg-0"
+            class="navbar-nav container-md align-items-lg-center justify-content-end py-3 p-lg-0"
             :class="{ 'my-3': isOpened }"
           >
             <li class="nav-item mb-2 mb-lg-0 d-lg-none">
@@ -108,88 +108,104 @@
       </div>
     </nav>
   </header>
+
   <router-view></router-view>
+
   <footer class="bg-gray-1">
-    <div class="container">
-      <div class="d-flex py-5 border-bottom border-gray-3">
-        <p class="mb-0 mx-3 text-white">網站導覽</p>
-        <router-link to="/" class="mx-5 text-white">首頁</router-link>
-        <router-link to="/courses" class="mx-5 text-white">購買課程</router-link>
-        <router-link to="/coaches" class="mx-5 text-white">認識教練</router-link>
-        <router-link to="/about" class="mx-5 text-white">關於我們</router-link>
-        <router-link to="/articles" class="mx-5 text-white">健身文章</router-link>
+    <div class="container pt-1 pt-lg-4">
+      <div class="border-bottom border-gray-2 fw-medium">
+        <ul class="nav justify-content-center justify-content-lg-start pb-1 pb-lg-4">
+          <li class="py-3">
+            <a
+              class="d-inline-block small fs-md-7 ls-2 p-1 p-md-3 mx-1 mx-md-2"
+              href="#"
+              @click.prevent
+            >
+              網站導覽
+            </a>
+          </li>
+          <li class="py-3">
+            <router-link to="/" class="d-inline-block small fs-md-7 ls-2 p-1 p-md-3 mx-1 mx-md-2">
+              首頁
+            </router-link>
+          </li>
+          <li class="py-3">
+            <router-link
+              to="/courses"
+              class="d-inline-block small fs-md-7 ls-2 p-1 p-md-3 mx-1 mx-md-2"
+            >
+              購買課程
+            </router-link>
+          </li>
+          <li class="py-3">
+            <router-link
+              to="/coaches"
+              class="d-inline-block small fs-md-7 ls-2 p-1 p-md-3 mx-1 mx-md-2"
+            >
+              認識教練
+            </router-link>
+          </li>
+          <li class="py-3">
+            <router-link
+              to="/about"
+              class="d-inline-block small fs-md-7 ls-2 p-1 p-md-3 mx-1 mx-md-2"
+            >
+              關於我們
+            </router-link>
+          </li>
+          <li class="py-3">
+            <router-link
+              to="/articles"
+              class="d-inline-block small fs-md-7 ls-2 p-1 p-md-3 mx-1 mx-md-2"
+            >
+              健身文章
+            </router-link>
+          </li>
+        </ul>
       </div>
-      <div class="d-flex justify-content-between py-5">
-        <div class="d-flex flex-column">
-          <p class="mb-0 text-gray-3">
-            地址:
+      <div class="d-flex flex-column flex-md-row align-items-center pt-4 pt-md-6 pb-1 pb-md-5">
+        <ul class="fs-8 fs-lg-7 ls-md-2 text-gray-3 list-unstyled text-center text-md-start py-1">
+          <li class="mb-2">
+            <span class="me-2">地址</span>
             <span class="text-white">新北市某某區某某路一段233號</span>
-          </p>
-          <a href="tel:02-1234567" class="mb-0 text-gray-3">
-            電話:
-            <span class="text-white">02-1234567</span>
-          </a>
-        </div>
-        <ul class="mb-0 d-flex justify-content-between">
+          </li>
+          <li>
+            <span class="me-2">電話</span>
+            <a href="tel:02-1234567" class="mb-0" title="立即撥打">02-1234567</a>
+          </li>
+        </ul>
+        <ul class="list-unstyled d-flex ms-md-auto">
           <li class="mx-2">
-            <a
-              href="#"
-              class="text-white fs-4 d-block transition text-center rounded-circle bg-gray-2"
-              style="width: 40px; height: 40px"
-            >
-              f
+            <a href="https://www.facebook.com/" class="d-inline-block rounded-circle bg-gray-2">
+              <span class="icon-base icon-fb bg-white m-2"></span>
             </a>
           </li>
           <li class="mx-2">
-            <a
-              href="#"
-              class="fs-4 d-block position-relative transition text-center rounded-circle bg-gray-2"
-              style="width: 40px; height: 40px"
-            >
-              <img
-                src="../assets/icon/youtube.svg"
-                alt="youtube"
-                class="position-absolute top-50 start-50 translate-middle"
-              />
+            <a href="https://www.youtube.com/" class="d-inline-block rounded-circle bg-gray-2">
+              <span class="icon-base icon-yt bg-white m-2"></span>
             </a>
           </li>
           <li class="mx-2">
-            <a
-              href="#"
-              class="fs-4 d-block position-relative transition text-center rounded-circle bg-gray-2"
-              style="width: 40px; height: 40px"
-            >
-              <img
-                src="../assets/icon/instagram.svg"
-                alt="youtube"
-                class="position-absolute top-50 start-50 translate-middle"
-              />
+            <a href="#" class="d-inline-block rounded-circle bg-gray-2">
+              <span class="icon-base icon-ig bg-white m-2"></span>
             </a>
           </li>
           <li class="mx-2">
-            <a
-              href="#"
-              class="fs-4 d-block position-relative transition text-center rounded-circle bg-gray-2"
-              style="width: 40px; height: 40px"
-            >
-              <img
-                src="../assets/icon/messenger.svg"
-                alt="youtube"
-                class="position-absolute top-50 start-50 translate-middle"
-              />
+            <a href="#" class="d-inline-block rounded-circle bg-gray-2">
+              <span class="icon-base icon-message bg-white m-2"></span>
             </a>
           </li>
         </ul>
       </div>
     </div>
-    <div class="d-flex justify-content-end">
-      <div class="information">
-        <p class="mb-0 text-white">
-          Copyright © 2024 Gym All Rights Reserved.｜僅個人學習，無任何商業用途
-        </p>
-        <router-link to="/">
-          <h2 class="logo mb-0" style="width: 105px; height: 60px">GYMPlus</h2>
+    <div class="py-3 py-md-4 bg-primary">
+      <div class="container d-flex flex-column flex-md-row align-items-center">
+        <router-link to="/" class="mb-2 order-md-2 ms-md-auto mb-md-0">
+          <img src="/icons/logo-white.svg" alt="logo" class="footer-logo" />
         </router-link>
+        <small class="fs-8 fs-lg-7 text-white text-center order-md-1">
+          Copyright © 2024 Gym All Rights Reserved.｜僅個人學習，無任何商業用途
+        </small>
       </div>
     </div>
   </footer>
@@ -219,8 +235,6 @@ export default {
     this.routeName = this.$route.name;
     const { collapseBtn } = this.$refs;
     this.$refs.collapseBtn.addEventListener('click', () => {
-      console.dir(collapseBtn.classList);
-      console.log([...collapseBtn.classList].find((ele) => ele === 'collapsed'));
       if ([...collapseBtn.classList].find((ele) => ele === 'collapsed')) {
         this.isOpened = false;
       } else {
@@ -235,37 +249,7 @@ export default {
 </script>
 
 <style lang="scss">
-.icon-arrow {
-  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 17'%3E%3Cpath fill='%23000' d='M7.96209 14.5L16 2.5L8.11374 7.64998L0 2.5L7.96209 14.5Z'/%3E%3C/svg%3E");
-}
-.icon-xs {
-  width: 16px;
-  height: 16px;
-}
-
-.btn.btn-dark {
-  &:hover {
-    background: linear-gradient(110.77deg, #655aea -6.41%, #95e2ff 107.79%);
-  }
-}
-.btn.disabled {
-  background: #e0e0e0;
-  color: #707070;
-  opacity: 1;
-  &.btn-white {
-    border-color: #e0e0e0 !important;
-    .icon-base {
-      background: #707070;
-    }
-  }
-  &.btn-dark {
-    .badge {
-      color: #fff;
-      background: #707070 !important;
-    }
-  }
-}
-
+// header 客製化
 .front-header {
   .icon-arrow {
     visibility: hidden;
@@ -283,28 +267,8 @@ export default {
       }
     }
   }
-}
 
-.menu-btn {
-  span {
-    width: 40px;
-    height: 40px;
-    display: inline-block;
-    vertical-align: bottom;
-    transition: all 0.5s ease-out;
-    &.menu-icon {
-      --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='m6.4 18.308l-.708-.708l5.6-5.6l-5.6-5.6l.708-.708l5.6 5.6l5.6-5.6l.708.708l-5.6 5.6l5.6 5.6l-.708.708l-5.6-5.6z'/%3E%3C/svg%3E");
-    }
-  }
-  &.collapsed {
-    .menu-icon {
-      --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath fill='%23000' d='M6.6665 28.7833V27.1167H33.3332V28.7833H6.6665ZM6.6665 20.8333V19.1667H33.3332V20.8333H6.6665ZM6.6665 12.8833V11.2167H33.3332V12.8833H6.6665Z'/%3E%3C/svg%3E");
-    }
-  }
-}
-
-@media (max-width: 992px) {
-  .front-header {
+  @media (max-width: 992px) {
     position: sticky;
     box-shadow: 0px 4px 10px 0px rgba(0, 46, 188, 0.1);
     .navbar-collapse {
@@ -329,9 +293,7 @@ export default {
       left: -16px;
     }
   }
-}
-@media (max-width: 768px) {
-  .front-header {
+  @media (max-width: 768px) {
     h1.logo {
       width: 70px !important;
       height: 40px !important;
@@ -342,10 +304,8 @@ export default {
       top: 4px;
     }
   }
-}
-// 細部調整：指定視窗寬度 + 特殊路徑（壓過 collapse 設定）
-@media (min-width: 992px) {
-  .front-header {
+  // 細部調整：指定視窗寬度 + 特殊路徑（壓過 collapse 設定）
+  @media (min-width: 992px) {
     &.home-only {
       background: transparent !important;
       &.scrolled {
@@ -354,6 +314,27 @@ export default {
     }
     &.other-route {
       background: #fff !important;
+    }
+  }
+}
+// footer 客製化
+footer {
+  a,
+  a.nav-link {
+    color: #fff;
+    &:hover {
+      color: rgba(224, 224, 224, 0.75);
+    }
+  }
+  .icon-base:hover {
+    background: rgba(224, 224, 224, 0.75) !important;
+  }
+  .footer-logo {
+    width: 56px;
+    height: 32px;
+    @media (min-width: 992px) {
+      width: 105px;
+      height: 60px;
     }
   }
 }

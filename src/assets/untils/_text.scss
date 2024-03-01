@@ -1,14 +1,14 @@
 // letter spacing
-h1,.h1, .fs-1,
-h2,.h2, .fs-2 {
+h1,.h1, .fs-1, .fs-md-1, .fs-lg-1, .fs-xl-1, 
+h2,.h2, .fs-2, .fs-md-2, .fs-lg-2, .fs-xl-2 {
   letter-spacing: 4px;
 }
-h3,.h3, .fs-3,
-h4,.h4, .fs-4 {
+h3,.h3, .fs-3, .fs-md-3, .fs-lg-3, .fs-xl-3, 
+h4,.h4, .fs-4, .fs-md-4, .fs-lg-4, .fs-xl-4 {
   letter-spacing: 3px;
 }
-h5,.h5, .fs-5,
-h6,.h6, .fs-6,
+h5,.h5, .fs-5, .fs-md-5, .fs-lg-5, .fs-xl-5,
+h6,.h6, .fs-6, .fs-md-6, .fs-lg-6, .fs-xl-6,
 .btn {
   letter-spacing: 2px;
 }
@@ -25,7 +25,6 @@ body, small, .small {
 .ls-2 {
   letter-spacing: 2px !important;
 }
-
 
 // RWD
 body {
@@ -54,6 +53,12 @@ body {
     .fs-md-8 {
     font-size: $font-size-base * .75 !important;
     }
+    .fw-md-bold {
+      font-weight: 700 !important;
+    }
+    .ls-md-2 {
+      letter-spacing: 2px !important;
+    }
   }
   @media (min-width: 992px) {
     .fs-lg-1 {
@@ -78,6 +83,32 @@ body {
     font-size: $font-size-base !important;
     }
     .fs-lg-8 {
+    font-size: $font-size-base * .75 !important;
+    }
+  }
+  @media (min-width: 1200px) {
+    .fs-xl-1 {
+    font-size: $h1-font-size !important;
+    }
+    .fs-xl-2 {
+    font-size: $h2-font-size !important;
+    }
+    .fs-xl-3 {
+    font-size: $h3-font-size !important;
+    }
+    .fs-xl-4 {
+    font-size: $h4-font-size !important;
+    }
+    .fs-xl-5 {
+    font-size: $h5-font-size !important;
+    }
+    .fs-xl-6 {
+    font-size: $h6-font-size !important;
+    }
+    .fs-xl-7 {
+    font-size: $font-size-base !important;
+    }
+    .fs-xl-8 {
     font-size: $font-size-base * .75 !important;
     }
   }
