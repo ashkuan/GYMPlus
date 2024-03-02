@@ -187,7 +187,7 @@ export default {
     getData() {
       let data = [];
       this.axios
-        .get(`${this.url}${this.path}/products/all`)
+        .get(`${this.url}api/${this.path}/products/all`)
         .then((res) => {
           this.products = Object.values(res.data.products);
           data = this.products.filter((item) => item.id === this.id);
@@ -211,7 +211,7 @@ export default {
         product_id: id,
         qty: 1,
       };
-      this.axios.post(`${this.url}${this.path}/cart`, { data: cart })
+      this.axios.post(`${this.url}api/${this.path}/cart`, { data: cart })
         .then(() => {
           this.$swal({
             icon: 'success',
