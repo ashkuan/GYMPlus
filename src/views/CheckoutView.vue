@@ -239,8 +239,23 @@ export default {
           this.total = this.carts.reduce((acc, curr) => acc + parseInt(curr.total, 10), 0);
           // eslint-disable-next-line max-len
           this.final_total = this.carts.reduce((acc, curr) => acc + parseInt(curr.final_total, 10), 0);
-          this.isLoading = false;
+          this.checkData();
         });
+    },
+    checkData() {
+      if (this.carts.length === 0) {
+        this.$swal({
+          icon: 'error',
+          title: '購物車為空',
+          text: '您還沒選購課程~',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          this.$router.push('/courses');
+        }, 1500);
+      }
+      this.isLoading = false;
     },
     onSubmit() {
       this.$swal({

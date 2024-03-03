@@ -1,5 +1,5 @@
 <template>
-  <LoadingPlugin :active="isLoading"></LoadingPlugin>
+  <Loading :active="isLoading"></Loading>
   <div class="bg-light" style="min-height: 100vh">
     <div class="container">
       <nav aria-label="breadcrumb" class="pt-5">
@@ -187,6 +187,9 @@
 </template>
 
 <script>
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
+
 export default {
   data() {
     return {
@@ -285,6 +288,12 @@ export default {
       } else {
         this.axios.post(`${this.url}api/${this.path}/coupon`, { data: conpon })
           .then((res) => {
+            this.$swal({
+              icon: 'success',
+              title: '已成功套用優惠卷',
+              showConfirmButton: false,
+              timer: 1500,
+            });
             setTimeout(() => {
               this.isLoading = true;
               this.getData();
@@ -294,6 +303,9 @@ export default {
           });
       }
     },
+  },
+  components: {
+    Loading,
   },
   mounted() {
     this.url = import.meta.env.VITE_API_URL;

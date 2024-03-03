@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading"></Loading>
   <div class="bg-light" style="min-height: 100vh;">
     <div class="container">
       <nav aria-label="breadcrumb" class="pt-5">
@@ -10,7 +11,7 @@
         </ol>
       </nav>
     </div>
-    <main class="container">
+    <main class="container" v-if="!isLoading">
       <section class="pt-5">
         <div class="row justify-content-center">
           <div class="col-9 col-md-7 timeLine"></div>
@@ -56,7 +57,7 @@
             </tr>
             <tr>
               <th>商品清單</th>
-              <td>{{ order?.user?.cartTitle }}</td>
+              <td class="text-break">{{ order?.user?.cartTitle }}</td>
             </tr>
             <tr>
               <th>訂單總計</th>
@@ -64,7 +65,7 @@
             </tr>
             <tr>
               <th>折價卷</th>
-              <td>未使用</td>
+              <td>{{ coupon === '' ? '未使用優惠卷' : coupon }}</td>
             </tr>
             <tr>
               <th>備註</th>
@@ -76,15 +77,21 @@
             </tr>
             <tr>
               <th>付款狀態</th>
-              <td>審核中</td>
+              <td :class="[order?.is_paid ? 'text-success' : '' ]">
+                {{ order?.is_paid ? '已完成付款' : '審核中...' }}</td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
               <th scope="row" colspan="2">
                 <div class="d-flex justify-content-center">
-                  <button type="button"
-                 class="btn btn-outline-danger btn-lg rounded">完成訂單</button>
+                  <button type="button" v-if="order?.is_paid"
+                 class="btn btn-outline-success btn-lg rounded"
+                 @click.prevent="this.$router.push('/');">返回首頁</button>
+                  <button type="button" v-else
+                 class="btn btn-outline-danger btn-lg rounded"
+                 @click.prevent="payOrder">完成訂單</button>
+
                 </div>
               </th>
             </tr>
@@ -96,6 +103,9 @@
 </template>
 
 <script>
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
+
 export default {
   props: ['id'],
   data() {
@@ -118,13 +128,7 @@ export default {
       const hours = String(date.getHours()).padStart(2, '0');
       const minutes = String(date.getMinutes()).padStart(2, '0');
       const seconds = String(date.getSeconds()).padStart(2, '0');
-      let amOrPm = '上午';
-      let formattedHours = hours;
-      if (hours >= 12) {
-        amOrPm = '下午';
-        formattedHours = String(hours - 12).padStart(2, '0');
-      }
-      const formattedDate = `${year}/${month}/${day} ${amOrPm}:${formattedHours}:${minutes}:${seconds}`;
+      const formattedDate = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
       return formattedDate;
     },
     formatOrderNumber(time) { // 轉換為訂單編號
@@ -146,11 +150,39 @@ export default {
           this.order = { ...res.data.order };
           this.orderTime = this.formatUnixTimestamp(this.order.create_at);
           this.orderId = this.formatOrderNumber(this.order.create_at);
-          this.coupon = this.order.products;
+          // 取出order products的第一筆物件資料
+          const { products } = this.order;
+          const keys = Object.keys(products);
+          const firstKey = keys[0];
+          const firstValue = products[firstKey];
+          if (Object.prototype.hasOwnProperty.call(firstValue, 'coupon')) { // 判斷物件是否有coupon這個key
+            this.coupon = firstValue.coupon.title;
+          }
+          setTimeout(() => {
+            this.isLoading = false;
+          }, 1000);
+        });
+    },
+    payOrder() {
+      this.axios.post(`${this.url}api/${this.path}/pay/${this.id}`)
+        .then((res) => {
+          if (res.data.success) {
+            this.$swal({
+              icon: 'success',
+              title: '系統通知',
+              text: '謝謝您的訂購!',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            setTimeout(() => {
+              this.$router.push('/');
+            }, 1500);
+          }
         });
     },
   },
-  computed: {
+  components: {
+    Loading,
   },
   mounted() {
     window.scrollTo(0, 0);

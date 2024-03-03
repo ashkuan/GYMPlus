@@ -1,5 +1,5 @@
 <template>
-  <LoadingPlugin :active="isLoading"></LoadingPlugin>
+  <Loading :active="isLoading"></Loading>
   <div class="bg-linght" style="min-height: 100vh">
     <div
       class="banner"
@@ -263,6 +263,8 @@
 </template>
 
 <script>
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
 
 export default {
   data() {
@@ -315,6 +317,9 @@ export default {
           }, 1500);
         });
     },
+  },
+  components: {
+    Loading,
   },
   computed: {
     filteredProducts() {

@@ -14,7 +14,7 @@ import * as rules from '@vee-validate/rules';
 import { localize, setLocale } from '@vee-validate/i18n';
 import zhTw from '@vee-validate/i18n/dist/locale/zh_TW.json';
 
-import LoadingPlugin from 'vue-loading-overlay';
+import { LoadingPlugin } from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 
 import VueSweetalert2 from 'vue-sweetalert2';
@@ -67,7 +67,7 @@ const app = createApp(App);
 app.use(createPinia());
 app.use(router);
 app.use(VueAxios, axios);
-app.component('LoadingPlugin', LoadingPlugin);
+app.use(LoadingPlugin);
 app.component('VForm', Form);
 app.component('VField', Field);
 app.component('ErrorMessage', ErrorMessage);
