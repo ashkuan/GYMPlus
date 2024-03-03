@@ -3,7 +3,6 @@
   <div class="bg-linght" style="min-height: 100vh">
     <div
       class="banner"
-      style="background-image: url('./src/assets/classes.jpg')"
     ></div>
     <main class="container-lg rounded-bottom">
       <nav aria-label="breadcrumb" class="mt-5">
@@ -248,8 +247,6 @@
             <li class="page-item active">
               <a class="page-link" href="#">1</a>
             </li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
             <li class="page-item">
               <a class="page-link" href="#" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
