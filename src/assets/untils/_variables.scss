@@ -432,6 +432,8 @@ $spacers: (
   // custom
   7: $spacer * 3.75,
   // custom
+  8: $spacer * 1.25,
+  // custom
   ) !default;
 // scss-docs-end spacer-variables-maps
 
@@ -1444,14 +1446,17 @@ $placeholder-opacity-min: .2 !default;
 // Cards
 
 // scss-docs-start card-variables
-$card-spacer-y: $spacer !default;
+// $card-spacer-y: $spacer !default;
+$card-spacer-y: $spacer * 1.5 !default; // custom
 $card-spacer-x: $spacer !default;
 $card-title-spacer-y: $spacer * .5 !default;
 $card-title-color: null !default;
 $card-subtitle-color: null !default;
-$card-border-width: var(--#{$prefix}border-width) !default;
+// $card-border-width: var(--#{$prefix}border-width) !default;
+$card-border-width: 0 !default; // custom
 $card-border-color: var(--#{$prefix}border-color-translucent) !default;
-$card-border-radius: var(--#{$prefix}border-radius) !default;
+// $card-border-radius: var(--#{$prefix}border-radius) !default;
+$card-border-radius: 1rem !default; // custom
 $card-box-shadow: null !default;
 $card-inner-border-radius: subtract($card-border-radius, $card-border-width) !default;
 $card-cap-padding-y: $card-spacer-y * .5 !default;

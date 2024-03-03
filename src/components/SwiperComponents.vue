@@ -1,7 +1,7 @@
 <template>
   <swiper
-    :slides-per-view="1"
-    :space-between="50"
+    :slides-per-view="3"
+    :space-between="48"
     :modules="modules"
     navigation
     :pagination="{ clickable: true }"
@@ -47,11 +47,7 @@ export default {
   },
 };
 </script>
-<style scoped>
-.swiper {
-  width: 600px;
-  height: 400px;
-}
+<style lang="scss">
 .swiper-slide img {
   display: block;
   width: 100%;

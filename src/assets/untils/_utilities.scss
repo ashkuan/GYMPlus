@@ -1,0 +1,14 @@
+$utilities: (
+  ) !default;
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "font-size": (
+      rfs: false, // custom
+      property: font-size,
+      class: fs,
+      values: $font-sizes
+    ),
+  )
+);
