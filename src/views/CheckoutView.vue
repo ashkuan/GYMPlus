@@ -1,5 +1,5 @@
 <template>
-  <Loading :active="this.isLoading"></Loading>
+  <Loading :active="isLoading"></Loading>
   <div class="bg-light" style="min-height: 100vh">
     <div class="container">
       <nav aria-label="breadcrumb" class="pt-5">
@@ -182,10 +182,10 @@
           </div>
           <div class="d-flex flex-column align-items-end">
             <p>商品合計: <span
-                      :class="[ this.total === this.final_total
+                      :class="[ total === final_total
                        ? '' : 'text-decoration-line-through']">
-                        NT$ {{ this.total }}</span></p>
-            <p>訂單總計: <span>NT$ {{ this.final_total }}</span></p>
+                        NT$ {{ total }}</span></p>
+            <p>訂單總計: <span>NT$ {{ final_total }}</span></p>
           </div>
         </div>
         <div class="col-12 d-flex justify-content-center py-3">
@@ -202,17 +202,13 @@
 <script>
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
+import { mapActions, mapState } from 'pinia';
+import cartStore from '@/stores/cartStore';
 
 export default {
   data() {
     return {
-      url: '',
-      path: '',
-      carts: [],
-      total: 0,
       orderId: '',
-      final_total: 0,
-      isLoading: true,
       form: {
         user: {
           name: '',
@@ -230,18 +226,7 @@ export default {
     Loading,
   },
   methods: {
-    getData() {
-      this.carts = [];
-      this.axios
-        .get(`${this.url}api/${this.path}/cart`)
-        .then((res) => {
-          this.carts = res.data.data.carts;
-          this.total = this.carts.reduce((acc, curr) => acc + parseInt(curr.total, 10), 0);
-          // eslint-disable-next-line max-len
-          this.final_total = this.carts.reduce((acc, curr) => acc + parseInt(curr.final_total, 10), 0);
-          this.checkData();
-        });
-    },
+    ...mapActions(cartStore, ['getCarts']),
     checkData() {
       if (this.carts.length === 0) {
         this.$swal({
@@ -255,7 +240,6 @@ export default {
           this.$router.push('/courses');
         }, 1500);
       }
-      this.isLoading = false;
     },
     onSubmit() {
       this.$swal({
@@ -288,10 +272,19 @@ export default {
       });
     },
   },
+  computed: {
+    ...mapState(cartStore, ['carts']),
+    ...mapState(cartStore, ['total']),
+    ...mapState(cartStore, ['final_total']),
+    ...mapState(cartStore, ['isLoading']),
+  },
   mounted() {
     this.url = import.meta.env.VITE_API_URL;
     this.path = import.meta.env.VITE_API_PATH;
-    this.getData();
+    this.getCarts();
+    setTimeout(() => {
+      this.checkData();
+    }, 500);
   },
 };
 

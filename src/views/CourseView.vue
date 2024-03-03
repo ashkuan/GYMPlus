@@ -42,9 +42,9 @@
         <button type="button" class="btn btn-outline-danger
          rounded align-self-end w-50"
           @click.prevent="addCart(this.product.id, this.product.title)"
-         :disabled="this.product.id === this.status.loadingItem">
+         :disabled="this.product.id === status.loadingItem">
          <div class="spinner-border spinner-border-sm text-secondary" role="status"
-         v-if="this.product.id === this.status.loadingItem">
+         v-if="this.product.id === status.loadingItem">
                   <span class="visually-hidden">Loading...</span>
                 </div>
          購買課程</button>
@@ -171,6 +171,8 @@
 <script>
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
+import { mapActions, mapState } from 'pinia';
+import cartStore from '@/stores/cartStore';
 
 export default {
   props: ['id'],
@@ -180,9 +182,6 @@ export default {
       path: '',
       product: {},
       products: [],
-      status: {
-        loadingItem: '',
-      },
       isLoading: true,
     };
   },
@@ -208,26 +207,7 @@ export default {
         window.location.reload();
       }, 500);
     },
-    addCart(id, title) {
-      this.status.loadingItem = id;
-      const cart = {
-        product_id: id,
-        qty: 1,
-      };
-      this.axios.post(`${this.url}api/${this.path}/cart`, { data: cart })
-        .then(() => {
-          this.$swal({
-            icon: 'success',
-            title: '課程新增',
-            text: `已成功新增${title}課程`,
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          setTimeout(() => {
-            this.status.loadingItem = '';
-          }, 1500);
-        });
-    },
+    ...mapActions(cartStore, ['addCart']),
   },
   components: {
     Loading,
@@ -241,6 +221,7 @@ export default {
       filtered = filtered.filter((item) => item.coach === this.product.coach);
       return filtered;
     },
+    ...mapState(cartStore, ['status']),
   },
   mounted() {
     window.scrollTo(0, 0);

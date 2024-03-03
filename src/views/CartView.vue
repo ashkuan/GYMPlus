@@ -103,10 +103,10 @@
                   </div>
                   <div class="col-12 d-flex flex-column align-items-end">
                       <p>商品合計: <span
-                      :class="[ this.total === this.final_total
+                      :class="[ total === final_total
                        ? '' : 'text-decoration-line-through']">
-                        NT$ {{ this.total }}</span></p>
-                      <p>訂單總計: <span>NT$ {{ this.final_total }}</span></p>
+                        NT$ {{ total }}</span></p>
+                      <p>訂單總計: <span>NT$ {{ final_total }}</span></p>
                   </div>
                 </div>
                 <div class="d-flex justify-content-between py-4">
@@ -216,92 +216,23 @@
 <script>
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
+import { mapActions, mapState } from 'pinia';
+import cartStore from '@/stores/cartStore';
 
 export default {
   data() {
     return {
       url: '',
       path: '',
-      carts: [],
-      total: 0,
-      final_total: 0,
       code: '',
       conponTitle: '',
-      isLoading: true,
       isconponStatus: false,
     };
   },
   methods: {
-    getData() {
-      this.carts = [];
-      this.axios
-        .get(`${this.url}api/${this.path}/cart`)
-        .then((res) => {
-          this.carts = res.data.data.carts;
-          this.total = this.carts.reduce((acc, curr) => acc + parseInt(curr.total, 10), 0);
-          // eslint-disable-next-line max-len
-          this.final_total = this.carts.reduce((acc, curr) => acc + parseInt(curr.final_total, 10), 0);
-          this.isLoading = false;
-        });
-      if (this.carts.length === 0) {
-        this.code = '';
-        this.isconponStatus = false;
-        this.conponTitle = '';
-      }
-    },
-    delCart(id, title) {
-      this.$swal({
-        icon: 'warning',
-        title: '確定刪除課程?',
-        text: title,
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: '確定',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.axios.delete(`${this.url}api/${this.path}/cart/${id}`)
-            .then((res) => {
-              this.$swal({
-                icon: 'success',
-                title: res.data.message,
-                showConfirmButton: false,
-                timer: 1500,
-              });
-              setTimeout(() => {
-                this.isLoading = true;
-                this.getData();
-              }, 1500);
-            });
-        }
-      });
-    },
-    delAllCart() {
-      this.$swal({
-        icon: 'warning',
-        title: '確定刪除全部課程?',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: '確定',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.axios.delete(`${this.url}api/${this.path}/carts`)
-            .then((res) => {
-              this.$swal({
-                icon: 'success',
-                title: res.data.message,
-                showConfirmButton: false,
-                timer: 1500,
-              });
-              setTimeout(() => {
-                this.isLoading = true;
-                this.getData();
-              }, 1500);
-            });
-        }
-      });
-    },
+    ...mapActions(cartStore, ['getCarts']),
+    ...mapActions(cartStore, ['delCart']),
+    ...mapActions(cartStore, ['delAllCart']),
     addCouponCode() {
       const conpon = {
         code: this.code,
@@ -322,8 +253,7 @@ export default {
               timer: 1500,
             });
             setTimeout(() => {
-              this.isLoading = true;
-              this.getData();
+              this.getCarts();
               this.isconponStatus = true;
               this.conponTitle = res.data.message;
             }, 1500);
@@ -334,10 +264,16 @@ export default {
   components: {
     Loading,
   },
+  computed: {
+    ...mapState(cartStore, ['carts']),
+    ...mapState(cartStore, ['total']),
+    ...mapState(cartStore, ['final_total']),
+    ...mapState(cartStore, ['isLoading']),
+  },
   mounted() {
     this.url = import.meta.env.VITE_API_URL;
     this.path = import.meta.env.VITE_API_PATH;
-    this.getData();
+    this.getCarts();
   },
 };
 
