@@ -72,7 +72,7 @@
       <h3 class="subtitle-border text-linear display-4 display-md-3 mb-1 mb-md-2 pt-1 pt-md-0">
         WHAT’s GOOD
       </h3>
-      <h2 class="fs-4 fs-md-3 fs-lg-2 pt-md-5 mb-8 mb-md-6" style="margin-top: -5px">
+      <h2 class="fs-4 fs-md-3 fs-lg-2 pt-md-5 mb-8 mb-md-6 mb-lg-7" style="margin-top: -5px">
         <span class="fs-3 fs-md-2 fs-lg-1">健身</span>
         <span>帶來的</span>
         <span class="text-primary">好處</span>
@@ -157,12 +157,12 @@
     </div>
   </div>
   <!-- COURSE -->
-  <div class="bg-dark">
-    <div class="container block-space text-center">
+  <div class="bg-dark block-space overflow-hidden">
+    <div class="container text-center position-relative">
       <h3 class="subtitle-border text-linear display-4 display-md-3 mb-1 mb-md-2 pt-1 pt-md-0">
         COURSE
       </h3>
-      <h2 class="fs-4 fs-md-3 fs-lg-2 pt-3 pt-md-5 mb-4 mb-md-6 text-white">
+      <h2 class="fs-4 fs-md-3 fs-lg-2 pt-3 pt-md-5 mb-8 mb-md-6 mb-lg-7 text-white">
         <span>心動不如</span>
         <span class="text-secondary">馬上行動</span>
       </h2>
@@ -173,10 +173,8 @@
   <div class="bg-gray-1">
     <div class="home-last bg-white rounded-bottom block-space">
       <div class="container block-space text-center">
-        <h3 class="subtitle-border text-linear display-4 display-md-3 mb-1 mb-md-2 pt-1 pt-md-0">
-          INBODY
-        </h3>
-        <h2 class="fs-4 fs-md-3 fs-lg-2 pt-3 pt-md-5 mb-4 mb-md-6">
+        <h3 class="subtitle-border text-linear display-4 display-md-3">INBODY</h3>
+        <h2 class="fs-4 fs-md-3 fs-lg-2 pt-3 pt-md-5 mb-4 mb-md-6 mb-lg-7">
           <span>認識</span>
           <span class="text-primary">身體數值</span>
         </h2>
