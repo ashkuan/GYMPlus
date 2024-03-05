@@ -2,7 +2,7 @@
   <Loading :active="isLoading"></Loading>
   <div class="bg-linght" style="min-height: 100vh">
     <div
-      class="banner"
+      class="banner" style="background-image: url('https://images.unsplash.com/photo-1561214078-f3247647fc5e?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"
     ></div>
     <main class="container-lg rounded-bottom">
       <nav aria-label="breadcrumb" class="mt-5">
