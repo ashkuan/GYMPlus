@@ -56,7 +56,9 @@
         </div>
         <div class="card-body px-0">
           <h5 class="card-title mb-1 mb-xxl-0 fs-7 fs-lg-5 lh-base lh-lg-sm fw-medium">
-            {{ course.title }}
+            <router-link :to="`/courses/${course.id}`" class="link-white">
+              {{ course.title }}
+            </router-link>
           </h5>
           <div
             class="d-flex flex-column flex-xxl-row justify-content-xxl-between align-items-xxl-end"

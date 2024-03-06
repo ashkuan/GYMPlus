@@ -29,7 +29,6 @@ export default defineStore('getDataStore', {
       axios
         .get(`${url}/api/${path}/${target}/${id}`)
         .then((res) => {
-          console.log(res.data[target]);
           this.singleInfo = res.data[target];
         })
         .catch((err) => {

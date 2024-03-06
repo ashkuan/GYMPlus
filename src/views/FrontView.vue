@@ -112,6 +112,7 @@
   <router-view></router-view>
 
   <footer class="bg-gray-1">
+    <div class="footer-top-rounded pt-8 pt-md-6 rounded-bottom bg-white"></div>
     <div class="container pt-1 pt-lg-4">
       <div class="border-bottom border-gray-2 fw-medium">
         <ul class="nav justify-content-center justify-content-lg-start pb-1 pb-lg-4">
@@ -336,6 +337,13 @@ footer {
       width: 105px;
       height: 60px;
     }
+  }
+}
+/* 上方圓弧 */
+.footer-top-rounded {
+  --bs-border-radius: 20px;
+  @media (min-width: 768px) {
+    --bs-border-radius: 40px;
   }
 }
 </style>

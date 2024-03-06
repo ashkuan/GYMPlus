@@ -1,5 +1,5 @@
 <template>
-  <div class="shadow rounded-2 p-5 p-md-6 p-xl-7">
+  <div class="shadow rounded-2 rounded-md-4 p-5 p-md-6 p-xl-7">
     <div class="row gx-lg-7">
       <VForm
         class="col-lg calculate-border-end pe-xl-7"
@@ -194,16 +194,20 @@
         <p class="mb-4 mb-md-8 fs-6 fs-md-5 lh-sm fw-bold">為您推薦</p>
         <div class="card">
           <div class="d-flex">
-            <img
-              :src="singleInfo.imageUrl"
-              class="img-fluid rounded-3 me-3 me-md-4"
-              :alt="singleInfo.title"
-              style="width: 100px; height: 72px"
-            />
+            <router-link :to="`/course/${singleInfo.id}`">
+              <img
+                :src="singleInfo.imageUrl"
+                class="img-fluid rounded-3 me-3 me-md-4"
+                :alt="singleInfo.title"
+                style="width: 100px; height: 72px"
+              />
+            </router-link>
             <div class="col d-flex flex-column justify-content-center">
               <h4 class="card-title small fs-md-7 ls-md-2 fw-medium lh-base">
-                <span>{{ singleInfo.title }}</span>
-                <span class="icon-rwd icon-base icon-left-arrow ms-2"></span>
+                <router-link class="link-gray-1" :to="`/course/${singleInfo.id}`">
+                  {{ singleInfo.title }}
+                  <span class="icon-rwd icon-base icon-left-arrow ms-2"></span>
+                </router-link>
               </h4>
               <small class="fs-8 small-md">{{ singleInfo.coach }} 教練</small>
             </div>
@@ -369,6 +373,12 @@ export default {
     width: 16px;
     height: 16px;
     vertical-align: text-top;
+  }
+}
+
+@media (min-width: 768px) {
+  .rounded-md-4 {
+    border-radius: 1rem !important;
   }
 }
 </style>

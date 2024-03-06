@@ -166,22 +166,21 @@
     </div>
   </div>
   <!-- INBODY -->
-  <div class="bg-gray-1">
-    <div class="home-last bg-white rounded-bottom block-space">
-      <div class="container text-center">
-        <h3 class="subtitle-border text-linear display-4 display-md-3 mb-0">INBODY</h3>
-        <h2 class="fs-4 fs-md-3 fs-lg-2 pt-3 pt-md-5 mb-4 mb-md-6 mb-lg-7">
-          <span>認識</span>
-          <span class="text-primary">身體數值</span>
-        </h2>
-        <div class="row text-start justify-content-center">
-          <div class="col-md-10 col-lg col-xxl-10">
-            <InbodyCalculator></InbodyCalculator>
-          </div>
+  <div class="bg-white block-space pb-8 pb-md-6">
+    <div class="container text-center">
+      <h3 class="subtitle-border text-linear display-4 display-md-3 mb-0">INBODY</h3>
+      <h2 class="fs-4 fs-md-3 fs-lg-2 pt-3 pt-md-5 mb-4 mb-md-6 mb-lg-7">
+        <span>認識</span>
+        <span class="text-primary">身體數值</span>
+      </h2>
+      <div class="row text-start justify-content-center">
+        <div class="col-md-10 col-lg col-xxl-10">
+          <InbodyCalculator></InbodyCalculator>
         </div>
       </div>
     </div>
   </div>
+  <div class="bg-gray-1"></div>
 </template>
 
 <script>
@@ -380,13 +379,6 @@ export default {
 @media (max-width: 768px) {
   .good-title {
     margin-top: -13px;
-  }
-}
-/* 最後一個區塊 */
-.home-last {
-  --bs-border-radius: 20px;
-  @media (min-width: 768px) {
-    --bs-border-radius: 40px;
   }
 }
 
