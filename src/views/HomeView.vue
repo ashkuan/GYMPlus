@@ -418,7 +418,7 @@ export default {
 .number-shape {
   display: inline-block;
   padding: 2px 5px;
-  background: url(number-shape.svg) center/cover;
+  background: url(/number-shape.svg) center/cover;
   @media (min-width: 992px) {
     padding: 0 5px;
   }

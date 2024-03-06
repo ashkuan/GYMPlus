@@ -750,7 +750,7 @@ $display-font-sizes: (
   6: 2.5rem) !default;
 
 // $display-font-family: null !default;
-$display-font-family: "Maven Pro" !default; // custom
+$display-font-family: $font-family-sans-serif  !default; // custom
 $display-font-style: null !default;
 // $display-font-weight: 300 !default;
 $display-font-weight: 500 !default; // custom
