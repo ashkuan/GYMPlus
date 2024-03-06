@@ -13,6 +13,11 @@ button.btn,.btn {
       border-color: #88C0FF;
     }
   }
+  &.btn-dark {
+    &:hover {
+      background: $linear;
+    }
+  }
   &.btn-gray-1 {
     &:hover {
       background: $primary;
@@ -28,6 +33,19 @@ button.btn,.btn {
   &.disbaled {
     background: $gray-300;
     color: $gray-500;
+    opacity: 1;
+    &.btn-white {
+      border-color: $gray-300 !important;
+      .icon-base {
+        background: $gray-500;
+      }
+    }
+    &.btn-dark {
+      .badge {
+        color: $white;
+        background: $gray-500 !important;
+      }
+    }
   }
 }
 
