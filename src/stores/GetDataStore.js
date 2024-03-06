@@ -10,6 +10,7 @@ export default defineStore('getDataStore', {
   state: () => ({
     pagination: {},
     targetData: [],
+    singleInfo: '',
   }),
   actions: {
     getRemoteData(target, page = 1, isUser = true) {
@@ -19,6 +20,17 @@ export default defineStore('getDataStore', {
         .then((res) => {
           this.pagination = res.data.pagination;
           this.targetData = res.data[target];
+        })
+        .catch((err) => {
+          alertStyles.basic.fire(basicContent(`錯誤${err.response.status}，請洽客服`, 2));
+        });
+    },
+    getFrontSingleInfo(target, id) {
+      axios
+        .get(`${url}/api/${path}/${target}/${id}`)
+        .then((res) => {
+          console.log(res.data[target]);
+          this.singleInfo = res.data[target];
         })
         .catch((err) => {
           alertStyles.basic.fire(basicContent(`錯誤${err.response.status}，請洽客服`, 2));

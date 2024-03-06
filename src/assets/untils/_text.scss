@@ -2,7 +2,7 @@
 .display-1,.display-2,.display-3,.display-4,.display-5,.display-6 {
   letter-spacing: 0;
 }
-body, small, .small {
+body, small, .small, .fs-8 {
   letter-spacing: 1px;
 }
 h5,.h5, .fs-5, .fs-md-5, .fs-lg-5, .fs-xl-5,
@@ -53,11 +53,17 @@ body {
     .fs-md-8 {
     font-size: $font-size-base * .75 !important;
     }
+    .small-md {
+    font-size: $font-size-base * .875 !important;
+    }
     .display-md-3 {
-      font-size: 1.125rem !important;
+    font-size: $font-size-base * 1.5 !important;
     }
     .fw-md-bold {
       font-weight: 700 !important;
+    }
+    .lh-md-sm {
+      line-height: $line-height-sm !important;
     }
     .ls-md-2 {
       letter-spacing: 2px !important;

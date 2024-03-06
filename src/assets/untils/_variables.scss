@@ -325,6 +325,10 @@ $theme-colors: (
   // custom
   "gray-3": $gray-500,
   // custom
+  "gray-4": $gray-300,
+  // custom
+  "gray-5": $gray-100,
+  // custom
   ) !default;
 // scss-docs-end theme-colors-map
 
@@ -882,8 +886,10 @@ $input-btn-focus-color: $focus-ring-color !default;
 $input-btn-focus-blur: $focus-ring-blur !default;
 $input-btn-focus-box-shadow: $focus-ring-box-shadow !default;
 
-$input-btn-padding-y-sm: .25rem !default;
-$input-btn-padding-x-sm: .5rem !default;
+$input-btn-padding-y-sm: .5rem !default; // custom
+// $input-btn-padding-y-sm: .25rem !default;
+$input-btn-padding-x-sm: .75rem !default; // custom
+// $input-btn-padding-x-sm: .5rem !default;
 $input-btn-font-size-sm: $font-size-sm !default;
 
 $input-btn-padding-y-lg: .5rem !default;
@@ -1013,7 +1019,8 @@ $input-focus-color: $input-color !default;
 $input-focus-width: $input-btn-focus-width !default;
 $input-focus-box-shadow: $input-btn-focus-box-shadow !default;
 
-$input-placeholder-color: var(--#{$prefix}secondary-color) !default;
+// $input-placeholder-color: var(--#{$prefix}secondary-color) !default;
+$input-placeholder-color: rgba(var(--#{$prefix}body-color-rgb), .3)  !default; // custom
 $input-plaintext-color: var(--#{$prefix}body-color) !default;
 
 $input-height-border: calc(#{$input-border-width} * 2) !default; // stylelint-disable-line function-disallowed-list
@@ -1044,6 +1051,7 @@ $form-check-transition: null !default;
 $form-check-input-active-filter: brightness(90%) !default;
 
 $form-check-input-bg: $input-bg !default;
+$form-check-input-border: var(--#{$prefix}border-width) solid $gray-900 !default;
 $form-check-input-border: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color) !default;
 $form-check-input-border-radius: .25em !default;
 $form-check-radio-border-radius: 50% !default;
@@ -1053,6 +1061,7 @@ $form-check-input-focus-box-shadow: $focus-ring-box-shadow !default;
 $form-check-input-checked-color: $component-active-color !default;
 // $form-check-input-checked-bg-color: $component-active-bg !default;
 $form-check-input-checked-bg-color: $secondary !default; // custom
+$form-check-input-checked-border-color: $form-check-input-checked-bg-color !default;
 $form-check-input-checked-border-color: $form-check-input-checked-bg-color !default;
 $form-check-input-checked-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{$form-check-input-checked-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/></svg>") !default;
 $form-check-radio-checked-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='2' fill='#{$form-check-input-checked-color}'/></svg>") !default;
