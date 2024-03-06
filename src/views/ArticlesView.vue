@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading"></Loading>
   <div class="bg-linght" style="min-height: 100vh;">
     <div class="banner" style="background-image: url('https://images.unsplash.com/photo-1517130038641-a774d04afb3c?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
     <main class="container">
@@ -18,9 +19,9 @@
            @click.prevent="checkArticle(item)">{{ item }}</button>
         </div>
       </div>
-      <section class="row row-cols-1">
+      <section class="row row-cols-1" v-if="filteredArticles.length !== 0">
         <div class="col d-flex justify-content-start justify-content-md-center"
-        v-for="item in articles" :key="item.id">
+        v-for="item in filteredArticles" :key="item.id">
           <div class="card mb-3" style="max-width: 540px;">
   <div class="row g-0">
     <div class="col-12 col-md-4">
@@ -41,6 +42,9 @@
   </div>
         </div>
         </div>
+      </section>
+      <section v-else>
+        <h5 class="text-center">未查詢到此篩選結果</h5>
       </section>
       <section class="d-flex justify-content-center mt-5">
         <nav aria-label="Page navigation example">
@@ -66,6 +70,9 @@
 </template>
 
 <script>
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
+
 export default {
   data() {
     return {
@@ -74,6 +81,7 @@ export default {
       article: '全部',
       articlesType: ['全部', '健身好處', '健身知識', '營養素', '開課訊息'],
       articles: [],
+      isLoading: true,
     };
   },
   methods: {
@@ -84,6 +92,9 @@ export default {
       this.axios.get(`${this.url}api/${this.path}/articles`)
         .then((res) => {
           this.articles = res.data.articles;
+          setTimeout(() => {
+            this.isLoading = false;
+          }, 500);
         });
     },
     formatUnixTimestamp(time) { // 轉換為時間
@@ -94,6 +105,18 @@ export default {
       const formattedDate = `${year}-${month}-${day}`;
       return formattedDate;
     },
+  },
+  computed: {
+    filteredArticles() {
+      let filtered = this.articles;
+      if (this.article !== '全部') {
+        filtered = filtered.filter((item) => item.tag.includes(this.article));
+      }
+      return filtered;
+    },
+  },
+  components: {
+    Loading,
   },
   mounted() {
     this.url = import.meta.env.VITE_API_URL;
