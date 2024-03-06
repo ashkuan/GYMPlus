@@ -36,9 +36,12 @@ const router = createRouter({
           component: () => import('../views/CheckoutView.vue'),
         },
         {
-          path: 'order-creation',
+          path: 'order-creation/:id',
           name: 'order-creation',
           component: () => import('../views/OrderCreation.vue'),
+          props: (route) => ({
+            id: route.params.id,
+          }),
         },
         {
           path: 'favourite',

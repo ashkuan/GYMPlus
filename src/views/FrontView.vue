@@ -213,6 +213,9 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'pinia';
+import CartStore from '@/stores/cartStore';
+
 export default {
   data() {
     return {
@@ -221,7 +224,11 @@ export default {
       isOpened: false,
     };
   },
+  computed: {
+    ...mapState(CartStore, ['carts']),
+  },
   methods: {
+    ...mapActions(CartStore, ['getCarts', 'addCart']),
     handleScroll() {
       this.scrollPosition = window.scrollY;
     },

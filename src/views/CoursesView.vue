@@ -1,9 +1,8 @@
 <template>
-  <LoadingPlugin :active="isLoading"></LoadingPlugin>
+  <Loading :active="isLoading"></Loading>
   <div class="bg-linght" style="min-height: 100vh">
     <div
       class="banner"
-      style="background-image: url('./src/assets/classes.jpg')"
     ></div>
     <main class="container-lg rounded-bottom">
       <nav aria-label="breadcrumb" class="mt-5">
@@ -222,10 +221,10 @@
                 <p class="card-text mb-0">免費</p>
               </div>
               <button type="button" class="btn btn-primary"
-              :disabled="this.status.loadingItem === item.id"
+              :disabled="status.loadingItem === item.id"
                @click.prevent="addCart(item.id, item.title)">
                <div class="spinner-border spinner-border-sm text-secondary" role="status"
-               v-if="this.status.loadingItem === item.id"
+               v-if="status.loadingItem === item.id"
                >
                   <span class="visually-hidden">Loading...</span>
                 </div>
@@ -248,8 +247,6 @@
             <li class="page-item active">
               <a class="page-link" href="#">1</a>
             </li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
             <li class="page-item">
               <a class="page-link" href="#" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
@@ -263,6 +260,10 @@
 </template>
 
 <script>
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
+import { mapActions, mapState } from 'pinia';
+import cartStore from '@/stores/cartStore';
 
 export default {
   data() {
@@ -271,9 +272,6 @@ export default {
       path: '',
       products: [],
       coach: [],
-      status: {
-        loadingItem: '',
-      },
       sortOrder: 'asc', // 默認從小到大
       category: '全部課程',
       categorys: ['全部課程', '瑜珈', '有氧運動', '重量訓練'],
@@ -283,7 +281,7 @@ export default {
   methods: {
     getData() {
       this.axios
-        .get(`${this.url}/api/${this.path}/products/all`)
+        .get(`${this.url}api/${this.path}/products/all`)
         .then((res) => {
           this.products = Object.values(res.data.products);
           this.isLoading = false;
@@ -295,26 +293,10 @@ export default {
     checkCategory(type) {
       this.category = type;
     },
-    addCart(id, title) {
-      this.status.loadingItem = id;
-      const cart = {
-        product_id: id,
-        qty: 1,
-      };
-      this.axios.post(`${this.url}/api/${this.path}/cart`, { data: cart })
-        .then(() => {
-          this.$swal({
-            icon: 'success',
-            title: '課程新增',
-            text: `已成功新增${title}課程`,
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          setTimeout(() => {
-            this.status.loadingItem = '';
-          }, 1500);
-        });
-    },
+    ...mapActions(cartStore, ['addCart']),
+  },
+  components: {
+    Loading,
   },
   computed: {
     filteredProducts() {
@@ -332,6 +314,7 @@ export default {
       }
       return filtered;
     },
+    ...mapState(cartStore, ['status']),
   },
   mounted() {
     this.url = import.meta.env.VITE_API_URL;

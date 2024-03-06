@@ -1,5 +1,5 @@
 <template>
-  <LoadingPlugin :active="isLoading"></LoadingPlugin>
+  <Loading :active="isLoading"></Loading>
   <div class="bg-light" style="min-height: 100vh">
     <div class="container">
       <nav aria-label="breadcrumb" class="pt-5">
@@ -73,6 +73,15 @@
                   </td>
                     </tr>
                   </tbody>
+                  <tfoot>
+                    <tr>
+                      <th scope="row" colspan="2">
+                        <button type="button"
+                   class="btn btn-outline-danger btn-lg rounded my-3"
+                   @click.prevent="delAllCart">刪除全部</button>
+                      </th>
+                    </tr>
+                  </tfoot>
                 </table>
               </div>
                 <div class="container row align-items-center mb-4">
@@ -94,17 +103,18 @@
                   </div>
                   <div class="col-12 d-flex flex-column align-items-end">
                       <p>商品合計: <span
-                      :class="[ this.total === this.final_total
+                      :class="[ total === final_total
                        ? '' : 'text-decoration-line-through']">
-                        NT$ {{ this.total }}</span></p>
-                      <p>訂單總計: <span>NT$ {{ this.final_total }}</span></p>
+                        NT$ {{ total }}</span></p>
+                      <p>訂單總計: <span>NT$ {{ final_total }}</span></p>
                   </div>
                 </div>
                 <div class="d-flex justify-content-between py-4">
                   <button type="button" class="btn btn-secondary btn-lg mx-3"
-                  @click.prevent="pushCoursesView">返回購物</button>
+                  @click.prevent="this.$router.push('/courses')">返回購物</button>
                   <button type="button" class="btn btn-outline-danger btn-lg mx-3"
-                  :disabled="this.carts.length === 0">填寫資料</button>
+                  :disabled="this.carts.length === 0"
+                  @click.prevent="this.$router.push('/checkout')">填寫資料</button>
                 </div>
             </div>
           </div>
@@ -113,62 +123,89 @@
       <section class="pb-5">
         <h3 class="text-center">推薦課程</h3>
         <div class="row row-cols-1 row-cols-md-4 gy-4 gy-md-0 overflow-auto justify-content-center">
-          <div class="col"
-           >
-            <a href="#" class="card text-white ground-floor">
-              <img src="https://storage.googleapis.com/vue-course-api.appspot.com/gymplus/1708756288385.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=WLskNJ2gkOdikUIYZuHrb2MQLW3czCBSfDFkZGkOjpbnpPVD%2BsJRx9wuIemdY862GhtBuXmHVoxSvMGtunvCxNgnmVYIkOVngWJb0CkwkgVOUVFhZFd9FiD9o70druBo2i8ijYkia0dpENc3Mindor9Y0VQlATxP2i4B%2FDTNrVehQ5Yml%2BZCjFbjWFXbCqdq7VjAqGgDYVbRIPvpSzk1OYPLwv2Cs3tzLymllU59WQ%2B5VtpkRkVScekzFX5FOEnc15YFDu3O0hXtXq4wt%2Fx9ggBL7O9YtrBglXQfznuFWimKV6WEJNelRI%2FUT69bVbTXbs6V4m97rqaZWTpSjWpV5Q%3D%3D" class="card-img" alt="img">
-  <div class="card-img-overlay d-flex flex-column justify-content-between">
-    <button type="button" class="border-0 align-self-end bg-transparent high-floor" style="z-index: 1000;"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bookmark-star" viewBox="0 0 16 16">
-  <path d="M7.84 4.1a.178.178 0 0 1 .32 0l.634 1.285a.18.18 0 0 0
-   .134.098l1.42.206c.145.021.204.2.098.303L9.42 6.993a.18.18
-    0 0 0-.051.158l.242 1.414a.178.178 0 0 1-.258.187l-1.27-.668a.18.18
-     0 0 0-.165 0l-1.27.668a.178.178 0 0 1-.257-.187l.242-1.414a.18.18 0
-      0 0-.05-.158l-1.03-1.001a.178.178 0 0 1 .098-.303l1.42-.206a.18.18 0 0 0 .134-.098z"/>
-  <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8
-   13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5
-    0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
-</svg></button>
-    <h6 class="font-bold">0</h6>
-  </div>
-            </a>
+          <div class="col">
+            <div class="card">
+              <button type="button" class="position-absolute bookmark">
+                <img src="../assets/icon/bookmark.svg" alt="bookmark">
+              </button>
+              <a href="#" class="position-relative ground-floor">
+                <img src="https://storage.googleapis.com/vue-course-api.appspot.com/gymplus/1708836412360.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=PMo66X%2BhVSWUUcjqcbsHl%2FciHmo1tcl%2BoYE7iLQJ5znqT7rHxPryosgy4Jc90gKmG3GRiavyKj%2BPu2jIoy%2FVekIVOxd2gN9IIhGD43ADfqvriZpRhwmmKN3dI%2BBrtM1SE4g1xh9SLgEYtkwi5dW1fJNT%2FkDVpcgOwoQcQaixQCF99MmUmrOqH3TExkOLvoAK0Ad2X2syMKnhmJ%2BWSNOkQZP3kLN%2BsovKrNLcLctzzvzykP0KBcTyyyWqPtoCQ08rimR8Z71LDmpOM%2Fo8kx8fyua5rP4XqpMwHaEKv9jTo8PKhCrLJ3OETsvCAQfowSTaDXSkzyNgincNEvyE5aqUwA%3D%3D" alt="img"
+                class="card-img-top" style="height: 350px; object-fit: cover;">
+                <div class="card-img-overlay d-flex flex-column justify-content-between">
+                  <div class="d-flex overlay-text">
+                    <div class="d-flex flex-column">
+                      <p class="font-bold text-white mx-2">Dhalsim 教練</p>
+                      <h6 class="font-bold text-white mx-2">互動式團隊瑜珈</h6>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <div class="card-body d-flex justify-content-between align-items-center">
+                <div class="d-flex">
+                  <p class="card-text mb-0">NT$ 800</p>
+                  <p class="card-text mb-0 text-decoration-line-through"> 1000</p>
+                </div>
+                <button type="type" class="btn">
+                  <img src="../assets/icon/cartIcon.svg" alt="cartIcon">
+                </button>
+              </div>
+            </div>
           </div>
-          <div class="col"
-           >
-            <a href="#" class="card text-white ground-floor">
-              <img src="https://storage.googleapis.com/vue-course-api.appspot.com/gymplus/1708756288385.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=WLskNJ2gkOdikUIYZuHrb2MQLW3czCBSfDFkZGkOjpbnpPVD%2BsJRx9wuIemdY862GhtBuXmHVoxSvMGtunvCxNgnmVYIkOVngWJb0CkwkgVOUVFhZFd9FiD9o70druBo2i8ijYkia0dpENc3Mindor9Y0VQlATxP2i4B%2FDTNrVehQ5Yml%2BZCjFbjWFXbCqdq7VjAqGgDYVbRIPvpSzk1OYPLwv2Cs3tzLymllU59WQ%2B5VtpkRkVScekzFX5FOEnc15YFDu3O0hXtXq4wt%2Fx9ggBL7O9YtrBglXQfznuFWimKV6WEJNelRI%2FUT69bVbTXbs6V4m97rqaZWTpSjWpV5Q%3D%3D" class="card-img" alt="img">
-  <div class="card-img-overlay d-flex flex-column justify-content-between">
-    <button type="button" class="border-0 align-self-end bg-transparent high-floor" style="z-index: 1000;"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bookmark-star" viewBox="0 0 16 16">
-  <path d="M7.84 4.1a.178.178 0 0 1 .32 0l.634 1.285a.18.18 0 0 0
-   .134.098l1.42.206c.145.021.204.2.098.303L9.42 6.993a.18.18
-    0 0 0-.051.158l.242 1.414a.178.178 0 0 1-.258.187l-1.27-.668a.18.18
-     0 0 0-.165 0l-1.27.668a.178.178 0 0 1-.257-.187l.242-1.414a.18.18 0
-      0 0-.05-.158l-1.03-1.001a.178.178 0 0 1 .098-.303l1.42-.206a.18.18 0 0 0 .134-.098z"/>
-  <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8
-   13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5
-    0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
-</svg></button>
-    <h6 class="font-bold">0</h6>
-  </div>
-            </a>
+          <div class="col">
+            <div class="card">
+              <button type="button" class="position-absolute bookmark">
+                <img src="../assets/icon/bookmark.svg" alt="bookmark">
+              </button>
+              <a href="#" class="position-relative ground-floor">
+                <img src="https://storage.googleapis.com/vue-course-api.appspot.com/gymplus/1708802072732.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=d0o%2FflbNgMzLMtrQW%2BORuz8N0hxwNZ414%2Bf7%2FIYWt7X07AyxbfVayozskG%2FrJElJFlht%2Bcwg0TS7OOjkp1pSL9z6YUenCO50FsFq2nfxxctDHCpDiYzc1feE%2BIMthgNIHbW9KGljncZm7Lb6zGkJE9zdaQ%2B8boYcphT6j4k2nwjzfxU049cgoa74Rcssd06MENB9d6oc8cLj9KdgrtBH1lmyD9h%2F87pV0NvJ%2BjxM3blwplmEF35f2B8nGhlLAHOATdcraxgx4f9mSVStyFZ4qey5%2FXImCoqEwOgU7H505Um680nKpvKp%2B5%2FsmAhVpEt8FyxXaQBEtmSwkV2JZzxpKg%3D%3D" alt="img"
+                class="card-img-top" style="height: 350px; object-fit: cover;">
+                <div class="card-img-overlay d-flex flex-column justify-content-between">
+                  <div class="d-flex overlay-text">
+                    <div class="d-flex flex-column">
+                      <p class="font-bold text-white mx-2">Alex 教練</p>
+                      <h6 class="font-bold text-white mx-2">有氧拳擊</h6>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <div class="card-body d-flex justify-content-between align-items-center">
+                <div class="d-flex">
+                  <p class="card-text mb-0">NT$ 800</p>
+                  <p class="card-text mb-0 text-decoration-line-through"> 1000</p>
+                </div>
+                <button type="type" class="btn">
+                  <img src="../assets/icon/cartIcon.svg" alt="cartIcon">
+                </button>
+              </div>
+            </div>
           </div>
-          <div class="col"
-           >
-            <a href="#" class="card text-white ground-floor">
-              <img src="https://storage.googleapis.com/vue-course-api.appspot.com/gymplus/1708756288385.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=WLskNJ2gkOdikUIYZuHrb2MQLW3czCBSfDFkZGkOjpbnpPVD%2BsJRx9wuIemdY862GhtBuXmHVoxSvMGtunvCxNgnmVYIkOVngWJb0CkwkgVOUVFhZFd9FiD9o70druBo2i8ijYkia0dpENc3Mindor9Y0VQlATxP2i4B%2FDTNrVehQ5Yml%2BZCjFbjWFXbCqdq7VjAqGgDYVbRIPvpSzk1OYPLwv2Cs3tzLymllU59WQ%2B5VtpkRkVScekzFX5FOEnc15YFDu3O0hXtXq4wt%2Fx9ggBL7O9YtrBglXQfznuFWimKV6WEJNelRI%2FUT69bVbTXbs6V4m97rqaZWTpSjWpV5Q%3D%3D" class="card-img" alt="img">
-  <div class="card-img-overlay d-flex flex-column justify-content-between">
-    <button type="button" class="border-0 align-self-end bg-transparent high-floor" style="z-index: 1000;"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bookmark-star" viewBox="0 0 16 16">
-  <path d="M7.84 4.1a.178.178 0 0 1 .32 0l.634 1.285a.18.18 0 0 0
-   .134.098l1.42.206c.145.021.204.2.098.303L9.42 6.993a.18.18
-    0 0 0-.051.158l.242 1.414a.178.178 0 0 1-.258.187l-1.27-.668a.18.18
-     0 0 0-.165 0l-1.27.668a.178.178 0 0 1-.257-.187l.242-1.414a.18.18 0
-      0 0-.05-.158l-1.03-1.001a.178.178 0 0 1 .098-.303l1.42-.206a.18.18 0 0 0 .134-.098z"/>
-  <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8
-   13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5
-    0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
-</svg></button>
-    <h6 class="font-bold">0</h6>
-  </div>
-            </a>
+          <div class="col">
+            <div class="card">
+              <button type="button" class="position-absolute bookmark">
+                <img src="../assets/icon/bookmark.svg" alt="bookmark">
+              </button>
+              <a href="#" class="position-relative ground-floor">
+                <img src="https://storage.googleapis.com/vue-course-api.appspot.com/gymplus/1708801998686.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=KzgWQoD6%2BSLlits3hVLfljPy3UsisGDHnVRLRv5ur4Od68oUO%2FE%2FnYoKTApaIC%2FO8DNDuUIfHP5rRP%2FE8lesuVgPyuqiyo3A4l7Hvi1i1Xei7W9p26zbaG3dCcu5Fuw%2By9e2hKbo%2BUcYU6XLNmRRuWd0ztn%2B9NBj7mT94VSvjfQtEwS588uV%2BJTHN2dEURYXh5puUpGEpSRol%2B7%2FXEwotykW0BgFKWzQxnLETaC3l8BZ6h3rQG0P%2BOtAH%2BzS9EUB3xJDO7oBBxg8N7PkDoLuxYxhWvBv7aM%2BUZHUUsKTWrEeB5tOZrGNRtn9Er0srtCWI0VXMZ0SRGf7FOSpLmLV3A%3D%3D" alt="img"
+                class="card-img-top" style="height: 350px; object-fit: cover;">
+                <div class="card-img-overlay d-flex flex-column justify-content-between">
+                  <div class="d-flex overlay-text">
+                    <div class="d-flex flex-column">
+                      <p class="font-bold text-white mx-2">Dhalsim 教練</p>
+                      <h6 class="font-bold text-white mx-2">物理治療瑜珈</h6>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <div class="card-body d-flex justify-content-between align-items-center">
+                <div class="d-flex">
+                  <p class="card-text mb-0">NT$ 1500</p>
+                  <p class="card-text mb-0 text-decoration-line-through"> 1500</p>
+                </div>
+                <button type="type" class="btn">
+                  <img src="../assets/icon/cartIcon.svg" alt="cartIcon">
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -177,60 +214,25 @@
 </template>
 
 <script>
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
+import { mapActions, mapState } from 'pinia';
+import cartStore from '@/stores/cartStore';
+
 export default {
   data() {
     return {
       url: '',
       path: '',
-      carts: [],
-      total: 0,
-      final_total: 0,
       code: '',
       conponTitle: '',
-      isLoading: true,
       isconponStatus: false,
     };
   },
   methods: {
-    getData() {
-      this.carts = [];
-      this.axios
-        .get(`${this.url}/api/${this.path}/cart`)
-        .then((res) => {
-          this.carts = res.data.data.carts;
-          this.total = this.carts.reduce((acc, curr) => acc + parseInt(curr.total, 10), 0);
-          // eslint-disable-next-line max-len
-          this.final_total = this.carts.reduce((acc, curr) => acc + parseInt(curr.final_total, 10), 0);
-          this.isLoading = false;
-        });
-    },
-    delCart(id, title) {
-      this.$swal({
-        icon: 'warning',
-        title: '確定刪除課程?',
-        text: title,
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: '確定',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.axios.delete(`${this.url}/api/${this.path}/cart/${id}`)
-            .then((res) => {
-              this.$swal({
-                icon: 'success',
-                title: res.data.message,
-                showConfirmButton: false,
-                timer: 1500,
-              });
-              setTimeout(() => {
-                this.isLoading = true;
-                this.getData();
-              }, 1500);
-            });
-        }
-      });
-    },
+    ...mapActions(cartStore, ['getCarts']),
+    ...mapActions(cartStore, ['delCart']),
+    ...mapActions(cartStore, ['delAllCart']),
     addCouponCode() {
       const conpon = {
         code: this.code,
@@ -242,25 +244,36 @@ export default {
           text: '優惠卷欄位不可填空!',
         });
       } else {
-        this.axios.post(`${this.url}/api/${this.path}/coupon`, { data: conpon })
+        this.axios.post(`${this.url}api/${this.path}/coupon`, { data: conpon })
           .then((res) => {
+            this.$swal({
+              icon: 'success',
+              title: '已成功套用優惠卷',
+              showConfirmButton: false,
+              timer: 1500,
+            });
             setTimeout(() => {
-              this.isLoading = true;
-              this.getData();
+              this.getCarts();
               this.isconponStatus = true;
               this.conponTitle = res.data.message;
             }, 1500);
           });
       }
     },
-    pushCoursesView() {
-      this.$router.push('/courses');
-    },
+  },
+  components: {
+    Loading,
+  },
+  computed: {
+    ...mapState(cartStore, ['carts']),
+    ...mapState(cartStore, ['total']),
+    ...mapState(cartStore, ['final_total']),
+    ...mapState(cartStore, ['isLoading']),
   },
   mounted() {
     this.url = import.meta.env.VITE_API_URL;
     this.path = import.meta.env.VITE_API_PATH;
-    this.getData();
+    this.getCarts();
   },
 };
 
