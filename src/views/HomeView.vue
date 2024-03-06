@@ -20,6 +20,9 @@
           <router-link
             to="/courses"
             class="fw-medium fw-md-bold align-self-md-end d-flex align-items-center"
+            data-aos="fade-right"
+            data-aos-duration="1500"
+            data-aos-delay="1500"
           >
             <span class="small fs-lg-7 fs-xl-6 me-2 ls-2">立即體驗</span>
             <span class="icon-bg d-inline-block rounded-circle mt-1 mt-lg-0">
@@ -41,7 +44,14 @@
       <span class="text-primary">特色</span>
     </h2>
     <div class="row gy-8 gx-3 gx-lg-5">
-      <div class="col-12 col-md" v-for="(feature, index) in features" :key="feature.title">
+      <div
+        class="col-12 col-md"
+        v-for="(feature, index) in features"
+        :key="feature.title"
+        data-aos="flip-left"
+        data-aos-duration="1500"
+        :data-aos-delay="(index + 1) * 150"
+      >
         <div
           class="h-100 card shadow"
           :class="{ 'me-xl-5': !index, 'mx-xl-3': index === 1, 'ms-xl-5': index === 2 }"
@@ -75,17 +85,30 @@
         <span>帶來的</span>
         <span class="text-primary">好處</span>
         <span
-          class="fs-2 fs-lg-1 d-inline-block"
-          style="transform: rotate(15deg) translate(-9px, 7px)"
+          class="animate__animated d-inline-block"
+          :class="[isAddAnimate ? 'animate__rotateInUpLeft' : 'animate__rotateOutDownLeft']"
         >
-          ？
+          <span
+            class="fs-2 fs-lg-1 d-inline-block"
+            style="transform: rotate(15deg) translate(-9px, 7px)"
+          >
+            ？
+          </span>
         </span>
       </h2>
       <div class="d-flex flex-column text-start px-3 px-md-0">
         <div class="good-card card mb-8 mb-md-6 bg-transparent">
           <div class="row justify-content-center align-items-center position-relative">
             <div class="col-md-6 col-xl-5">
-              <img src="/home-good01.png" class="img-fluid rounded-start" alt="強健身體" />
+              <img
+                src="/home-good01.png"
+                class="img-fluid rounded-start"
+                alt="強健身體"
+                data-aos="fade-zoom-in"
+                data-aos-duration="1000"
+                data-aos-easing="ease-in-back"
+                data-aos-offset="0"
+              />
             </div>
             <div class="col-md-6 col-xl-5">
               <div class="card-body px-0 py-8">
@@ -108,7 +131,16 @@
         <div class="good-card card mb-6 mb-md-7 bg-transparent">
           <div class="row justify-content-center align-items-center position-relative">
             <div class="col-md-6 col-xl-5 order-md-2">
-              <img src="/home-good02.png" class="img-fluid rounded-start" alt="情緒改善" />
+              <img
+                src="/home-good02.png"
+                class="img-fluid rounded-start"
+                alt="情緒改善"
+                data-aos="fade-zoom-in"
+                data-aos-duration="1000"
+                data-aos-delay="1000"
+                data-aos-easing="ease-in-back"
+                data-aos-offset="0"
+              />
             </div>
             <div class="col-md-6 col-xl-5 order-md-1 d-flex flex-column align-items-md-end">
               <div class="card-body px-0 py-8">
@@ -121,7 +153,7 @@
                 </p>
                 <img
                   src="/home-deco02.svg"
-                  alt="strong"
+                  alt="relax"
                   class="position-absolute d-none d-lg-block"
                 />
               </div>
@@ -131,7 +163,16 @@
         <div class="good-card card pt-lg-8 pt-xl-6 bg-transparent">
           <div class="row justify-content-center align-items-center position-relative">
             <div class="col-md-6 col-xl-5">
-              <img src="/home-good03.png" class="img-fluid rounded-start" alt="情緒改善" />
+              <img
+                src="/home-good03.png"
+                class="img-fluid rounded-start"
+                alt="情緒改善"
+                data-aos="fade-zoom-in"
+                data-aos-duration="1000"
+                data-aos-easing="ease-in-back"
+                data-aos-delay="1500"
+                data-aos-offset="0"
+              />
             </div>
             <div class="col-md-6 col-xl-5">
               <div class="card-body px-0 pt-8 pb-0">
@@ -144,7 +185,7 @@
                 </p>
                 <img
                   src="/home-deco03.svg"
-                  alt="strong"
+                  alt="enrich"
                   class="position-absolute d-none d-lg-block"
                 />
               </div>
@@ -173,7 +214,12 @@
         <span>認識</span>
         <span class="text-primary">身體數值</span>
       </h2>
-      <div class="row text-start justify-content-center">
+      <div
+        class="row text-start justify-content-center"
+        data-aos="fade-up"
+        data-aos-delay="1800"
+        data-aos-duration="500"
+      >
         <div class="col-md-10 col-lg col-xxl-10">
           <InbodyCalculator></InbodyCalculator>
         </div>
@@ -211,6 +257,7 @@ export default {
         },
       ],
       loader: null,
+      isAddAnimate: false,
     };
   },
   computed: {
@@ -218,6 +265,17 @@ export default {
   },
   methods: {
     ...mapActions(CartStore, ['getCarts']),
+    // 防抖動
+    debounce(func, delay = 500) {
+      let timer = null;
+      return (...args) => {
+        const context = this;
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          func.apply(context, args);
+        }, delay);
+      };
+    },
   },
   watch: {
     isLoading(now) {
@@ -230,6 +288,16 @@ export default {
   created() {
     this.loader = this.$loading.show();
     this.getCarts();
+    window.addEventListener(
+      'scroll',
+      this.debounce(() => {
+        if (window.scrollY > 900) {
+          this.isAddAnimate = true;
+        } else if (window.scrollY < 900) {
+          this.isAddAnimate = false;
+        }
+      }),
+    );
   },
 };
 </script>
