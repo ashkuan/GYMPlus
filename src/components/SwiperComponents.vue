@@ -56,7 +56,7 @@
         </div>
         <div class="card-body px-0">
           <h5 class="card-title mb-1 mb-xxl-0 fs-7 fs-lg-5 lh-base lh-lg-sm fw-medium">
-            <router-link :to="`/courses/${course.id}`" class="link-white">
+            <router-link :to="`/course/${course.id}`" class="link-white">
               {{ course.title }}
             </router-link>
           </h5>
@@ -78,6 +78,7 @@
               href="#"
               class="btn btn-primary btn-sm py-2 py-xxl-3 px-xxl-8 fs-lg-7"
               title="立即加購"
+              @click.prevent="addCart(course.id, course.title)"
             >
               加入購物車
             </a>
@@ -97,6 +98,7 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import { mapActions, mapState } from 'pinia';
 import GetDataStore from '@/stores/GetDataStore';
 import FakeDataStore from '@/stores/FakeDataStore';
+import CartStore from '@/stores/cartStore';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -116,6 +118,7 @@ export default {
   },
   methods: {
     ...mapActions(GetDataStore, ['getRemoteData']),
+    ...mapActions(CartStore, ['addCart']),
     onSwiper(swiper) {
       this.swiperInstance = swiper;
     },

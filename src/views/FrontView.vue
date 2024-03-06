@@ -99,7 +99,9 @@
                   class="badge position-absolute top-0 bg-primary rounded-circle p-0 lh-base"
                   style="width: 18px; right: -4px"
                 >
-                  <small class="fs-8 fw-normal align-top d-none d-lg-block">0</small>
+                  <small class="fs-8 fw-normal align-top d-none d-lg-block">
+                    {{ carts.length }}
+                  </small>
                 </span>
               </router-link>
             </li>
@@ -222,13 +224,14 @@ export default {
       scrollPosition: 0,
       routeName: '',
       isOpened: false,
+      loader: null,
     };
   },
   computed: {
     ...mapState(CartStore, ['carts']),
   },
   methods: {
-    ...mapActions(CartStore, ['getCarts', 'addCart']),
+    ...mapActions(CartStore, ['getCarts']),
     handleScroll() {
       this.scrollPosition = window.scrollY;
     },
@@ -252,6 +255,7 @@ export default {
   },
   created() {
     window.removeEventListener('scroll', this.handleScroll);
+    this.getCarts();
   },
 };
 </script>

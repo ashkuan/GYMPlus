@@ -186,6 +186,8 @@
 <script>
 import CoursesSwiper from '@/components/SwiperComponents.vue';
 import InbodyCalculator from '@/components/InbodyCalculator.vue';
+import { mapActions, mapState } from 'pinia';
+import CartStore from '@/stores/cartStore';
 
 export default {
   components: { CoursesSwiper, InbodyCalculator },
@@ -208,7 +210,26 @@ export default {
           content: '不論是課程資訊、健身建議，線上客服將迅速為您解答。',
         },
       ],
+      loader: null,
     };
+  },
+  computed: {
+    ...mapState(CartStore, ['isLoading']),
+  },
+  methods: {
+    ...mapActions(CartStore, ['getCarts']),
+  },
+  watch: {
+    isLoading(now) {
+      if (!now && this.loader) {
+        this.loader.hide();
+        this.loader = null;
+      }
+    },
+  },
+  created() {
+    this.loader = this.$loading.show();
+    this.getCarts();
   },
 };
 </script>
