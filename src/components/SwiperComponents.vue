@@ -74,14 +74,16 @@
                 {{ course.origin_price }}
               </span>
             </p>
-            <a
-              href="#"
+            <button
+              type="button"
               class="btn btn-primary btn-sm py-2 py-xxl-3 px-xxl-8 fs-lg-7"
               title="立即加購"
-              @click.prevent="addCart(course.id, course.title)"
+              @click.prevent="addCart(course.id, course.title), (isAddingToCart = true)"
+              :disabled="isAddingToCart"
             >
+              <span v-if="isAddingToCart" class="line-loading-loop"></span>
               加入購物車
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -114,6 +116,7 @@ export default {
     return {
       modules: [Navigation, Autoplay],
       swiperInstance: null,
+      isAddingToCart: false,
     };
   },
   methods: {
@@ -132,8 +135,16 @@ export default {
   computed: {
     ...mapState(GetDataStore, ['targetData']),
     ...mapState(FakeDataStore, ['coaches']),
+    ...mapState(CartStore, ['isLoading']),
     courses() {
       return this.targetData.filter((course, index) => index > 4);
+    },
+  },
+  watch: {
+    isLoading(boolean) {
+      if (!boolean) {
+        this.isAddingToCart = false;
+      }
     },
   },
   mounted() {
@@ -163,7 +174,8 @@ export default {
       filter: gray;
     }
   }
-  a[title] {
+  a[title],
+  button[title] {
     transition: all 0.5s ease-out;
     opacity: 0;
     display: inline-block;
@@ -227,7 +239,8 @@ export default {
         background: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.5) 100%);
       }
     }
-    a[title] {
+    a[title],
+    button[title] {
       visibility: visible;
       opacity: 1;
     }

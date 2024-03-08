@@ -20,6 +20,9 @@
           <router-link
             to="/courses"
             class="fw-medium fw-md-bold align-self-md-end d-flex align-items-center"
+            data-aos="fade-right"
+            data-aos-duration="1500"
+            data-aos-delay="1500"
           >
             <span class="small fs-lg-7 fs-xl-6 me-2 ls-2">立即體驗</span>
             <span class="icon-bg d-inline-block rounded-circle mt-1 mt-lg-0">
@@ -41,7 +44,14 @@
       <span class="text-primary">特色</span>
     </h2>
     <div class="row gy-8 gx-3 gx-lg-5">
-      <div class="col-12 col-md" v-for="(feature, index) in features" :key="feature.title">
+      <div
+        class="col-12 col-md"
+        v-for="(feature, index) in features"
+        :key="feature.title"
+        data-aos="flip-left"
+        data-aos-duration="1500"
+        :data-aos-delay="(index + 1) * 150"
+      >
         <div
           class="h-100 card shadow"
           :class="{ 'me-xl-5': !index, 'mx-xl-3': index === 1, 'ms-xl-5': index === 2 }"
@@ -67,7 +77,7 @@
     </div>
   </div>
   <!-- WHAT’s GOOD -->
-  <div class="bg-light">
+  <div class="bg-light overflow-hidden">
     <div class="container block-space text-center">
       <h3 class="subtitle-border text-linear display-4 display-md-3 mb-0">WHAT’s GOOD</h3>
       <h2 class="good-title fs-4 fs-md-3 fs-lg-2 pt-2 pt-md-4 mb-8 mb-md-6 mb-lg-7">
@@ -75,10 +85,15 @@
         <span>帶來的</span>
         <span class="text-primary">好處</span>
         <span
-          class="fs-2 fs-lg-1 d-inline-block"
-          style="transform: rotate(15deg) translate(-9px, 7px)"
+          class="animate__animated d-inline-block"
+          :class="[isAddAnimate ? 'animate__rotateInUpLeft' : 'animate__rotateOutDownLeft']"
         >
-          ？
+          <span
+            class="fs-2 fs-lg-1 d-inline-block"
+            style="transform: rotate(15deg) translate(-9px, 7px)"
+          >
+            ？
+          </span>
         </span>
       </h2>
       <div class="d-flex flex-column text-start px-3 px-md-0">
@@ -100,6 +115,9 @@
                   src="/home-deco01.svg"
                   alt="strong"
                   class="position-absolute d-none d-lg-block"
+                  data-aos="fade-down-left"
+                  data-aos-duration="1200"
+                  data-aos-anchor-placement="bottom-center"
                 />
               </div>
             </div>
@@ -121,8 +139,12 @@
                 </p>
                 <img
                   src="/home-deco02.svg"
-                  alt="strong"
+                  alt="relax"
                   class="position-absolute d-none d-lg-block"
+                  data-aos="fade-down-right"
+                  data-aos-duration="1200"
+                  data-aos-offset="100"
+                  data-aos-anchor-placement="bottom-center"
                 />
               </div>
             </div>
@@ -144,8 +166,12 @@
                 </p>
                 <img
                   src="/home-deco03.svg"
-                  alt="strong"
+                  alt="enrich"
                   class="position-absolute d-none d-lg-block"
+                  data-aos="fade-down-left"
+                  data-aos-duration="1200"
+                  data-aos-offset="100"
+                  data-aos-anchor-placement="bottom-center"
                 />
               </div>
             </div>
@@ -173,7 +199,13 @@
         <span>認識</span>
         <span class="text-primary">身體數值</span>
       </h2>
-      <div class="row text-start justify-content-center">
+      <div
+        class="row text-start justify-content-center"
+        data-aos="fade-up"
+        data-aos-offset="300"
+        data-aos-duration="1000"
+        data-aos-anchor-placement="bottom-bottom"
+      >
         <div class="col-md-10 col-lg col-xxl-10">
           <InbodyCalculator></InbodyCalculator>
         </div>
@@ -211,6 +243,7 @@ export default {
         },
       ],
       loader: null,
+      isAddAnimate: false,
     };
   },
   computed: {
@@ -218,6 +251,17 @@ export default {
   },
   methods: {
     ...mapActions(CartStore, ['getCarts']),
+    // 防抖動
+    debounce(func, delay = 250) {
+      let timer = null;
+      return (...args) => {
+        const context = this;
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          func.apply(context, args);
+        }, delay);
+      };
+    },
   },
   watch: {
     isLoading(now) {
@@ -230,6 +274,16 @@ export default {
   created() {
     this.loader = this.$loading.show();
     this.getCarts();
+    window.addEventListener(
+      'scroll',
+      this.debounce(() => {
+        if (window.scrollY > 1000) {
+          this.isAddAnimate = true;
+        } else if (window.scrollY < 1000) {
+          this.isAddAnimate = false;
+        }
+      }),
+    );
   },
 };
 </script>
