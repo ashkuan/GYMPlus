@@ -11,7 +11,7 @@
       <div class="modal-content">
         <div class="modal-header bg-linear py-3">
           <h3 class="modal-title fs-5 fw-medium text-white" id="productModal">
-            {{ needEnit ? `編輯訂單` : `訂單詳細` }}：
+            {{ isEniting ? `編輯訂單` : `訂單詳細` }}：
             <span class="ls-0">{{ order.id }}</span>
           </h3>
         </div>
@@ -20,22 +20,30 @@
             <h4 class="fs-6 mb-0">訂單內容</h4>
             <form class="row admin-form">
               <div class="col-md-4 ms-auto mb-3">
-                <div class="row align-items-center text-end">
+                <div class="row align-items-center text-end justify-content-end">
                   <label for="status" class="form-label col-5">付款狀態</label>
                   <select
                     class="form-select form-select-sm col"
                     id="status"
+                    v-if="isEniting"
                     v-model="order.is_paid"
                   >
                     <option value="true">已付款</option>
                     <option value="false">未付款</option>
                   </select>
+                  <span
+                    v-else
+                    class="badge col-4"
+                    :class="[order.is_paid ? 'bg-success' : 'bg-danger']"
+                  >
+                    {{ order.is_paid ? '已付款' : '未付款' }}
+                  </span>
                 </div>
               </div>
               <table class="table text-center align-middle small">
                 <thead>
                   <tr class="table-light">
-                    <th scope="col" width="52px"></th>
+                    <th scope="col" width="52px" :class="{ 'd-none': !isEniting }"></th>
                     <th scope="col">課程編號</th>
                     <th scope="col" class="d-none d-lg-table-cell">縮圖</th>
                     <th scope="col">標題</th>
@@ -46,7 +54,7 @@
                 </thead>
                 <tbody>
                   <tr v-for="course in courses" :key="course.id">
-                    <td>
+                    <td :class="{ 'd-none': !isEniting }">
                       <button
                         type="button"
                         class="btn btn-sm btn-outline-danger border-0 p-1"
@@ -76,25 +84,49 @@
                       </span>
                     </td>
                   </tr>
+                  <tr v-if="isDeledProduct" class="border-white">
+                    <td colspan="7">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-light px-6"
+                        @click="rollbackCourse"
+                      >
+                        復原
+                      </button>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
               <div>
                 <div class="row small">
                   <div class="col-md-7">
-                    <p class="mb-2">客戶留言：{{ order.message ? order.message : '無' }}</p>
-                    <label for="description" class="form-label mb-1">備註事項：</label>
+                    <p class="d-flex mb-2">
+                      <span class="d-inline-block" style="min-width: 75px">客戶留言：</span>
+                      <span :class="{ 'text-gray-4': !order.message }">
+                        {{ order.message ? order.message : '無' }}
+                      </span>
+                    </p>
+                    <label for="description" class="form-label d-flex mb-1">
+                      <span class="d-inline-block" style="min-width: 75px">備註事項：</span>
+                      <span :class="{ 'text-gray-4': !order.remark }">
+                        {{ isEniting ? '' : order.remark ? order.remark : '無' }}
+                      </span>
+                    </label>
                     <textarea
+                      v-if="isEniting"
                       id="description"
                       class="form-control form-control-sm"
                       placeholder="記錄訂單備註"
                       style="height: 80px"
-                      v-model="order.description"
+                      v-model="order.remark"
                     ></textarea>
                   </div>
                   <div class="col-md-4 ms-auto">
                     <ul class="list-unstyled text-end">
-                      <li class="py-1 mb-3">
-                        套用優惠券：{{ couponTitle ? couponTitle : '未使用' }}
+                      <li class="mb-3">
+                        <span class="py-2 px-3 d-inline-block bg-light rounded-2">
+                          套用優惠券：{{ couponTitle ? couponTitle : '未使用' }}
+                        </span>
                       </li>
                       <li class="row gx-2 py-1">
                         <span class="col-9">優惠券折扣：</span>
@@ -125,11 +157,13 @@
                 <li class="col-6 list-group-item">稱呼：{{ userInfo.name }}</li>
                 <li class="col-6 list-group-item">
                   電話：
-                  <a :href="`tel:${userInfo.tel}`"></a>
-                  {{ userInfo.tel }}
+                  <a :href="`tel:${userInfo.tel}`">{{ userInfo.tel }}</a>
                 </li>
                 <li class="col-6 list-group-item">付款方式：{{ userInfo.payment }}</li>
-                <li class="col-6 list-group-item">信箱：{{ userInfo.email }}</li>
+                <li class="col-6 list-group-item">
+                  信箱：
+                  <a :href="`mailto:${userInfo.email}`">{{ userInfo.email }}</a>
+                </li>
                 <li class="col list-group-item">聯絡地址：{{ userInfo.address }}</li>
               </ul>
             </div>
@@ -144,13 +178,22 @@
             關閉視窗
           </button>
           <button
+            v-show="isEniting"
             type="button"
             class="btn btn-gray-1 flex-grow-1 flex-md-grow-0"
-            @click="editCourse(order.id, editModal)"
+            @click="editOrder(order.id)"
             :disabled="false"
           >
             <span v-show="false" class="line-loading-loop bg-white"></span>
             更新訂單
+          </button>
+          <button
+            v-show="!isEniting && !isOrderFinished"
+            type="button"
+            class="btn btn-primary flex-grow-1 flex-md-grow-0"
+            @click="isEniting = !isEniting"
+          >
+            前往編輯
           </button>
         </div>
       </div>
@@ -160,40 +203,69 @@
 
 <script>
 import * as bootstrap from 'bootstrap';
-// import { mapActions, mapState } from 'pinia';
-// import adminCourseStore from '@/stores/dashboard/AdminCourseStore';
+import { mapActions, mapState } from 'pinia';
+import GetDataStore from '@/stores/GetDataStore';
+import AlertStore from '@/stores/AlertStore';
 
 export default {
-  props: ['singleOrder', 'needEnit'],
+  props: ['singleOrder', 'needEnit', 'isOrderFinished'],
   data() {
     return {
-      isImgArr: false,
-      categories: ['瑜珈', '有氧運動', '重量訓練'],
-      coachs: ['Emma', 'Alex', 'Dhalsim', 'Olivia Chang', 'Jackson Liu'],
-      targets: ['年長者', '初學者', '親子', '進階', '健力', '復健', '體態維持'],
-      isAddingToCart: false,
-      editModal: {},
-      //
-      order: {},
+      url: '',
+      path: '',
+      editModal: null,
+      order: {
+        remark: '',
+      },
+      temporaryProducts: {},
+      isDeledProduct: false,
+      isEniting: false,
     };
   },
   methods: {
-    // ...mapActions(adminCourseStore, [
-    //   'getCourse',
-    //   'resetTemp',
-    //   'editCourse',
-    //   'getImgFile',
-    //   'uploadImg',
-    // ]),
+    ...mapActions(GetDataStore, ['getRemoteData']),
+    ...mapActions(AlertStore, ['basicContent']),
+    editOrder(id) {
+      this.order.is_paid = this.order.is_paid === 'true';
+      const data = { data: { ...this.order } };
+      this.axios
+        .put(`${this.url}/api/${this.path}/admin/order/${id}`, data)
+        .then((res) => {
+          this.alertStyles.basic.fire({
+            ...this.basicContent(res.data.message, 1),
+            didClose: () => {
+              this.editModal.hide();
+              this.getRemoteData('orders', this.pagination.current_page, false);
+            },
+          });
+        })
+        .catch((err) => {
+          this.alertStyles.basic.fire(this.basicContent(err.response.data.message, 2));
+          this.editModal.hide();
+        });
+    },
     delCourse(id) {
-      console.log(id);
+      if (this.courses.length === 1) {
+        this.alertStyles.basic.fire(this.basicContent('最後一筆資料，請直接刪除訂單。', 3));
+      } else {
+        this.isDeledProduct = true;
+        delete this.order.products[id];
+        this.order.total = this.courses.reduce((acc, ele) => acc + ele.final_total, 0);
+      }
+    },
+    rollbackCourse() {
+      const courses = Object.values(this.temporaryProducts);
+      this.order.products = JSON.parse(JSON.stringify(this.temporaryProducts));
+      this.order.total = courses.reduce((acc, ele) => acc + ele.final_total, 0);
+      this.isDeledProduct = false;
     },
   },
   computed: {
-    // ...mapState(adminCourseStore, ['temp', 'isEditingCourse', 'isAddingImg']),
+    ...mapState(GetDataStore, ['pagination']),
+    ...mapState(AlertStore, ['alertStyles']),
     courses() {
       const { products } = this.order;
-      return products ? Object.values(this.order.products) : [];
+      return products ? Object.values(products) : [];
     },
     originTotal() {
       return this.courses.reduce((acc, ele) => acc + ele.total, 0);
@@ -220,26 +292,27 @@ export default {
   },
   watch: {
     singleOrder(newOrder) {
-      this.order = newOrder;
+      this.order = JSON.parse(JSON.stringify(newOrder));
+      // 儲存 producs (復原用)
+      this.temporaryProducts = JSON.parse(JSON.stringify(this.order.products));
       console.log(this.order);
+    },
+    needEnit(boolean) {
+      this.isEniting = boolean;
     },
   },
   mounted() {
+    // modal 操作
     this.editModal = new bootstrap.Modal(this.$refs.orderEditModal);
     const danglingStr = '_element';
     this.editModal[danglingStr].addEventListener('hidden.bs.modal', () => {
-      this.$emit('updateNeedEnit', false);
-      // this.resetTemp();
+      this.isEniting = false;
+      this.$emit('updateNeedEnit', this.isEniting);
     });
+    this.url = import.meta.env.VITE_API_URL;
+    this.path = import.meta.env.VITE_API_PATH;
   },
 };
 </script>
 
-<style lang="scss">
-.admin-img-delBtn {
-  border-width: 0;
-  padding: 4px;
-  background-color: #f5f5f5;
-  z-index: 2;
-}
-</style>
+<style lang="scss"></style>
