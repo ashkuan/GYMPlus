@@ -27,6 +27,8 @@ export default defineStore('adminCourseStore', {
       unit: '堂',
     },
     fileInfo: null,
+    isEditingCourse: false,
+    isAddingImg: false,
   }),
   actions: {
     getCourse(id) {
@@ -40,6 +42,9 @@ export default defineStore('adminCourseStore', {
       this.$reset();
     },
     editCourse(id, modalDom) {
+      this.isEditingCourse = !this.isEditingCourse;
+      this.temp.is_enabled = parseInt(this.temp.is_enabled, 10);
+      this.temp['time-unix'] = new Date(this.temp.time).getTime() / 1000;
       const course = { data: { ...this.temp } };
       let method = 'post';
       if (id) {
@@ -51,16 +56,19 @@ export default defineStore('adminCourseStore', {
             ...basicContent(res.data.message, 1),
             didClose: () => {
               this.resetTemp();
+              this.isEditingCourse = !this.isEditingCourse;
               modalDom.hide();
             },
           });
           GetDataStore().getRemoteData('products', 1, false);
         })
         .catch((err) => {
+          this.isEditingCourse = !this.isEditingCourse;
           alertStyles.basic.fire(basicContent(`錯誤${err.response.status}，請洽客服`, 2));
         });
     },
     delCourse(id, modalDom) {
+      this.isEditingCourse = !this.isEditingCourse;
       axios
         .delete(`${url}/api/${path}/admin/product/${id}`)
         .then((res) => {
@@ -68,12 +76,14 @@ export default defineStore('adminCourseStore', {
             ...basicContent(res.data.message, 1),
             didClose: () => {
               this.resetTemp();
+              this.isEditingCourse = !this.isEditingCourse;
               modalDom.hide();
             },
           });
           GetDataStore().getRemoteData('products', 1, false);
         })
         .catch((err) => {
+          this.isEditingCourse = !this.isEditingCourse;
           alertStyles.basic.fire(basicContent(`錯誤${err.response.status}，請洽客服`, 2));
         });
     },
@@ -84,6 +94,7 @@ export default defineStore('adminCourseStore', {
       this.fileInfo = formData;
     },
     uploadImg(addToArr, fileInput) {
+      this.isAddingImg = !this.isAddingImg;
       axios
         .post(`${url}/api/${path}/admin/upload`, this.fileInfo)
         .then((res) => {
@@ -96,8 +107,10 @@ export default defineStore('adminCourseStore', {
           alertStyles.basic.fire(basicContent('新增成功', 1));
           const DOM = fileInput;
           DOM.value = null;
+          this.isAddingImg = !this.isAddingImg;
         })
         .catch((err) => {
+          this.isAddingImg = !this.isAddingImg;
           if (this.fileInfo === null) {
             alertStyles.basic.fire(basicContent('請選擇檔案', 2));
           } else {
