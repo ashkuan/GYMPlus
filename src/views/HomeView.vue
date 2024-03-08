@@ -77,7 +77,7 @@
     </div>
   </div>
   <!-- WHAT’s GOOD -->
-  <div class="bg-light">
+  <div class="bg-light overflow-hidden">
     <div class="container block-space text-center">
       <h3 class="subtitle-border text-linear display-4 display-md-3 mb-0">WHAT’s GOOD</h3>
       <h2 class="good-title fs-4 fs-md-3 fs-lg-2 pt-2 pt-md-4 mb-8 mb-md-6 mb-lg-7">
@@ -100,15 +100,7 @@
         <div class="good-card card mb-8 mb-md-6 bg-transparent">
           <div class="row justify-content-center align-items-center position-relative">
             <div class="col-md-6 col-xl-5">
-              <img
-                src="/home-good01.png"
-                class="img-fluid rounded-start"
-                alt="強健身體"
-                data-aos="fade-zoom-in"
-                data-aos-duration="1000"
-                data-aos-easing="ease-in-back"
-                data-aos-offset="0"
-              />
+              <img src="/home-good01.png" class="img-fluid rounded-start" alt="強健身體" />
             </div>
             <div class="col-md-6 col-xl-5">
               <div class="card-body px-0 py-8">
@@ -123,6 +115,9 @@
                   src="/home-deco01.svg"
                   alt="strong"
                   class="position-absolute d-none d-lg-block"
+                  data-aos="fade-down-left"
+                  data-aos-duration="1200"
+                  data-aos-anchor-placement="bottom-center"
                 />
               </div>
             </div>
@@ -131,16 +126,7 @@
         <div class="good-card card mb-6 mb-md-7 bg-transparent">
           <div class="row justify-content-center align-items-center position-relative">
             <div class="col-md-6 col-xl-5 order-md-2">
-              <img
-                src="/home-good02.png"
-                class="img-fluid rounded-start"
-                alt="情緒改善"
-                data-aos="fade-zoom-in"
-                data-aos-duration="1000"
-                data-aos-delay="1000"
-                data-aos-easing="ease-in-back"
-                data-aos-offset="0"
-              />
+              <img src="/home-good02.png" class="img-fluid rounded-start" alt="情緒改善" />
             </div>
             <div class="col-md-6 col-xl-5 order-md-1 d-flex flex-column align-items-md-end">
               <div class="card-body px-0 py-8">
@@ -155,6 +141,10 @@
                   src="/home-deco02.svg"
                   alt="relax"
                   class="position-absolute d-none d-lg-block"
+                  data-aos="fade-down-right"
+                  data-aos-duration="1200"
+                  data-aos-offset="100"
+                  data-aos-anchor-placement="bottom-center"
                 />
               </div>
             </div>
@@ -163,16 +153,7 @@
         <div class="good-card card pt-lg-8 pt-xl-6 bg-transparent">
           <div class="row justify-content-center align-items-center position-relative">
             <div class="col-md-6 col-xl-5">
-              <img
-                src="/home-good03.png"
-                class="img-fluid rounded-start"
-                alt="情緒改善"
-                data-aos="fade-zoom-in"
-                data-aos-duration="1000"
-                data-aos-easing="ease-in-back"
-                data-aos-delay="1500"
-                data-aos-offset="0"
-              />
+              <img src="/home-good03.png" class="img-fluid rounded-start" alt="情緒改善" />
             </div>
             <div class="col-md-6 col-xl-5">
               <div class="card-body px-0 pt-8 pb-0">
@@ -187,6 +168,10 @@
                   src="/home-deco03.svg"
                   alt="enrich"
                   class="position-absolute d-none d-lg-block"
+                  data-aos="fade-down-left"
+                  data-aos-duration="1200"
+                  data-aos-offset="100"
+                  data-aos-anchor-placement="bottom-center"
                 />
               </div>
             </div>
@@ -217,8 +202,9 @@
       <div
         class="row text-start justify-content-center"
         data-aos="fade-up"
-        data-aos-delay="1800"
-        data-aos-duration="500"
+        data-aos-offset="300"
+        data-aos-duration="1000"
+        data-aos-anchor-placement="bottom-bottom"
       >
         <div class="col-md-10 col-lg col-xxl-10">
           <InbodyCalculator></InbodyCalculator>
@@ -266,7 +252,7 @@ export default {
   methods: {
     ...mapActions(CartStore, ['getCarts']),
     // 防抖動
-    debounce(func, delay = 500) {
+    debounce(func, delay = 250) {
       let timer = null;
       return (...args) => {
         const context = this;
@@ -291,9 +277,9 @@ export default {
     window.addEventListener(
       'scroll',
       this.debounce(() => {
-        if (window.scrollY > 900) {
+        if (window.scrollY > 1000) {
           this.isAddAnimate = true;
-        } else if (window.scrollY < 900) {
+        } else if (window.scrollY < 1000) {
           this.isAddAnimate = false;
         }
       }),
