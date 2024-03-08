@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h2 class="fs-3 fw-normal ls-0 mb-md-0 text-center">訂單管理</h2>
-    <div class="text-center text-md-end mb-3">
+    <h2 class="fs-3 fw-normal mb-5 ls-0 text-center">訂單管理</h2>
+    <!-- <div class="text-center text-md-end mb-3">
       <button
         type="button"
         class="btn btn-outline-danger py-1 border-2"
@@ -11,7 +11,7 @@
         <span class="icon-base icon-sm icon-trash align-text-top me-1 bg-danger"></span>
         <span>清空訂單</span>
       </button>
-    </div>
+    </div> -->
     <div v-if="orders.length !== 0" class="table-responsive mb-5">
       <table class="table table-hover text-center align-middle" style="min-width: 760px">
         <thead>
@@ -42,7 +42,7 @@
             <td>
               <a
                 href="#"
-                @click.prevent="getOrder(order.id)"
+                @click.prevent="getOrder(order.id, perOrderStates[index].isfinished)"
                 data-bs-toggle="modal"
                 data-bs-target="#orderEditModal"
               >
@@ -69,7 +69,7 @@
                   授課中
                 </span>
                 <span
-                  v-if="perOrderStates[index].isComeingSoon"
+                  v-if="!perOrderStates[index].isTeaching && perOrderStates[index].isComeingSoon"
                   class="badge bg-primary bg-opacity-50 mx-1"
                 >
                   即將開課
@@ -78,7 +78,7 @@
                   v-else-if="
                     !perOrderStates[index].isComeingSoon && !perOrderStates[index].isfinished
                   "
-                  class="badge bg-gray-3 bg-opacity-50 mx-1"
+                  class="badge bg-transparent text-secondary border border-secondary mx-1"
                 >
                   等待開課
                 </span>
@@ -104,6 +104,7 @@
                 data-bs-toggle="modal"
                 data-bs-target="#orderEditModal"
                 @click="getOrder(order.id), (needEnit = true)"
+                :disabled="perOrderStates[index].isfinished"
               >
                 編輯
               </button>
@@ -122,6 +123,7 @@
     <OrderEditModal
       :single-order="singleOrder"
       :need-enit="needEnit"
+      :is-order-finished="isOrderFinished"
       @update-need-enit="updateNeedEnit"
     ></OrderEditModal>
   </div>
@@ -140,11 +142,13 @@ export default {
       orders: [],
       singleOrder: {},
       needEnit: false,
+      isOrderFinished: false,
     };
   },
   methods: {
     ...mapActions(getDataStore, ['getRemoteData', 'addSeparator']),
-    getOrder(id) {
+    getOrder(id, isfinished = false) {
+      this.isOrderFinished = isfinished;
       this.singleOrder = this.orders.find((order) => order.id === id);
     },
     updateNeedEnit(boolean) {
@@ -170,18 +174,21 @@ export default {
     perOrderStates() {
       return this.perOrderCourses.map((order) => {
         const coursesTime = order.map((productInfo) => productInfo['time-unix']).sort();
-        const nowTime = this.nowUnix;
-        const isfinished = !(coursesTime[coursesTime.length - 1] > nowTime);
-        const isTeaching = !!coursesTime.find((time) => time === nowTime);
+        const { nowDate } = this;
+        const isfinished = !(coursesTime[coursesTime.length - 1] > nowDate);
+        const isTeaching = !!coursesTime.find((time) => time > nowDate && time - nowDate < 86400);
         const WithinSevenDays = coursesTime.filter(
-          (time) => time - 86400 * 7 < nowTime && time > nowTime,
+          (time) => time - 86400 * 7 < nowDate && time > nowDate,
         );
         const isComeingSoon = WithinSevenDays.length !== 0;
         return { isfinished, isTeaching, isComeingSoon };
       });
     },
-    nowUnix() {
-      return Math.floor(new Date() / 1000);
+    nowDate() {
+      const date = new Date();
+      return (
+        new Date(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`).getTime() / 1000
+      );
     },
   },
   watch: {
