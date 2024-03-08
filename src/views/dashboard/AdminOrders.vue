@@ -1,12 +1,10 @@
 <template>
   <div class="container">
-    <h2 class="display-1 mb-md-0 text-center">
-      <span>訂單管理</span>
-    </h2>
+    <h2 class="fs-3 fw-normal ls-0 mb-md-0 text-center">訂單管理</h2>
     <div class="text-center text-md-end mb-3">
       <button
         type="button"
-        class="btn btn-outline-danger py-1 shadow-sm"
+        class="btn btn-outline-danger py-1 border-2"
         data-bs-toggle="modal"
         data-bs-target="#"
       >
@@ -19,13 +17,13 @@
         <thead>
           <tr class="table-gray-4">
             <th scope="col" width="52px"></th>
-            <th scope="col" width="200px">訂單編號</th>
+            <th scope="col" width="210px">訂單編號</th>
             <th scope="col" class="d-none d-lg-table-cell">成立日期</th>
             <th scope="col">訂購人</th>
             <th scope="col">訂單狀態</th>
             <th scope="col">付款狀態</th>
             <th scope="col" width="90px">訂單總額</th>
-            <th scope="col" width="70px"></th>
+            <th scope="col" width="75px"></th>
           </tr>
         </thead>
         <tbody>
@@ -42,10 +40,17 @@
               </button>
             </td>
             <td>
-              <h3 class="small fs-lg-7 fw-normal text-start ls-0 mb-0">{{ order.id }}</h3>
+              <a
+                href="#"
+                @click.prevent="getOrder(order.id)"
+                data-bs-toggle="modal"
+                data-bs-target="#orderEditModal"
+              >
+                <h3 class="small fs-lg-7 fw-normal text-start ls-0 mb-0">{{ order.id }}</h3>
+              </a>
             </td>
-            <td class="small fs-lg-7 d-none d-lg-table-cell ls-0">{{ UnixtoText[index] }}</td>
-            <td class="small fs-lg-7 text-start ls-0">{{ order.user.name }}</td>
+            <td class="fs-8 fs-lg-7 d-none d-lg-table-cell ls-0">{{ UnixtoText[index] }}</td>
+            <td class="small fs-lg-7 ls-0">{{ order.user.name }}</td>
             <td>
               <p class="fs-7 fs-lg-6">
                 <span
@@ -97,8 +102,8 @@
                 type="button"
                 class="btn btn-sm btn-outline-dark fw-normal"
                 data-bs-toggle="modal"
-                data-bs-target="#courseEditModal"
-                @click="getOrder(order.id)"
+                data-bs-target="#orderEditModal"
+                @click="getOrder(order.id), (needEnit = true)"
               >
                 編輯
               </button>
@@ -108,29 +113,42 @@
       </table>
     </div>
     <div v-else>
-      <h2 class="display-1 text-center">資料讀取中請稍後</h2>
+      <h2 class="fs-6 fw-light text-center">
+        <span class="line-loading-loop bg-gray-3 align-top"></span>
+        資料讀取中請稍後
+      </h2>
     </div>
     <PaginationComponent :now-target="'orders'" :is-user="false"></PaginationComponent>
+    <OrderEditModal
+      :single-order="singleOrder"
+      :need-enit="needEnit"
+      @update-need-enit="updateNeedEnit"
+    ></OrderEditModal>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'pinia';
 import getDataStore from '@/stores/GetDataStore';
-
+import OrderEditModal from '@/components/dashboard/OrderEditModal.vue';
 import PaginationComponent from '@/components/PaginationComponent.vue';
 
 export default {
-  components: { PaginationComponent },
+  components: { PaginationComponent, OrderEditModal },
   data() {
     return {
       orders: [],
+      singleOrder: {},
+      needEnit: false,
     };
   },
   methods: {
     ...mapActions(getDataStore, ['getRemoteData', 'addSeparator']),
     getOrder(id) {
-      console.log(id);
+      this.singleOrder = this.orders.find((order) => order.id === id);
+    },
+    updateNeedEnit(boolean) {
+      this.needEnit = boolean;
     },
   },
   computed: {
@@ -145,7 +163,6 @@ export default {
     },
     perOrderCourses() {
       return this.targetData.map((order) => {
-        console.log(order);
         const coursesArr = Object.values(order.products).map((ele) => ele.product);
         return coursesArr;
       });
