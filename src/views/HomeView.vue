@@ -170,7 +170,7 @@
                   class="position-absolute d-none d-lg-block"
                   data-aos="fade-down-left"
                   data-aos-duration="1200"
-                  data-aos-offset="100"
+                  data-aos-offset="200"
                   data-aos-anchor-placement="bottom-center"
                 />
               </div>
@@ -202,7 +202,8 @@
       <div
         class="row text-start justify-content-center"
         data-aos="fade-up"
-        data-aos-offset="300"
+        data-aos-delay="500"
+        data-aos-once="true"
         data-aos-duration="1000"
         data-aos-anchor-placement="bottom-bottom"
       >
@@ -277,9 +278,9 @@ export default {
     window.addEventListener(
       'scroll',
       this.debounce(() => {
-        if (window.scrollY > 1000) {
+        if (window.scrollY > 1200) {
           this.isAddAnimate = true;
-        } else if (window.scrollY < 1000) {
+        } else if (window.scrollY < 1200) {
           this.isAddAnimate = false;
         }
       }),
