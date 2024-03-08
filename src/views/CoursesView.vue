@@ -1,8 +1,8 @@
 <template>
+  <Loading :active="isLoading"></Loading>
   <div class="bg-linght" style="min-height: 100vh">
     <div
-      class="banner"
-      style="background-image: url('./src/assets/classes.jpg')"
+      class="banner" style="background-image: url('https://images.unsplash.com/photo-1561214078-f3247647fc5e?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"
     ></div>
     <main class="container-lg rounded-bottom">
       <nav aria-label="breadcrumb" class="mt-5">
@@ -191,15 +191,15 @@
        v-if="filteredProducts.length !== 0">
         <div class="col" v-for="(item) in filteredProducts" :key="item.id">
           <div class="card">
-            <a href="#" class="position-relative" @click.prevent="pushPage(item.id)">
+            <button type="button" class="position-absolute bookmark">
+      <img src="../assets/icon/bookmark.svg" alt="bookmark"></button>
+            <a href="#" class="position-relative ground-floor" @click.prevent="pushPage(item.id)">
               <img
               :src="item.imageUrl"
               class="card-img-top" style="height: 350px; object-fit: cover;"
               :alt="item.content"
             />
             <div class="card-img-overlay d-flex flex-column justify-content-between">
-    <button type="button" class="bookmark">
-      <img src="../assets/icon/bookmark.svg" alt="bookmark"></button>
     <div class="d-flex overlay-text">
       <img src="../assets/icon/user.svg" alt="user" class="overlay-img m-2">
       <h6 class="font-bold text-white">{{ item.coach }} 教練</h6>
@@ -220,7 +220,15 @@
                 <p class="card-text mb-0">{{ item.title }}</p>
                 <p class="card-text mb-0">免費</p>
               </div>
-              <button type="button" class="btn btn-primary">加入購物車</button>
+              <button type="button" class="btn btn-primary"
+              :disabled="status.loadingItem === item.id"
+               @click.prevent="addCart(item.id, item.title)">
+               <div class="spinner-border spinner-border-sm text-secondary" role="status"
+               v-if="status.loadingItem === item.id"
+               >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+               加入購物車</button>
             </div>
           </div>
         </div>
@@ -239,8 +247,6 @@
             <li class="page-item active">
               <a class="page-link" href="#">1</a>
             </li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
             <li class="page-item">
               <a class="page-link" href="#" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
@@ -254,6 +260,10 @@
 </template>
 
 <script>
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
+import { mapActions, mapState } from 'pinia';
+import cartStore from '@/stores/cartStore';
 
 export default {
   data() {
@@ -265,15 +275,16 @@ export default {
       sortOrder: 'asc', // 默認從小到大
       category: '全部課程',
       categorys: ['全部課程', '瑜珈', '有氧運動', '重量訓練'],
+      isLoading: true,
     };
   },
   methods: {
     getData() {
       this.axios
-        .get(`${this.url}${this.path}/products/all`)
+        .get(`${this.url}api/${this.path}/products/all`)
         .then((res) => {
           this.products = Object.values(res.data.products);
-          this.product = this.products;
+          this.isLoading = false;
         });
     },
     pushPage(id) {
@@ -282,6 +293,10 @@ export default {
     checkCategory(type) {
       this.category = type;
     },
+    ...mapActions(cartStore, ['addCart']),
+  },
+  components: {
+    Loading,
   },
   computed: {
     filteredProducts() {
@@ -299,6 +314,7 @@ export default {
       }
       return filtered;
     },
+    ...mapState(cartStore, ['status']),
   },
   mounted() {
     this.url = import.meta.env.VITE_API_URL;

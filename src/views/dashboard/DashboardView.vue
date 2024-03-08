@@ -8,6 +8,7 @@ export default {
       url: '',
       isColse: false,
       isLoading: false,
+      haveToken: false,
     };
   },
   methods: {
@@ -29,8 +30,9 @@ export default {
         })
         .catch((err) => {
           loader.hide();
+          const { message } = err.response.data;
           this.alertStyles.basic.fire({
-            ...this.basicContent(`錯誤${err.response.status}，請洽客服`, 2),
+            ...this.basicContent(`${message.replace(', ', '，')}`, 2),
             ...this.closedAction('replace', 'admin-login'),
           });
         });

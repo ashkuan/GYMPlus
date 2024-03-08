@@ -13,9 +13,11 @@
   "dependencies": {
     "@vee-validate/i18n": "^4.12.5",
     "@vee-validate/rules": "^4.12.5",
+    "animate.css": "^4.1.1",
     "aos": "^2.3.4",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.2",
+    "eslint-config-prettier": "^9.1.0",
     "pinia": "^2.1.7",
     "save": "^2.9.0",
     "sweetalert2": "^11.10.4",
