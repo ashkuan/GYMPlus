@@ -8,6 +8,7 @@ import CourseDelModal from '@/components/dashboard/CourseDelModal.vue';
 
 export default {
   components: { PaginationComponent, CourseEditModal, CourseDelModal },
+  props: ['haveToken'],
   data() {
     return {
       url: '',
@@ -54,7 +55,7 @@ export default {
 
 <template>
   <div class="container">
-    <h2 class="display-1 mb-md-0 text-center">
+    <h2 class="fs-3 fw-normal ls-0 mb-md-0 text-center">
       <span>課程管理</span>
     </h2>
     <div class="text-center text-md-end mb-3">
@@ -71,7 +72,7 @@ export default {
     <div v-if="courses.length !== 0" class="table-responsive mb-5">
       <table
         class="table table-hover text-center align-middle"
-        style="letter-spacing: 0px; min-width: 700px"
+        style="letter-spacing: 0px; min-width: 720px"
       >
         <thead>
           <tr class="table-gray-4">
@@ -83,7 +84,7 @@ export default {
             <th scope="col">上課時間</th>
             <th scope="col">售價</th>
             <th scope="col" width="90px">開課狀況</th>
-            <th scope="col" width="70px"></th>
+            <th scope="col" width="75px"></th>
           </tr>
         </thead>
         <tbody>
@@ -112,8 +113,8 @@ export default {
             <td>
               <h3 class="small fs-lg-7 fw-normal mb-0">{{ course.title }}</h3>
             </td>
-            <td>{{ course.coach }}</td>
-            <td class="small fs-lg-7">{{ course.time }}</td>
+            <td class="fs-8 fs-lg-7">{{ course.coach }}</td>
+            <td class="fs-8 fs-lg-7 ls-0">{{ course.time }}</td>
             <td class="fw-semibold">
               <span :class="{ 'text-danger ': course.price < course.origin_price }">
                 {{ course.price }}
@@ -145,7 +146,10 @@ export default {
       </table>
     </div>
     <div v-else>
-      <h2 class="display-1 text-center">資料讀取中請稍後</h2>
+      <h2 class="fs-6 fw-light text-center">
+        <span class="line-loading-loop bg-gray-3 align-top"></span>
+        資料讀取中請稍後
+      </h2>
     </div>
     <PaginationComponent :now-target="'products'" :is-user="false"></PaginationComponent>
   </div>
