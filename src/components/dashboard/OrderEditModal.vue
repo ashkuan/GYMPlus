@@ -310,6 +310,8 @@ export default {
     const danglingStr = '_element';
     this.editModal[danglingStr].addEventListener('hidden.bs.modal', () => {
       this.isEnitModel = false;
+      this.isDeledProduct = false;
+      this.rollbackCourse();
       this.$emit('updateNeedEnit', this.isEnitModel);
     });
     this.url = import.meta.env.VITE_API_URL;
