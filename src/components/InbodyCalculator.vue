@@ -143,10 +143,10 @@
           <button
             type="submit"
             class="btn btn-gray-1 btn-sm fs-md-7 align-self-lg-center py-lg-3 px-lg-8"
-            :disabled="isLoading"
+            :disabled="isGettingInfo"
           >
+            <span v-if="isGettingInfo" class="line-loading-loop"></span>
             看結果
-            <span v-show="isLoading" class="line-loading-loop bg-gray-3"></span>
           </button>
         </div>
       </VForm>
@@ -192,24 +192,26 @@
           }}
         </p>
         <p class="mb-4 mb-md-8 fs-6 fs-md-5 lh-sm fw-bold">為您推薦</p>
-        <div class="card">
+        <div class="card" aria-hidden="true">
           <div class="d-flex">
             <router-link :to="`/course/${singleInfo.id}`">
               <img
                 :src="singleInfo.imageUrl"
-                class="img-fluid rounded-3 me-3 me-md-4"
+                class="img-fluid border rounded-3 me-3 me-md-4"
                 :alt="singleInfo.title"
                 style="width: 100px; height: 72px"
               />
             </router-link>
-            <div class="col d-flex flex-column justify-content-center">
+            <div class="col d-flex flex-column justify-content-center placeholder-glow">
               <h4 class="card-title small fs-md-7 ls-md-2 fw-medium lh-base">
-                <router-link class="link-gray-1" :to="`/course/${singleInfo.id}`">
+                <span v-if="isGettingInfo" class="placeholder col-6"></span>
+                <router-link v-else class="link-gray-1" :to="`/course/${singleInfo.id}`">
                   {{ singleInfo.title }}
                   <span class="icon-rwd icon-base icon-left-arrow ms-2"></span>
                 </router-link>
               </h4>
-              <small class="fs-8 small-md">{{ singleInfo.coach }} 教練</small>
+              <span v-if="isGettingInfo" class="placeholder col-6"></span>
+              <small v-else class="fs-8 small-md">{{ singleInfo.coach }} 教練</small>
             </div>
           </div>
         </div>
@@ -286,7 +288,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(GetDataStore, ['singleInfo']),
+    ...mapState(GetDataStore, ['singleInfo', 'isGettingInfo']),
     personalSuggestion() {
       const { ffmi, sex, suggestions } = this;
       const sexRange = this.classRange[sex];

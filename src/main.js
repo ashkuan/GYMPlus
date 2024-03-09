@@ -1,4 +1,5 @@
 import 'bootstrap';
+import 'animate.css';
 import './assets/all.scss';
 
 import { createApp } from 'vue';
@@ -7,9 +8,7 @@ import { createPinia } from 'pinia';
 import VueAxios from 'vue-axios';
 import axios from 'axios';
 
-import {
-  Field, Form, ErrorMessage, defineRule, configure,
-} from 'vee-validate';
+import { Field, Form, ErrorMessage, defineRule, configure } from 'vee-validate';
 import * as rules from '@vee-validate/rules';
 import { localize, setLocale } from '@vee-validate/i18n';
 import zhTw from '@vee-validate/i18n/dist/locale/zh_TW.json';
@@ -58,7 +57,8 @@ defineRule('cardholderNumber', (value) => {
 // 聯絡地址驗證
 defineRule('isContact', (value) => {
   // 自定義驗證地址正则表达式
-  const contact = /^[\u4e00-\u9fa5]+(?:省|市|自治區|特別行政區)?[\u4e00-\u9fa5]+(?:市|區|縣)?[\u4e00-\u9fa5]+(?:街道)?[\u4e00-\u9fa5\d]+(?:號|弄|棟|單元|座|樓|層)?(?:[\u4e00-\u9fa5]+)?$/;
+  const contact =
+    /^[\u4e00-\u9fa5]+(?:省|市|自治區|特別行政區)?[\u4e00-\u9fa5]+(?:市|區|縣)?[\u4e00-\u9fa5]+(?:街道)?[\u4e00-\u9fa5\d]+(?:號|弄|棟|單元|座|樓|層)?(?:[\u4e00-\u9fa5]+)?$/;
   return contact.test(value) ? true : '請填寫正確的聯絡地址';
 });
 

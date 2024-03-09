@@ -1,12 +1,9 @@
 /* eslint-env node */
 module.exports = {
   root: true,
-  extends: ['plugin:vue/vue3-essential', 'eslint:recommended', 'airbnb-base'],
+  extends: ['plugin:vue/vue3-essential', 'eslint:recommended', 'airbnb-base', 'prettier'],
   parserOptions: {
     ecmaVersion: 'latest',
-  },
-  rules: {
-    'linebreak-style': [0, 'error', 'windos'],
   },
   settings: {
     'import/resolver': {
@@ -18,6 +15,6 @@ module.exports = {
     'import/core-modules': ['vite', '@vitejs/plugin-vue'],
   },
   rules: {
-    'linebreak-style': ['error', (process.platform === 'win32' ? 'windows' : 'unix')], // https://stackoverflow.com/q/39114446/2771889
+    'linebreak-style': ['error', process.platform === 'win32' ? 'windows' : 'unix'], // https://stackoverflow.com/q/39114446/2771889
   },
 };

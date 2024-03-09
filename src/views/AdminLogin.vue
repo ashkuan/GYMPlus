@@ -38,9 +38,6 @@ export default {
             this.alertStyles.basic.fire({
               ...this.basicContent(responce.message, 1),
               ...this.closedAction('replace', 'admin'),
-              // didClose: () => {
-              //   this.$router.replace('/admin');
-              // },
             });
           }
           this.isLoading = false;
@@ -137,8 +134,8 @@ export default {
             </ErrorMessage>
           </div>
           <button type="submit" class="btn btn-primary w-100 mb-6" :disabled="isLoading">
-            登入
             <span v-show="isLoading" class="line-loading-loop bg-gray-3"></span>
+            登入
           </button>
         </VForm>
       </div>

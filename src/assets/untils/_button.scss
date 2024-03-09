@@ -32,6 +32,7 @@ button.btn,.btn {
   &:disabled,
   &.disbaled {
     background: $gray-300;
+    border-color: $gray-300;
     color: $gray-500;
     opacity: 1;
     &.btn-white {

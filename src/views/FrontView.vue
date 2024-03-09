@@ -114,7 +114,7 @@
   <router-view></router-view>
 
   <footer class="bg-gray-1">
-    <div class="footer-top-rounded pt-8 pt-md-6 rounded-bottom border-5 bg-white"></div>
+    <div class="footer-top-rounded pt-8 pt-md-6 rounded-bottom bg-white"></div>
     <div class="container pt-1 pt-lg-4">
       <div class="border-bottom border-gray-2 fw-medium">
         <ul class="nav justify-content-center justify-content-lg-start pb-1 pb-lg-4">

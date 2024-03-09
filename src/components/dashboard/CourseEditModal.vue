@@ -236,11 +236,13 @@
                     @change="getImgFile"
                   />
                   <button
-                    class="btn btn-outline-gray-3"
+                    class="btn btn-outline-gray-3 ls-2"
                     type="button"
                     @click="uploadImg(isImgArr, $refs.fileInput)"
+                    :disabled="isAddingImg"
                   >
-                    新增圖片
+                    <span v-if="isAddingImg" class="line-loading-loop bg-white"></span>
+                    <span v-else>新增圖片</span>
                   </button>
                 </div>
                 <div class="mt-auto ms-md-auto">
@@ -272,7 +274,9 @@
             type="button"
             class="btn btn-gray-1 flex-grow-1 flex-md-grow-0"
             @click="editCourse(temp.id, editModal)"
+            :disabled="isEditingCourse"
           >
+            <span v-show="isEditingCourse" class="line-loading-loop bg-white"></span>
             {{ temp.id ? '更新課程' : '新增課程' }}
           </button>
         </div>
@@ -307,7 +311,7 @@ export default {
     ]),
   },
   computed: {
-    ...mapState(adminCourseStore, ['temp']),
+    ...mapState(adminCourseStore, ['temp', 'isEditingCourse', 'isAddingImg']),
     checkedtargets() {
       return this.targets.map((ele) => {
         const tempTargets = this.temp.target;

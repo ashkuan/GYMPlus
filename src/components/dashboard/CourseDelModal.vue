@@ -47,7 +47,9 @@
             type="button"
             class="btn btn-danger flex-grow-1 flex-sm-grow-0"
             @click="delCourse(temp.id, delModal)"
+            :disabled="isEditingCourse"
           >
+            <span v-show="isEditingCourse" class="line-loading-loop bg-white"></span>
             確認刪除
           </button>
         </div>
@@ -71,7 +73,7 @@ export default {
     ...mapActions(adminCourseStore, ['delCourse']),
   },
   computed: {
-    ...mapState(adminCourseStore, ['temp']),
+    ...mapState(adminCourseStore, ['temp', 'isEditingCourse']),
   },
   mounted() {
     this.delModal = new bootstrap.Modal(this.$refs.courseDelModal);
