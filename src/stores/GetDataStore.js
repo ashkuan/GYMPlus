@@ -23,7 +23,10 @@ export default defineStore('getDataStore', {
           this.targetData = res.data[target];
         })
         .catch((err) => {
-          alertStyles.basic.fire(basicContent(`錯誤${err.response.status}，請洽客服`, 2));
+          const { status } = err.response;
+          if (isUser) {
+            alertStyles.basic.fire(basicContent(`錯誤${status}，請洽客服`, 2));
+          }
         });
     },
     getFrontSingleInfo(target, id) {
