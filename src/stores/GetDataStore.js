@@ -23,10 +23,7 @@ export default defineStore('getDataStore', {
           this.targetData = res.data[target];
         })
         .catch((err) => {
-          const { status } = err.response;
-          if (isUser) {
-            alertStyles.basic.fire(basicContent(`錯誤${status}，請洽客服`, 2));
-          }
+          alertStyles.basic.fire(basicContent(`錯誤${err.response.status}，請洽客服`, 2));
         });
     },
     getFrontSingleInfo(target, id) {
@@ -40,16 +37,6 @@ export default defineStore('getDataStore', {
         .catch((err) => {
           alertStyles.basic.fire(basicContent(`錯誤${err.response.status}，請洽客服`, 2));
           this.isGettingInfo = !this.isGettingInfo;
-        });
-    },
-    getFrontSingleInfo(target, id) {
-      axios
-        .get(`${url}/api/${path}/${target}/${id}`)
-        .then((res) => {
-          this.singleInfo = res.data[target];
-        })
-        .catch((err) => {
-          alertStyles.basic.fire(basicContent(`錯誤${err.response.status}，請洽客服`, 2));
         });
     },
   },
