@@ -33,7 +33,7 @@
                 type="button"
                 class="btn btn-sm btn-outline-danger border-0 p-1"
                 data-bs-toggle="modal"
-                data-bs-target="#courseDelModal"
+                data-bs-target="#orderDelModal"
                 @click="getOrder(order.id)"
               >
                 <span class="icon-base icon-sm icon-trash"></span>
@@ -126,6 +126,7 @@
       :is-order-finished="isOrderFinished"
       @update-need-enit="updateNeedEnit"
     ></OrderEditModal>
+    <OrderDelModal :single-order="singleOrder"></OrderDelModal>
   </div>
 </template>
 
@@ -133,10 +134,11 @@
 import { mapActions, mapState } from 'pinia';
 import getDataStore from '@/stores/GetDataStore';
 import OrderEditModal from '@/components/dashboard/OrderEditModal.vue';
+import OrderDelModal from '@/components/dashboard/OrderDelModal.vue';
 import PaginationComponent from '@/components/PaginationComponent.vue';
 
 export default {
-  components: { PaginationComponent, OrderEditModal },
+  components: { PaginationComponent, OrderEditModal, OrderDelModal },
   data() {
     return {
       orders: [],

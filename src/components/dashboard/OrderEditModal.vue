@@ -11,7 +11,7 @@
       <div class="modal-content">
         <div class="modal-header bg-linear py-3">
           <h3 class="modal-title fs-5 fw-medium text-white" id="productModal">
-            {{ isEniting ? `編輯訂單` : `訂單詳細` }}：
+            {{ isEnitModel ? `編輯訂單` : `訂單詳細` }}：
             <span class="ls-0">{{ order.id }}</span>
           </h3>
         </div>
@@ -25,7 +25,7 @@
                   <select
                     class="form-select form-select-sm col"
                     id="status"
-                    v-if="isEniting"
+                    v-if="isEnitModel"
                     v-model="order.is_paid"
                   >
                     <option value="true">已付款</option>
@@ -43,7 +43,7 @@
               <table class="table text-center align-middle small">
                 <thead>
                   <tr class="table-light">
-                    <th scope="col" width="52px" :class="{ 'd-none': !isEniting }"></th>
+                    <th scope="col" width="52px" :class="{ 'd-none': !isEnitModel }"></th>
                     <th scope="col">課程編號</th>
                     <th scope="col" class="d-none d-lg-table-cell">縮圖</th>
                     <th scope="col">標題</th>
@@ -54,7 +54,7 @@
                 </thead>
                 <tbody>
                   <tr v-for="course in courses" :key="course.id">
-                    <td :class="{ 'd-none': !isEniting }">
+                    <td :class="{ 'd-none': !isEnitModel }">
                       <button
                         type="button"
                         class="btn btn-sm btn-outline-danger border-0 p-1"
@@ -109,11 +109,11 @@
                     <label for="description" class="form-label d-flex mb-1">
                       <span class="d-inline-block" style="min-width: 75px">備註事項：</span>
                       <span :class="{ 'text-gray-4': !order.remark }">
-                        {{ isEniting ? '' : order.remark ? order.remark : '無' }}
+                        {{ isEnitModel ? '' : order.remark ? order.remark : '無' }}
                       </span>
                     </label>
                     <textarea
-                      v-if="isEniting"
+                      v-if="isEnitModel"
                       id="description"
                       class="form-control form-control-sm"
                       placeholder="記錄訂單備註"
@@ -178,20 +178,20 @@
             關閉視窗
           </button>
           <button
-            v-show="isEniting"
+            v-show="isEnitModel"
             type="button"
             class="btn btn-gray-1 flex-grow-1 flex-md-grow-0"
             @click="editOrder(order.id)"
-            :disabled="false"
+            :disabled="isEniting"
           >
-            <span v-show="false" class="line-loading-loop bg-white"></span>
+            <span v-show="isEniting" class="line-loading-loop bg-white"></span>
             更新訂單
           </button>
           <button
-            v-show="!isEniting && !isOrderFinished"
+            v-show="!isEnitModel && !isOrderFinished"
             type="button"
             class="btn btn-primary flex-grow-1 flex-md-grow-0"
-            @click="isEniting = !isEniting"
+            @click="isEnitModel = !isEnitModel"
           >
             前往編輯
           </button>
@@ -219,6 +219,7 @@ export default {
       },
       temporaryProducts: {},
       isDeledProduct: false,
+      isEnitModel: false,
       isEniting: false,
     };
   },
@@ -226,6 +227,7 @@ export default {
     ...mapActions(GetDataStore, ['getRemoteData']),
     ...mapActions(AlertStore, ['basicContent']),
     editOrder(id) {
+      this.isEniting = !this.isEniting;
       this.order.is_paid = this.order.is_paid === 'true';
       const data = { data: { ...this.order } };
       this.axios
@@ -235,6 +237,7 @@ export default {
             ...this.basicContent(res.data.message, 1),
             didClose: () => {
               this.editModal.hide();
+              this.isEniting = !this.isEniting;
               this.getRemoteData('orders', this.pagination.current_page, false);
             },
           });
@@ -242,6 +245,7 @@ export default {
         .catch((err) => {
           this.alertStyles.basic.fire(this.basicContent(err.response.data.message, 2));
           this.editModal.hide();
+          this.isEniting = !this.isEniting;
         });
     },
     delCourse(id) {
@@ -295,10 +299,9 @@ export default {
       this.order = JSON.parse(JSON.stringify(newOrder));
       // 儲存 producs (復原用)
       this.temporaryProducts = JSON.parse(JSON.stringify(this.order.products));
-      console.log(this.order);
     },
     needEnit(boolean) {
-      this.isEniting = boolean;
+      this.isEnitModel = boolean;
     },
   },
   mounted() {
@@ -306,8 +309,8 @@ export default {
     this.editModal = new bootstrap.Modal(this.$refs.orderEditModal);
     const danglingStr = '_element';
     this.editModal[danglingStr].addEventListener('hidden.bs.modal', () => {
-      this.isEniting = false;
-      this.$emit('updateNeedEnit', this.isEniting);
+      this.isEnitModel = false;
+      this.$emit('updateNeedEnit', this.isEnitModel);
     });
     this.url = import.meta.env.VITE_API_URL;
     this.path = import.meta.env.VITE_API_PATH;
