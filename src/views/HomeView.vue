@@ -170,7 +170,7 @@
                   class="position-absolute d-none d-lg-block"
                   data-aos="fade-down-left"
                   data-aos-duration="1200"
-                  data-aos-offset="200"
+                  data-aos-offset="100"
                   data-aos-anchor-placement="bottom-center"
                 />
               </div>
@@ -202,8 +202,7 @@
       <div
         class="row text-start justify-content-center"
         data-aos="fade-up"
-        data-aos-delay="500"
-        data-aos-once="true"
+        data-aos-offset="300"
         data-aos-duration="1000"
         data-aos-anchor-placement="bottom-bottom"
       >
@@ -253,6 +252,8 @@ export default {
   methods: {
     ...mapActions(CartStore, ['getCarts']),
     // 防抖動
+    debounce(func, delay = 250) {
+      let timer = null;
       return (...args) => {
         const context = this;
         clearTimeout(timer);
@@ -263,6 +264,7 @@ export default {
     },
   },
   watch: {
+    isLoading(now) {
       if (!now && this.loader) {
         this.loader.hide();
         this.loader = null;
@@ -275,9 +277,9 @@ export default {
     window.addEventListener(
       'scroll',
       this.debounce(() => {
-        if (window.scrollY > 1200) {
+        if (window.scrollY > 1000) {
           this.isAddAnimate = true;
-        } else if (window.scrollY < 1200) {
+        } else if (window.scrollY < 1000) {
           this.isAddAnimate = false;
         }
       }),
@@ -470,7 +472,7 @@ export default {
 .number-shape {
   display: inline-block;
   padding: 2px 5px;
-  background: url(/number-shape.svg) center/cover;
+  background: url(number-shape.svg) center/cover;
   @media (min-width: 992px) {
     padding: 0 5px;
   }
