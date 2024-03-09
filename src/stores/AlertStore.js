@@ -10,7 +10,7 @@ export default defineStore('alertStore', {
         basic: {
           customClass: {
             confirmButton: 'btn py-2 btn-gray-1',
-            title: 'h4 mb-0',
+            title: 'h4 mb-0 ls-0',
             icon: 'small mb-0',
             container: 'border-4',
           },
@@ -37,7 +37,7 @@ export default defineStore('alertStore', {
   actions: {
     // 基本內容
     basicContent(title, iconCode = 0, confirmButtonText = '確認') {
-      const iconArr = ['', 'success', 'error'];
+      const iconArr = ['', 'success', 'error', 'warning'];
       return {
         icon: iconArr[iconCode],
         title,

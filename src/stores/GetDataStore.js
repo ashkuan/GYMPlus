@@ -39,5 +39,17 @@ export default defineStore('getDataStore', {
           this.isGettingInfo = !this.isGettingInfo;
         });
     },
+    addSeparator(price) {
+      let priceStr = price.toString();
+      let i = 0;
+      for (i; i < priceStr.length / 4; i += 1) {
+        const target = priceStr.at(-3 * (i + 1) - i);
+        priceStr = priceStr.replace(target, `,${target}`);
+      }
+      if (priceStr[0] === ',') {
+        priceStr = priceStr.slice(1);
+      }
+      return priceStr;
+    },
   },
 });
