@@ -30,7 +30,7 @@
       },
     }"
   >
-    <swiper-slide v-for="course in courses" :key="course.key">
+    <swiper-slide v-for="(course, index) in courses" :key="course.key">
       <div class="card text-white text-start bg-transparent">
         <div class="position-relative">
           <img :src="course.imageUrl" class="card-img-top rounded-4" alt="course.title" />
@@ -79,10 +79,10 @@
               class="btn btn-primary btn-sm py-2 py-xxl-3 px-xxl-8 fs-lg-7"
               title="立即加購"
               @click.prevent="addCart(course.id, course.title), (isAddingToCart = true)"
-              :disabled="isAddingToCart"
+              :disabled="isAddingToCart || isInCartArr[index]"
             >
               <span v-if="isAddingToCart" class="line-loading-loop"></span>
-              加入購物車
+              {{ isInCartArr[index] ? '已在購物車' : '加入購物車' }}
             </button>
           </div>
         </div>
@@ -135,9 +135,13 @@ export default {
   computed: {
     ...mapState(GetDataStore, ['targetData']),
     ...mapState(FakeDataStore, ['coaches']),
-    ...mapState(CartStore, ['isLoading']),
+    ...mapState(CartStore, ['isLoading', 'carts']),
     courses() {
       return this.targetData.filter((course, index) => index > 4);
+    },
+    isInCartArr() {
+      const cartIds = this.carts.map((cart) => cart.product_id);
+      return this.courses.map((course) => cartIds.some((cartId) => cartId === course.id));
     },
   },
   watch: {
