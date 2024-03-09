@@ -1,6 +1,6 @@
 <template>
   <Loading :active="isLoading"></Loading>
-  <div class="bg-light" style="min-height: 100vh;">
+  <div class="bg-white" style="min-height: 100vh;">
     <main v-if="!isLoading">
       <div class="container">
         <nav aria-label="breadcrumb" class="pt-5">

@@ -1,8 +1,9 @@
 <template>
   <Loading :active="isLoading"></Loading>
- <div class="bg-light" style="min-height: 100vh">
-    <main class="container-lg">
-      <nav aria-label="breadcrumb">
+ <div class="bg-white" style="min-height: 100vh">
+    <main v-if="!isLoading" data-aos="fade-up">
+      <div class="container">
+        <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
             <router-link to="/" class="mx-2">首頁</router-link>
@@ -12,35 +13,40 @@
           <li class="breadcrumb-item active" aria-current="page">{{ product?.title }}</li>
         </ol>
       </nav>
-      <div class="d-flex align-items-center my-4">
+      <div class="d-flex flex-column flex-md-row align-items-center my-4">
         <h2 class="font-bold mb-0">
         {{ product?.title }}
         </h2>
-        <span class="badge rounded-pill bg-primary h-25 mx-2 p-2">{{ product?.category }}</span>
+        <div class="d-flex py-3 py-md-0">
+          <span class="badge rounded-pill bg-primary h-25 mx-2 p-2">{{ product?.category }}</span>
         <span class="badge rounded-pill bg-primary h-25 mx-2 p-2">
           {{ product?.coach }} 教練</span>
+        </div>
       </div>
       <section class="card mb-3">
         <div class="row g-0">
-    <div class="col-md-6">
+    <div class="col-12 col-lg-6">
       <img :src="product?.imageUrl" class="img-fluid rounded-start" alt="img">
     </div>
-    <div class="col">
-      <div class="card-body d-flex flex-column">
+    <div class="col-12 col-lg-6">
+      <div class="card-body d-flex flex-column justify-content-between h-100">
         <ul>
           <li><p class="card-text">開課時間：{{ product?.time }}</p></li>
           <li><p class="card-text">授課教練：{{ product?.coach }}</p></li>
           <li><p class="card-text">難易度：{{ product?.difficulty }}</p></li>
           <li><p class="card-text">適合對象：{{ joinedString }}</p></li>
+          <li style="list-style-type: none;">
+            <p class="card-text py-3">{{ product?.description }}</p></li>
         </ul>
-        <p class="card-text px-5">
-          {{ product?.description }}
-        </p>
-        <span class="align-self-end text-decoration-line-through opacity-50 fs-4">
+        <div class="d-flex flex-column">
+        <span class="align-self-end text-decoration-line-through opacity-50 fs-6">
           NT$ {{ product?.origin_price }}</span>
-        <p class="card-text align-self-end mb-0 fs-3">NT$ {{ product?.price }}</p>
+        <p class="card-text align-self-end mb-0 fs-5">NT$ {{ product?.price }}</p>
         <button type="button" class="btn btn-outline-danger
          rounded align-self-end w-50"
+         v-if="this.carts.some(id => id.product_id === this.id)" disabled>已加入購物車</button>
+        <button type="button" class="btn btn-outline-danger
+         rounded align-self-end w-50" v-else
           @click.prevent="addCart(this.product.id, this.product.title)"
          :disabled="this.product.id === status.loadingItem">
          <div class="spinner-border spinner-border-sm text-secondary" role="status"
@@ -48,13 +54,14 @@
                   <span class="visually-hidden">Loading...</span>
                 </div>
          購買課程</button>
+        </div>
       </div>
     </div>
   </div>
       </section>
       <section class="p-5">
         <h4>注意事項</h4>
-        <ul class="row row-cols-1 row-cols-md-2">
+        <ul class="row row-cols-1 row-cols-md-2" style="list-style-type: none;">
           <li class="px-3">
             <p class="mb-0 font-bold">
               取消與轉讓政策：
@@ -89,7 +96,7 @@
           </li>
         </ul>
       </section>
-      <section class="mb-5 pb-5 border-bottom border-2 ">
+      <section class="mb-5 pb-5">
         <h5>學員回饋</h5>
         <div class="row row-cols-1 row-cols-md-3 gy-4 gy-md-0">
           <div class="col">
@@ -139,28 +146,11 @@
           </div>
         </div>
       </section>
-      <section class="mb-5">
-        <h5>你可能還喜歡</h5>
-        <div class="row row-cols-1 row-cols-md-4 gy-4  overflow-auto">
-          <div class="col" v-for="item in filteredProducts" :key="item.id"
-           @click.prevent="pushPage(item.id)">
-           <div class="card">
-            <button type="button" class="position-absolute bookmark">
-      <img src="../assets/icon/bookmark.svg" alt="bookmark"></button>
-            <a href="#" class="position-relative ground-floor" @click.prevent="pushPage(item.id)">
-              <img
-              :src="item.imageUrl"
-              class="card-img-top" style="height: 350px; object-fit: cover;"
-              :alt="item.content"
-            />
-            <div class="card-img-overlay d-flex flex-column justify-content-between">
-    <div class="d-flex overlay-text">
-      <h6 class="font-bold text-white mx-2">{{ item.title }}</h6>
-    </div>
-  </div>
-            </a>
-          </div>
-          </div>
+      </div>
+      <section class="bg-dark block-space overflow-hidden">
+        <div class="container  position-relative">
+          <h5 class="text-secondary text-center py-3">你可能還喜歡</h5>
+          <CoursesSwiper></CoursesSwiper>
         </div>
       </section>
     </main>
@@ -173,6 +163,9 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 import { mapActions, mapState } from 'pinia';
 import cartStore from '@/stores/cartStore';
+import CoursesSwiper from '@/components/SwiperComponents.vue';
+import Aos from 'aos';
+import 'aos/dist/aos.css';
 
 export default {
   props: ['id'],
@@ -208,25 +201,25 @@ export default {
       }, 500);
     },
     ...mapActions(cartStore, ['addCart']),
+    ...mapActions(cartStore, ['getCarts']),
   },
   components: {
     Loading,
+    CoursesSwiper,
   },
   computed: {
     joinedString() {
       return this.product?.target?.join(', '); // 使用逗号和空格作为分隔符
     },
-    filteredProducts() {
-      let filtered = this.products;
-      filtered = filtered.filter((item) => item.coach === this.product.coach);
-      return filtered;
-    },
     ...mapState(cartStore, ['status']),
+    ...mapState(cartStore, ['carts']),
   },
   mounted() {
     window.scrollTo(0, 0);
     this.url = import.meta.env.VITE_API_URL;
     this.path = import.meta.env.VITE_API_PATH;
+    Aos.init({ });
+    this.getCarts();
     this.getData();
   },
 };

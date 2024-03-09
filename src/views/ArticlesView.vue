@@ -1,6 +1,6 @@
 <template>
   <Loading :active="isLoading"></Loading>
-  <div class="bg-linght" style="min-height: 100vh;">
+  <div class="bg-white" style="min-height: 100vh;">
     <div class="banner" style="background-image: url('https://images.unsplash.com/photo-1517130038641-a774d04afb3c?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
     <main class="container">
       <nav aria-label="breadcrumb" class="mt-5">
@@ -15,14 +15,14 @@
         <div class="btn-group mb-4 mx-auth col-12 col-lg-6">
           <button type="button" class="btn btn-primary"
           v-for="(item, index) in articlesType" :key="index"
-          :class="{'active': item === article}"
+          :class="{'active': item === article}" role="button"
            @click.prevent="checkArticle(item)">{{ item }}</button>
         </div>
       </div>
       <section class="row row-cols-1" v-if="filteredArticles.length !== 0">
         <div class="col d-flex justify-content-start justify-content-md-center"
         v-for="item in filteredArticles" :key="item.id">
-          <div class="card mb-3" style="max-width: 540px;">
+          <div class="card border shadow-sm mb-3" style="max-width: 540px;">
   <div class="row g-0">
     <div class="col-12 col-md-4">
       <img :src="item.image" class="img-fluid rounded-start" :alt="item.title">

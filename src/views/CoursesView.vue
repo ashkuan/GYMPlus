@@ -1,6 +1,6 @@
 <template>
   <Loading :active="isLoading"></Loading>
-  <div class="bg-linght" style="min-height: 100vh">
+  <div class="bg-white" style="min-height: 100vh">
     <div
       class="banner" style="background-image: url('https://images.unsplash.com/photo-1561214078-f3247647fc5e?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"
     ></div>
@@ -20,152 +20,39 @@
            @click.prevent="checkCategory(item)">{{ item }}</button>
         </div>
       </div>
-      <div class="d-flex justify-content-center">
-        <div class="d-flex flex-column border border-3 rounded w-100 px-2">
-          <p>進一步指定你的教練</p>
-          <div class="row row-cols-1 row-cols-md-5 gy-3 gy-md-0">
-            <div class="col d-flex justify-content-start justify-content-md-center">
-              <div class="form-check">
+      <div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button"
+       type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+        aria-expanded="false" aria-controls="collapseOne">
+        進一步指定你的教練
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse"
+     aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <div class="row row-cols-1 row-cols-lg-5 gy-3 gy-md-0">
+            <div class="col d-flex justify-content-start"
+            v-for="(item, index) in coaches" :key="index">
+              <div class="form-check d-flex align-items-center">
                 <input
                   class="form-check-input"
                   type="checkbox"
-                  value="Alex"
-                  id="Alex"
+                  :value="item.name"
+                  :id="item.name"
                   v-model="coach"
                 />
-                <label class="form-check-label" for="Alex"> Alex </label>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="30"
-                  height="30"
-                  fill="currentColor"
-                  class="bi bi-person-circle mx-1"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                  <path
-                    fill-rule="evenodd"
-                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468
-                    11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div class="col d-flex justify-content-start justify-content-md-center">
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value="Olivia Chang"
-                  id="Olivia Chang"
-                  v-model="coach"
-                />
-                <label class="form-check-label" for="Olivia Chang">
-                  Olivia Chang
-                </label>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="30"
-                  height="30"
-                  fill="currentColor"
-                  class="bi bi-person-circle mx-1"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                  <path
-                    fill-rule="evenodd"
-                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468
-                    11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div class="col d-flex justify-content-start justify-content-md-center">
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value="Jackson Liu"
-                  id="Jackson Liu"
-                  v-model="coach"
-                />
-                <label class="form-check-label" for="Jackson Liu">
-                  Jackson Liu
-                </label>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="30"
-                  height="30"
-                  fill="currentColor"
-                  class="bi bi-person-circle mx-1"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                  <path
-                    fill-rule="evenodd"
-                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468
-                    11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div class="col d-flex justify-content-start justify-content-md-center">
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value="Emma"
-                  id="Emma"
-                  v-model="coach"
-                />
-                <label class="form-check-label" for="Emma"> Emma </label>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="30"
-                  height="30"
-                  fill="currentColor"
-                  class="bi bi-person-circle mx-1"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                  <path
-                    fill-rule="evenodd"
-                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468
-                    11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div class="col d-flex justify-content-start justify-content-md-center">
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value="Dhalsim"
-                  id="Dhalsim"
-                  v-model="coach"
-                />
-                <label class="form-check-label" for="Dhalsim"> Dhalsim </label>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="30"
-                  height="30"
-                  fill="currentColor"
-                  class="bi bi-person-circle mx-1"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                  <path
-                    fill-rule="evenodd"
-                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468
-                    11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
-                  />
-                </svg>
+                <label class="form-check-label px-2" :for="item.name"> {{ item.name }} </label>
+                <img :src="item.avatarUrl" alt="course.coach" class="rounded-circle"
+                 style="width: 40px;">
               </div>
             </div>
           </div>
-        </div>
       </div>
+    </div>
+  </div>
+  </div>
       <div class="row justify-content-end align-items-center my-3">
         <div class="col-12 col-md-5">
           <div class="row justify-content-end align-items-center">
@@ -179,7 +66,6 @@
           id="class"
           v-model="sortOrder"
         >
-          <option selected>熱門課程</option>
           <option value="asc">價格由低到高</option>
           <option value="desc">價格由高到低</option>
         </select>
@@ -189,9 +75,11 @@
       </div>
       <section class="row row-cols-1 row-cols-lg-3 g-5 gx-lg-4"
        v-if="filteredProducts.length !== 0">
-        <div class="col" v-for="(item) in filteredProducts" :key="item.id">
-          <div class="card">
-            <button type="button" class="position-absolute bookmark">
+        <div class="col" data-aos="zoom-in" v-for="(item) in filteredProducts" :key="item.id">
+          <div class="card shadow-sm">
+            <button type="button"
+             class="position-absolute bookmark btn btn-dark
+              rounded-circle border-0 align-self-start p-2 p-lg-3 ms-auto">
       <img src="../assets/icon/bookmark.svg" alt="bookmark"></button>
             <a href="#" class="position-relative ground-floor" @click.prevent="pushPage(item.id)">
               <img
@@ -201,7 +89,7 @@
             />
             <div class="card-img-overlay d-flex flex-column justify-content-between">
     <div class="d-flex overlay-text">
-      <img src="../assets/icon/user.svg" alt="user" class="overlay-img m-2">
+      <img :src="matchingKey(item.coach)" alt="user" class="overlay-img m-2">
       <h6 class="font-bold text-white">{{ item.coach }} 教練</h6>
     </div>
   </div>
@@ -220,7 +108,9 @@
                 <p class="card-text mb-0">{{ item.title }}</p>
                 <p class="card-text mb-0">免費</p>
               </div>
-              <button type="button" class="btn btn-primary"
+              <button type="button" class="btn btn-primary" disabled
+              v-if="this.carts.some(id => id.product_id === item.id)">已加入購物車</button>
+              <button type="button" class="btn btn-primary" v-else
               :disabled="status.loadingItem === item.id"
                @click.prevent="addCart(item.id, item.title)">
                <div class="spinner-border spinner-border-sm text-secondary" role="status"
@@ -236,24 +126,25 @@
       <section v-else>
         <h5>未查詢到此篩選結果</h5>
       </section>
-      <section class="d-flex justify-content-center mt-5">
+      <section class="d-flex justify-content-center mt-5" v-if="filteredProducts.length !==0">
+        <PaginationComponent :now-target="'products'" :isUser="true"></PaginationComponent>
+      </section>
+      <section class="d-flex justify-content-center mt-5" v-else>
         <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <li class="page-item disabled">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li class="page-item active">
-              <a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+  <ul class="pagination">
+    <li class="page-item disabled">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link active" href="#">1</a></li>
+    <li class="page-item disabled">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
       </section>
     </main>
   </div>
@@ -264,6 +155,11 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 import { mapActions, mapState } from 'pinia';
 import cartStore from '@/stores/cartStore';
+import PaginationComponent from '@/components/PaginationComponent.vue';
+import FakeDataStore from '@/stores/FakeDataStore';
+import getDataStore from '@/stores/GetDataStore';
+import Aos from 'aos';
+import 'aos/dist/aos.css';
 
 export default {
   data() {
@@ -279,24 +175,23 @@ export default {
     };
   },
   methods: {
-    getData() {
-      this.axios
-        .get(`${this.url}api/${this.path}/products/all`)
-        .then((res) => {
-          this.products = Object.values(res.data.products);
-          this.isLoading = false;
-        });
-    },
     pushPage(id) {
       this.$router.push(`course/${id}`);
     },
     checkCategory(type) {
       this.category = type;
     },
+    matchingKey(item) {
+      const matchingKey = Object.keys(this.coaches).find((key) => key === item);
+      return matchingKey ? this.coaches[matchingKey].avatarUrl : '';
+    },
     ...mapActions(cartStore, ['addCart']),
+    ...mapActions(getDataStore, ['getRemoteData']),
+    ...mapActions(cartStore, ['getCarts']),
   },
   components: {
     Loading,
+    PaginationComponent,
   },
   computed: {
     filteredProducts() {
@@ -315,11 +210,30 @@ export default {
       return filtered;
     },
     ...mapState(cartStore, ['status']),
+    ...mapState(cartStore, ['carts']),
+    ...mapState(getDataStore, ['targetData']),
+    ...mapState(FakeDataStore, ['coaches']),
+  },
+  watch: {
+    targetData(vaule) {
+      this.products = vaule;
+    },
+    filteredProducts() {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 500);
+    },
   },
   mounted() {
     this.url = import.meta.env.VITE_API_URL;
     this.path = import.meta.env.VITE_API_PATH;
-    this.getData();
+    Aos.init({ });
+    this.getCarts();
+    this.getRemoteData('products', 1);
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1500);
   },
 };
 </script>

@@ -50,9 +50,9 @@ export default {
   props: ['nowTarget', 'isUser'],
   data() {
     return {
-      url: '',
-      path: '',
-      nowPage: 0,
+      url: import.meta.env.VITE_API_URL,
+      path: import.meta.env.VITE_API_PATH,
+      nowPage: 1,
     };
   },
   methods: {
