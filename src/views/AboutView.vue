@@ -1,7 +1,24 @@
 <template>
-  <div>
-    <h1>This is an about page</h1>
-  </div>
+ 001
 </template>
 
-<style lang="scss"></style>
+<script>
+
+
+export default {
+  data() {
+    return {
+      url: "",
+      path: "",
+    };
+  },
+  methods: {
+    
+  },
+  mounted() {
+    this.url = import.meta.env.VITE_API_URL;
+    this.path = import.meta.env.VITE_API_PATH;
+  },
+};
+</script>
+
