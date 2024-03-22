@@ -1,4 +1,5 @@
 import 'bootstrap';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'animate.css';
 import './assets/all.scss';
 
