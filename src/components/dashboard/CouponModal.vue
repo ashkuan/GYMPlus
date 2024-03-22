@@ -65,7 +65,7 @@
                   id="exp"
                   class="form-control form-control-sm"
                   placeholder="請輸入到期日"
-                  v-model="coupon.exp"
+                  v-model="coupon.due_date_str"
                 />
               </div>
             </div>
@@ -94,7 +94,7 @@
                 </li>
                 <li class="list-group-item px-0">
                   到期日：
-                  <span class="ls-0">{{ coupon.exp }}</span>
+                  <span class="ls-0">{{ dueDateStr }}</span>
                 </li>
               </ul>
             </div>
@@ -137,9 +137,9 @@ export default {
       url: '',
       path: '',
       couponModal: null,
-      coupon: {},
-      // temporaryProducts: {},
-      // isDeledProduct: false,
+      coupon: {
+        is_enabled: 0,
+      },
       nowStatus: null,
       isEniting: false,
     };
@@ -147,23 +147,34 @@ export default {
   methods: {
     ...mapActions(GetDataStore, ['getRemoteData']),
     ...mapActions(AlertStore, ['basicContent']),
+    // 包含新增、編輯、刪除
     editCoupon(id) {
+      this.isEniting = !this.isEniting;
+      const { coupon, nowStatus } = this;
+      coupon.is_enabled = parseInt(coupon.is_enabled, 10);
+      coupon.due_date = new Date(coupon.due_date_str).getTime() / 1000;
+      let obj = { data: { ...coupon } };
       let method = 'post';
-      if (this.nowStatus === 2) {
+      if (nowStatus === 2) {
         method = `put`;
-      } else if (!this.nowStatus) {
+      } else if (!nowStatus) {
+        obj = null;
         method = 'delete';
       }
-      console.log(method, id, this.coupon);
-      this.axios[method](
-        `${this.url}api/${this.path}/admin/coupon${id ? `/${id}` : ''}`,
-        this.coupon,
-      )
+      this.axios[method](`${this.url}api/${this.path}/admin/coupon${id ? `/${id}` : ''}`, obj)
         .then((res) => {
-          console.log(res.data);
+          this.alertStyles.basic.fire({
+            ...this.basicContent(res.data.message, 1),
+            didClose: () => {
+              this.$emit('needGetNewData');
+              this.isEniting = !this.isEniting;
+              this.couponModal.hide();
+            },
+          });
         })
         .catch((err) => {
-          console.log(err.response);
+          this.isEniting = !this.isEniting;
+          this.alertStyles.basic.fire(this.basicContent(err.response.data.message, 2));
         });
     },
   },
@@ -176,26 +187,27 @@ export default {
       }
       return `刪除`;
     },
+    dueDateStr() {
+      const dateObj = new Date(this.coupon.due_date * 1000);
+      const month = `${dateObj.getMonth() + 1}`.padStart(2, '0');
+      const date = `${dateObj.getDate()}`.padStart(2, '0');
+      return `${dateObj.getFullYear()}-${month}-${date}`;
+    },
   },
   watch: {
-    couponInfo(newCoupon) {
-      this.coupon = newCoupon;
-      console.log(this.coupon);
-    },
     editStatus(status) {
       this.nowStatus = status;
     },
+    couponInfo(newCoupon) {
+      const isAddCoupon = !Object.keys(newCoupon).length;
+      this.coupon = this.$options.data().coupon;
+      if (!isAddCoupon) {
+        this.coupon = { ...this.coupon, ...newCoupon };
+      }
+    },
   },
   mounted() {
-    // modal 操作
     this.couponModal = new bootstrap.Modal(this.$refs.couponModal);
-    const danglingStr = '_element';
-    this.couponModal[danglingStr].addEventListener('hidden.bs.modal', () => {
-      // this.isEnitModel = false;
-      // this.isDeledProduct = false;
-      // this.rollbackCourse();
-      // this.$emit('updateNeedEnit', this.isEnitModel);
-    });
     this.url = import.meta.env.VITE_API_URL;
     this.path = import.meta.env.VITE_API_PATH;
   },

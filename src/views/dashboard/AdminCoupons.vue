@@ -18,9 +18,13 @@ export default {
       this.couponInfo = couponInfo;
       this.editStatus = editStatus;
     },
+    getNewData() {
+      const page = this.pagination.current_page;
+      this.getRemoteData('coupons', page, false);
+    },
   },
   computed: {
-    ...mapState(getDataStore, ['targetData']),
+    ...mapState(getDataStore, ['targetData', 'pagination']),
   },
   mounted() {
     this.getRemoteData('coupons', 1, false);
@@ -85,7 +89,7 @@ export default {
             <td class="fw-semibold">
               {{ coupon.percent }}
             </td>
-            <td class="fs-8 fs-lg-7 ls-0">{{ coupon.expiryDate }}</td>
+            <td class="fs-8 fs-lg-7 ls-0">{{ coupon.due_date_str }}</td>
             <td>
               <p class="fs-7 fs-lg-6">
                 <span
@@ -119,7 +123,11 @@ export default {
     </div>
     <PaginationComponent :now-target="'coupons'" :is-user="false"></PaginationComponent>
   </div>
-  <CouponModal :coupon-info="couponInfo" :edit-status="editStatus" />
+  <CouponModal
+    :coupon-info="couponInfo"
+    :edit-status="editStatus"
+    @need-get-new-data="getNewData"
+  />
 </template>
 
 <style lang="scss"></style>
