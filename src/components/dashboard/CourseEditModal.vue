@@ -7,21 +7,21 @@
     aria-labelledby="courseEditModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header bg-linear py-3">
-          <h3 class="modal-title fs-5 fw-medium text-white" id="productModal">
+          <h3 class="modal-title fs-6 fs-sm-5 fw-medium text-white" id="productModal">
             {{ temp.id ? '編輯課程' : '新增課程' }}
           </h3>
         </div>
-        <div class="modal-body pt-4">
+        <div class="modal-body p-5 px-xl-6">
           <div class="container-fluid">
-            <form class="row admin-form">
-              <div class="col-lg-7">
+            <form class="row admin-form gx-6">
+              <div class="col-lg-7 mb-3 mb-lg-0">
                 <div class="row g-3">
-                  <div class="col-md-6">
+                  <div class="col-xl-6">
                     <div class="row g-1 align-items-center">
-                      <label for="title" class="col-3 col-md-4 form-label">課程標題</label>
+                      <label for="title" class="col-2 col-xl-3 form-label">課程標題</label>
                       <div class="col">
                         <input
                           type="text"
@@ -33,7 +33,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-xl-6">
                     <div class="row g-1 align-items-center">
                       <label for="category" class="col-2 form-label">分類</label>
                       <div class="col">
@@ -50,21 +50,32 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="row g-1 align-items-center">
-                      <label for="time" class="col-3 col-md-4 form-label">上課日期</label>
-                      <div class="col">
+                  <div class="col-xl-6">
+                    <div class="row g-1 align-items-center" ref="dueDate">
+                      <label for="time" class="col-2 col-xl-3 form-label">上課日期</label>
+                      <div class="col input-group input-group-sm">
                         <input
                           type="text"
                           id="time"
-                          class="form-control form-control-sm"
+                          class="form-control"
                           placeholder="請輸入上課日期"
                           v-model="temp.time"
+                          data-input
                         />
+                        <button class="btn btn-light" type="button" data-toggle>
+                          <i class="bi bi-calendar-plus"></i>
+                        </button>
+                        <button
+                          class="btn btn-outline-gray-4 rounded-end-1 text-dark"
+                          type="button"
+                          data-clear
+                        >
+                          <i class="bi bi-x-lg"></i>
+                        </button>
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-xl-6">
                     <div class="row g-1 align-items-center">
                       <label for="coach" class="col-2 form-label">教練</label>
                       <div class="col">
@@ -77,7 +88,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-xl-6">
                     <div class="row g-1 align-items-center">
                       <label for="origin_price" class="col-2 form-label">原價</label>
                       <div class="col input-group input-group-sm">
@@ -93,7 +104,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-xl-6">
                     <div class="row g-1 align-items-center">
                       <label for="price" class="col-2 form-label">售價</label>
                       <div class="col input-group input-group-sm">
@@ -109,8 +120,8 @@
                       </div>
                     </div>
                   </div>
-                  <hr class="mt-5 mb-2" />
-                  <div class="col-md-12">
+                  <hr class="mt-5" />
+                  <div class="col-md-12 mt-2">
                     <div class="row g-1">
                       <label class="col-3 col-md-2 form-label" style="padding-top: 2px">
                         推薦對象
@@ -168,7 +179,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-lg-5 d-flex flex-column mt-3 mt-xl-0">
+              <div class="col-lg-5 d-flex flex-column">
                 <label for="img" class="form-label mb-2">課程圖片</label>
                 <div class="position-relative mb-2" style="height: 180px">
                   <img
@@ -265,14 +276,14 @@
         <div class="modal-footer border-0 shadow shadow-top">
           <button
             type="button"
-            class="btn btn-outline-gray-3 flex-grow-1 flex-md-grow-0 me-2"
+            class="btn btn-sm btn-outline-gray-3 flex-grow-1 flex-lg-grow-0 me-2"
             data-bs-dismiss="modal"
           >
             關閉視窗
           </button>
           <button
             type="button"
-            class="btn btn-gray-1 flex-grow-1 flex-md-grow-0"
+            class="btn btn-sm btn-gray-1 flex-grow-1 flex-lg-grow-0"
             @click="editCourse(temp.id, editModal)"
             :disabled="isEditingCourse"
           >
@@ -289,6 +300,8 @@
 import * as bootstrap from 'bootstrap';
 import { mapActions, mapState } from 'pinia';
 import adminCourseStore from '@/stores/dashboard/AdminCourseStore';
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.css';
 
 export default {
   data() {
@@ -299,6 +312,7 @@ export default {
       targets: ['年長者', '初學者', '親子', '進階', '健力', '復健', '體態維持'],
       isAddingToCart: false,
       editModal: {},
+      dateDom: null,
     };
   },
   methods: {
@@ -332,6 +346,11 @@ export default {
     const danglingStr = '_element';
     this.editModal[danglingStr].addEventListener('hidden.bs.modal', () => {
       this.resetTemp();
+    });
+    this.dateDom = this.$refs.dueDate;
+    flatpickr(this.dateDom, {
+      minDate: 'today',
+      wrap: true,
     });
   },
 };
