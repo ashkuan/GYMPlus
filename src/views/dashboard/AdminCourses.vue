@@ -70,10 +70,7 @@ export default {
       </button>
     </div>
     <div v-if="courses.length !== 0" class="table-responsive mb-5">
-      <table
-        class="table table-hover text-center align-middle"
-        style="letter-spacing: 0px; min-width: 720px"
-      >
+      <table class="table table-hover text-center align-middle ls-0" style="min-width: 720px">
         <thead>
           <tr class="table-gray-4">
             <th scope="col" width="52px"></th>
@@ -133,7 +130,7 @@ export default {
             <td>
               <button
                 type="button"
-                class="btn btn-sm btn-outline-dark fw-normal"
+                class="btn btn-sm py-1 btn-outline-dark fw-normal"
                 data-bs-toggle="modal"
                 data-bs-target="#courseEditModal"
                 @click="getCourse(course.id)"

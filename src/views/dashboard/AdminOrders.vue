@@ -13,12 +13,12 @@
       </button>
     </div> -->
     <div v-if="orders.length !== 0" class="table-responsive mb-5">
-      <table class="table table-hover text-center align-middle" style="min-width: 760px">
+      <table class="table table-hover text-center align-middle ls-0" style="min-width: 760px">
         <thead>
           <tr class="table-gray-4">
             <th scope="col" width="52px"></th>
             <th scope="col" width="210px">訂單編號</th>
-            <th scope="col" class="d-none d-lg-table-cell">成立日期</th>
+            <th scope="col" class="d-none d-xl-table-cell">成立日期</th>
             <th scope="col">訂購人</th>
             <th scope="col">訂單狀態</th>
             <th scope="col">付款狀態</th>
@@ -49,7 +49,7 @@
                 <h3 class="small fs-lg-7 fw-normal text-start ls-0 mb-0">{{ order.id }}</h3>
               </a>
             </td>
-            <td class="fs-8 fs-lg-7 d-none d-lg-table-cell ls-0">{{ UnixtoText[index] }}</td>
+            <td class="fs-8 fs-lg-7 d-none d-xl-table-cell ls-0">{{ UnixtoText[index] }}</td>
             <td class="small fs-lg-7 ls-0">{{ order.user.name }}</td>
             <td>
               <p class="fs-7 fs-lg-6">
@@ -100,7 +100,7 @@
             <td>
               <button
                 type="button"
-                class="btn btn-sm btn-outline-dark fw-normal"
+                class="btn btn-sm py-1 btn-outline-dark fw-normal"
                 data-bs-toggle="modal"
                 data-bs-target="#orderEditModal"
                 @click="getOrder(order.id), (needEnit = true)"

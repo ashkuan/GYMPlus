@@ -3,9 +3,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header bg-linear-danger py-3">
-          <h3 class="modal-title fs-5 fw-medium text-white">刪除課程</h3>
+          <h3 class="modal-title fs-6 fs-sm-5 fw-medium text-white">刪除課程</h3>
         </div>
-        <div class="modal-body pt-4">
+        <div class="modal-body p-5">
           <div class="container-fluid">
             <div class="row">
               <h4 class="fs-6">確定要刪除課程？</h4>
@@ -23,7 +23,7 @@
                 </ul>
               </div>
               <div class="col-sm-5">
-                <div class="position-relative" style="height: 120px">
+                <div class="position-relative mx-7 mx-sm-0" style="height: 140px">
                   <img
                     :src="temp.imageUrl"
                     :alt="temp.title"
@@ -38,14 +38,14 @@
         <div class="modal-footer border-0 shadow shadow-top">
           <button
             type="button"
-            class="btn btn-outline-gray-3 flex-grow-1 flex-sm-grow-0 me-2"
+            class="btn btn-sm btn-outline-gray-3 flex-grow-1 flex-md-grow-0 me-2"
             data-bs-dismiss="modal"
           >
             關閉視窗
           </button>
           <button
             type="button"
-            class="btn btn-danger flex-grow-1 flex-sm-grow-0"
+            class="btn btn-danger btn-sm flex-grow-1 flex-md-grow-0"
             @click="delCourse(temp.id, delModal)"
             :disabled="isEditingCourse"
           >
