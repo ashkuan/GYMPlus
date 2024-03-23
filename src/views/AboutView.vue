@@ -75,10 +75,10 @@
 </template>
 
 <script>
+import classRoomStore from '@/stores/classroomStore';
 import { mapState } from "pinia";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import classRoomStore from '@/stores/cartStore';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 import Aos from 'aos';
