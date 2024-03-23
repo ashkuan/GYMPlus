@@ -76,9 +76,9 @@
 
 <script>
 import { mapState } from "pinia";
-import classroom from "@/stores/classRoomStore";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import classRoomStore from '@/stores/cartStore';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 import Aos from 'aos';
@@ -96,7 +96,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(classroom, ["classRoom"]),
+    ...mapState(classRoomStore, ["classRoom"]),
   },
   components: {
     Swiper,
