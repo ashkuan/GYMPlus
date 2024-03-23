@@ -13,14 +13,14 @@
           class="modal-header py-3"
           :class="[status === '刪除' ? 'bg-linear-danger' : 'bg-linear']"
         >
-          <h3 class="modal-title fs-5 fw-medium text-white">
+          <h3 class="modal-title fs-6 fs-sm-5 fw-medium text-white">
             <span>{{ status }}優惠券</span>
-            <span class="ls-0 fs-6" v-if="coupon.id">：{{ coupon.id }}</span>
+            <span class="ls-0 small fs-sm-6" v-if="coupon.id">：{{ coupon.id }}</span>
           </h3>
         </div>
         <div class="modal-body p-5">
           <div v-show="status !== '刪除'">
-            <form class="admin-form container-fluid px-6 d-flex flex-column">
+            <form class="admin-form container-fluid px-sm-6 d-flex flex-column">
               <div class="row g-3 mb-3 align-items-center">
                 <label for="title" class="col-3 form-label">標題</label>
                 <div class="col">
@@ -58,9 +58,9 @@
                   />
                 </div>
               </div>
-              <div class="row g-3 mb-3 align-items-center flatpickr" ref="dueDate">
+              <div class="row g-3 mb-3 align-items-center">
                 <label for="dueDate" class="col-3 form-label">到期日</label>
-                <div class="col input-group input-group-sm">
+                <div class="col input-group input-group-sm" ref="dueDate">
                   <input
                     type="text"
                     id="dueDate"
@@ -116,14 +116,14 @@
         <div class="modal-footer border-0 shadow shadow-top">
           <button
             type="button"
-            class="btn btn-outline-gray-3 flex-grow-1 flex-md-grow-0 me-2"
+            class="btn btn-sm btn-outline-gray-3 flex-grow-1 flex-md-grow-0 me-2"
             data-bs-dismiss="modal"
           >
             關閉視窗
           </button>
           <button
             type="button"
-            class="btn flex-grow-1 flex-md-grow-0"
+            class="btn btn-sm flex-grow-1 flex-md-grow-0"
             :class="[status === '刪除' ? 'btn-danger' : 'btn-gray-1']"
             @click="editCoupon(coupon.id)"
             :disabled="isEniting"
@@ -227,7 +227,7 @@ export default {
     this.dateDom = this.$refs.dueDate;
     flatpickr(this.dateDom, {
       minDate: 'today',
-      maxDate: new Date().fp_incr(180),
+      maxDate: new Date().fp_incr(365),
       wrap: true,
     });
     this.url = import.meta.env.VITE_API_URL;

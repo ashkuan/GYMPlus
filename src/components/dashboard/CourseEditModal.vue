@@ -10,7 +10,7 @@
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header bg-linear py-3">
-          <h3 class="modal-title fs-5 fw-medium text-white" id="productModal">
+          <h3 class="modal-title fs-6 fs-sm-5 fw-medium text-white" id="productModal">
             {{ temp.id ? '編輯課程' : '新增課程' }}
           </h3>
         </div>
@@ -350,7 +350,6 @@ export default {
     this.dateDom = this.$refs.dueDate;
     flatpickr(this.dateDom, {
       minDate: 'today',
-      maxDate: new Date().fp_incr(180),
       wrap: true,
     });
   },

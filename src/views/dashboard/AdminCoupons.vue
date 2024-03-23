@@ -8,6 +8,7 @@ export default {
   components: { PaginationComponent, CouponModal },
   data() {
     return {
+      coupons: [],
       couponInfo: {},
       editStatus: null,
     };
@@ -25,6 +26,11 @@ export default {
   },
   computed: {
     ...mapState(getDataStore, ['targetData', 'pagination']),
+  },
+  watch: {
+    targetData(coupons) {
+      this.coupons = coupons;
+    },
   },
   mounted() {
     this.getRemoteData('coupons', 1, false);
@@ -49,15 +55,12 @@ export default {
         <span>新增優惠券</span>
       </button>
     </div>
-    <div v-if="targetData.length !== 0" class="table-responsive mb-5">
-      <table
-        class="table table-hover text-center align-middle"
-        style="letter-spacing: 0px; min-width: 720px"
-      >
+    <div v-if="coupons.length !== 0" class="table-responsive mb-5">
+      <table class="table table-hover text-center align-middle ls-0" style="min-width: 620px">
         <thead>
           <tr class="table-gray-4">
             <th scope="col" width="52px"></th>
-            <th scope="col">標號</th>
+            <th scope="col" class="d-none d-lg-table-cell" width="220px">編號</th>
             <th scope="col">標題</th>
             <th scope="col">代碼</th>
             <th scope="col">折扣趴數</th>
@@ -67,7 +70,7 @@ export default {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="coupon in targetData" :key="coupon.id">
+          <tr v-for="coupon in coupons" :key="coupon.id">
             <td>
               <button
                 type="button"
@@ -79,13 +82,13 @@ export default {
                 <span class="icon-base icon-sm icon-trash"></span>
               </button>
             </td>
-            <td class="fs-8 fs-lg-7">
+            <td class="fs-8 fs-lg-7 ls-0 text-start d-none d-lg-table-cell">
               {{ coupon.id }}
             </td>
             <td>
               <h3 class="small fs-lg-7 fw-normal mb-0">{{ coupon.title }}</h3>
             </td>
-            <td class="fs-8 fs-lg-7">{{ coupon.code }}</td>
+            <td class="small fs-lg-7">{{ coupon.code }}</td>
             <td class="fw-semibold">
               {{ coupon.percent }}
             </td>
@@ -103,7 +106,7 @@ export default {
             <td>
               <button
                 type="button"
-                class="btn btn-sm btn-outline-dark fw-normal"
+                class="btn btn-sm py-1 btn-outline-dark fw-normal"
                 data-bs-toggle="modal"
                 data-bs-target="#couponModal"
                 @click="getCoupon(coupon, 2)"

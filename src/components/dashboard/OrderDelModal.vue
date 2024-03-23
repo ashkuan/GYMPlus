@@ -3,7 +3,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header bg-linear-danger py-3">
-          <h3 class="modal-title fs-5 fw-medium text-white">刪除訂單</h3>
+          <h3 class="modal-title fs-6 fs-sm-5 fw-medium text-white">刪除訂單</h3>
         </div>
         <div class="modal-body p-5">
           <div class="container-fluid">
@@ -30,7 +30,11 @@
               <div class="col-sm-5">
                 <h5 class="fs-7 fw-normal text-center bg-light mb-2 rounded-2 py-1">訂單內容</h5>
                 <ul class="list-unstyled mb-0">
-                  <li v-for="course in courses" :key="course.product_id" class="d-flex small py-2">
+                  <li
+                    v-for="course in courses"
+                    :key="course.product_id"
+                    class="d-flex align-items-start small py-2"
+                  >
                     <span class="bg-secondary d-inline-block rounded-circle me-1">
                       <span
                         class="icon-base icon-left-arrow m-1 bg-white"
@@ -47,14 +51,14 @@
         <div class="modal-footer border-0 shadow shadow-top">
           <button
             type="button"
-            class="btn btn-outline-gray-3 flex-grow-1 flex-sm-grow-0 me-2"
+            class="btn btn-outline-gray-3 btn-sm flex-grow-1 flex-sm-grow-0 me-2"
             data-bs-dismiss="modal"
           >
             關閉視窗
           </button>
           <button
             type="button"
-            class="btn btn-danger flex-grow-1 flex-sm-grow-0"
+            class="btn btn-danger btn-sm flex-grow-1 flex-sm-grow-0"
             @click="delOerder(order.id)"
             :disabled="isDelingOrder"
           >
