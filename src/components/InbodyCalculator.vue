@@ -321,7 +321,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(GetDataStore, ['getFrontSingleInfo']),
+    ...mapActions(GetDataStore, ['getSingleInfo']),
     calculateValue(value) {
       const { height, weight, fatPercentage } = value;
       const denominator = (height / 100) ** 2;
@@ -332,12 +332,12 @@ export default {
       if (!courseId) {
         courseId = '-NrTU50o7sU6teneehCS';
       }
-      this.getFrontSingleInfo('product', courseId);
+      this.getSingleInfo('product', courseId);
     },
   },
   mounted() {
     // 預設取得推薦課程
-    this.getFrontSingleInfo('product', '-NrTU50o7sU6teneehCS');
+    this.getSingleInfo('product', '-NrTU50o7sU6teneehCS');
   },
 };
 </script>
