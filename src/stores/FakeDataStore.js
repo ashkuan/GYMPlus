@@ -172,5 +172,7 @@ export default defineStore("fackDataStore", {
         ],
       },
     },
+    // 文章分類
+    articleTags: ['健身好處', '健身知識', '營養素', '開課訊息'],
   }),
 });

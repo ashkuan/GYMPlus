@@ -171,7 +171,7 @@
                           id="description"
                           class="form-control form-control-sm"
                           placeholder="請輸入課程描述"
-                          style="height: 157px"
+                          style="height: 121px"
                           v-model="temp.description"
                         ></textarea>
                       </div>
@@ -184,7 +184,6 @@
                 <div class="position-relative mb-2" style="height: 180px">
                   <img
                     v-if="temp.imageUrl"
-                    v-show="temp.imageUrl"
                     :src="temp.imageUrl"
                     alt="主要圖片"
                     class="img-fluid w-100 h-100 rounded-2"
