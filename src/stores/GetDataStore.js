@@ -42,6 +42,7 @@ export default defineStore('getDataStore', {
           this.isGettingInfo = !this.isGettingInfo;
         });
     },
+    // 價格千位符
     addSeparator(price) {
       let priceStr = price.toString();
       let i = 0;

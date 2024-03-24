@@ -1,10 +1,10 @@
 <template>
-  <div class="container">
-    <h2 class="fs-3 fw-normal ls-0 mb-md-0 text-center">文章管理</h2>
-    <div class="d-flex justify-content-between">
-      <div class="row g-1 align-items-center mb-3">
-        <label for="img" class="col-2 col-xl-3 form-label">文章篩選</label>
-        <div class="col">
+  <div class="container mb-6">
+    <h2 class="fs-3 fw-normal ls-0 text-center">文章管理</h2>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div class="row gx-3 align-items-center">
+        <label for="img" class="col-2 col-xl-3 form-label pe-0">文章篩選</label>
+        <div class="col ps-0">
           <select class="form-select form-select-sm">
             <option selected hidden>依類別</option>
             <option value="全部">全部</option>
@@ -28,10 +28,10 @@
       </button>
     </div>
     <div v-if="articles.length !== 0">
+      <small class="text-muted fs-8 small-md">點擊後可進行編輯或刪除</small>
       <div class="row">
         <div class="col-6">
-          <small class="text-muted fs-8 small-md">點擊後可進行編輯或刪除</small>
-          <div class="list-group">
+          <div class="list-group mb-5">
             <button
               type="button"
               class="list-group-item list-group-item-action d-flex align-items-center"
@@ -42,34 +42,38 @@
               <img
                 :src="article.image"
                 :alt="article.title"
-                class="rounded-3"
+                class="rounded-2"
                 style="width: 120px; height: 80px"
               />
-              <div class="ms-2 me-auto">
-                <h3 class="small fs-lg-7">{{ article.title }}</h3>
+              <div class="ms-3 me-auto">
+                <h3 class="mb-0 small fs-lg-7">
+                  {{ article.title }}
+                </h3>
+                <span
+                  class="badge bg-primary bg-opacity-50 fw-light me-2"
+                  v-for="tag in article.tag"
+                  :key="tag"
+                >
+                  {{ tag }}
+                </span>
                 <p class="card-text">
                   <small class="text-muted fs-8 small-md">作者：{{ article.author }}</small>
-                  <span
-                    class="badge bg-primary bg-opacity-50 fw-light ms-2"
-                    v-for="tag in article.tag"
-                    :key="tag"
-                  >
-                    {{ tag }}
-                  </span>
                 </p>
               </div>
               <span
-                class="badge p-2 rounded-circle ms-5"
+                class="badge p-1 rounded-circle ms-5"
                 :class="[article.isPublic ? 'bg-success' : 'bg-danger']"
               >
-                <i class="bi bi-eye" :class="[article.isPublic ? 'bi-eye' : 'bi-eye-slash']"></i>
+                <i class="bi" :class="[article.isPublic ? 'bi-eye-fill' : 'bi-eye-slash']"></i>
               </span>
             </button>
-            <PaginationComponent :now-target="'articles'" :is-user="false"></PaginationComponent>
           </div>
+          <PaginationComponent :now-target="'articles'" :is-user="false"></PaginationComponent>
         </div>
         <div class="col-6">
-          <ArticleEditBlock :is-add-new="isAddNew" :get-new-data="getNewData" />
+          <div class="shadow-sm rounded-3">
+            <ArticleEditBlock :is-add-new="isAddNew" :get-new-data="getNewData" />
+          </div>
         </div>
       </div>
     </div>
@@ -101,7 +105,7 @@ export default {
     ...mapActions(getDataStore, ['getRemoteData', 'getSingleInfo']),
     getNewData() {
       const page = this.pagination.current_page;
-      this.getRemoteData('coupons', page, false);
+      this.getRemoteData('articles', page, false);
     },
   },
   computed: {
