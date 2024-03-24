@@ -289,7 +289,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 /* banner 客製化 */
 .banner-img {
   .icon-base {

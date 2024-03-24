@@ -1,43 +1,3 @@
-<script>
-import { mapActions, mapState } from 'pinia';
-import getDataStore from '@/stores/GetDataStore';
-import PaginationComponent from '@/components/PaginationComponent.vue';
-import CouponModal from '@/components/dashboard/CouponModal.vue';
-
-export default {
-  components: { PaginationComponent, CouponModal },
-  data() {
-    return {
-      coupons: [],
-      couponInfo: {},
-      editStatus: null,
-    };
-  },
-  methods: {
-    ...mapActions(getDataStore, ['getRemoteData']),
-    getCoupon(couponInfo, editStatus) {
-      this.couponInfo = couponInfo;
-      this.editStatus = editStatus;
-    },
-    getNewData() {
-      const page = this.pagination.current_page;
-      this.getRemoteData('coupons', page, false);
-    },
-  },
-  computed: {
-    ...mapState(getDataStore, ['targetData', 'pagination']),
-  },
-  watch: {
-    targetData(coupons) {
-      this.coupons = coupons;
-    },
-  },
-  mounted() {
-    this.getRemoteData('coupons', 1, false);
-  },
-};
-</script>
-
 <template>
   <div class="container">
     <h2 class="fs-3 fw-normal ls-0 mb-md-0 text-center">
@@ -132,5 +92,45 @@ export default {
     @need-get-new-data="getNewData"
   />
 </template>
+
+<script>
+import { mapActions, mapState } from 'pinia';
+import getDataStore from '@/stores/GetDataStore';
+import PaginationComponent from '@/components/PaginationComponent.vue';
+import CouponModal from '@/components/dashboard/CouponModal.vue';
+
+export default {
+  components: { PaginationComponent, CouponModal },
+  data() {
+    return {
+      coupons: [],
+      couponInfo: {},
+      editStatus: null,
+    };
+  },
+  methods: {
+    ...mapActions(getDataStore, ['getRemoteData']),
+    getCoupon(couponInfo, editStatus) {
+      this.couponInfo = couponInfo;
+      this.editStatus = editStatus;
+    },
+    getNewData() {
+      const page = this.pagination.current_page;
+      this.getRemoteData('coupons', page, false);
+    },
+  },
+  computed: {
+    ...mapState(getDataStore, ['targetData', 'pagination']),
+  },
+  watch: {
+    targetData(coupons) {
+      this.coupons = coupons;
+    },
+  },
+  mounted() {
+    this.getRemoteData('coupons', 1, false);
+  },
+};
+</script>
 
 <style lang="scss"></style>

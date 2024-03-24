@@ -156,6 +156,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss">
 .course-swiper {
   max-width: 255px;

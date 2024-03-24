@@ -1,3 +1,7 @@
+<template>
+  <RouterView />
+</template>
+
 <script>
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -8,9 +12,5 @@ export default {
   },
 };
 </script>
-
-<template>
-  <RouterView />
-</template>
 
 <style scoped lang="scss"></style>

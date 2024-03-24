@@ -1,63 +1,3 @@
-<script>
-import { mapActions, mapState } from 'pinia';
-import AlertStore from '../stores/AlertStore';
-
-export default {
-  data() {
-    return {
-      url: '',
-      path: '',
-      isLoading: false,
-    };
-  },
-  methods: {
-    ...mapActions(AlertStore, ['basicContent', 'closedAction']),
-    login(value) {
-      const { username, password } = value;
-      const user = { username, password };
-      this.isLoading = true;
-      this.axios
-        .post(`${this.url}/admin/signin`, user)
-        .then((res) => {
-          const responce = res.data;
-          if (responce.error) {
-            switch (responce.error.code) {
-              case 'auth/user-not-found':
-                this.alertStyles.basic.fire(this.basicContent('查無此帳號', 2));
-                break;
-              case 'auth/wrong-password':
-                this.alertStyles.basic.fire(this.basicContent('密碼輸入錯誤', 2));
-                break;
-              default:
-                this.alertStyles.basic.fire(this.basicContent('登入失敗，請洽客服', 2));
-                break;
-            }
-          } else {
-            const { token, expired } = responce;
-            document.cookie = `adminToken=${token}; expires=${new Date(expired)};`;
-            this.alertStyles.basic.fire({
-              ...this.basicContent(responce.message, 1),
-              ...this.closedAction('replace', 'admin'),
-            });
-          }
-          this.isLoading = false;
-        })
-        .catch((err) => {
-          this.alertStyles.basic.fire(this.basicContent(`錯誤${err.response.status}，請洽客服`, 2));
-          this.isLoading = false;
-        });
-    },
-  },
-  mounted() {
-    this.url = import.meta.env.VITE_API_URL;
-    this.path = import.meta.env.VITE_API_PATH;
-  },
-  computed: {
-    ...mapState(AlertStore, ['alertStyles']),
-  },
-};
-</script>
-
 <template>
   <div class="bg-light" style="min-height: 100vh">
     <nav class="navbar navbar-light bg-white">
@@ -142,5 +82,65 @@ export default {
     </div>
   </div>
 </template>
+
+<script>
+import { mapActions, mapState } from 'pinia';
+import AlertStore from '../stores/AlertStore';
+
+export default {
+  data() {
+    return {
+      url: '',
+      path: '',
+      isLoading: false,
+    };
+  },
+  methods: {
+    ...mapActions(AlertStore, ['basicContent', 'closedAction']),
+    login(value) {
+      const { username, password } = value;
+      const user = { username, password };
+      this.isLoading = true;
+      this.axios
+        .post(`${this.url}/admin/signin`, user)
+        .then((res) => {
+          const responce = res.data;
+          if (responce.error) {
+            switch (responce.error.code) {
+              case 'auth/user-not-found':
+                this.alertStyles.basic.fire(this.basicContent('查無此帳號', 2));
+                break;
+              case 'auth/wrong-password':
+                this.alertStyles.basic.fire(this.basicContent('密碼輸入錯誤', 2));
+                break;
+              default:
+                this.alertStyles.basic.fire(this.basicContent('登入失敗，請洽客服', 2));
+                break;
+            }
+          } else {
+            const { token, expired } = responce;
+            document.cookie = `adminToken=${token}; expires=${new Date(expired)};`;
+            this.alertStyles.basic.fire({
+              ...this.basicContent(responce.message, 1),
+              ...this.closedAction('replace', 'admin'),
+            });
+          }
+          this.isLoading = false;
+        })
+        .catch((err) => {
+          this.alertStyles.basic.fire(this.basicContent(`錯誤${err.response.status}，請洽客服`, 2));
+          this.isLoading = false;
+        });
+    },
+  },
+  mounted() {
+    this.url = import.meta.env.VITE_API_URL;
+    this.path = import.meta.env.VITE_API_PATH;
+  },
+  computed: {
+    ...mapState(AlertStore, ['alertStyles']),
+  },
+};
+</script>
 
 <style lang="scss"></style>

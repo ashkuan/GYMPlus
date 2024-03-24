@@ -1,75 +1,3 @@
-<script>
-import { mapActions, mapState } from 'pinia';
-import AlertStore from '../../stores/AlertStore';
-
-export default {
-  data() {
-    return {
-      url: '',
-      isColse: false,
-      isLoading: false,
-      haveToken: false,
-    };
-  },
-  methods: {
-    ...mapActions(AlertStore, ['basicContent', 'closedAction']),
-    checkIdentity() {
-      // 全頁讀取
-      const loader = this.$loading.show();
-      this.axios
-        .post(`${this.url}/api/user/check`)
-        .then((res) => {
-          loader.hide();
-          const { success, message } = res.data;
-          if (!success) {
-            this.alertStyles.basic.fire({
-              ...this.basicContent(message.replace(', ', '，'), 2),
-              ...this.closedAction('replace', 'admin-login'),
-            });
-          }
-        })
-        .catch((err) => {
-          loader.hide();
-          const { message } = err.response.data;
-          this.alertStyles.basic.fire({
-            ...this.basicContent(`${message.replace(', ', '，')}`, 2),
-            ...this.closedAction('replace', 'admin-login'),
-          });
-        });
-    },
-    logout() {
-      this.isLoading = !this.isLoading;
-      this.axios
-        .post(`${this.url}/logout`)
-        .then((res) => {
-          this.isLoading = !this.isLoading;
-          this.alertStyles.basic.fire({
-            ...this.basicContent(res.data.message, 1),
-            ...this.closedAction('replace', 'admin-login'),
-          });
-        })
-        .catch((err) => {
-          this.isLoading = !this.isLoading;
-          this.alertStyles.basic.fire(this.basicContent(`錯誤${err.response.status}，請洽客服`, 2));
-        });
-    },
-  },
-  computed: {
-    ...mapState(AlertStore, ['alertStyles']),
-    sidebarWidth() {
-      return this.isColse ? 0 : 260;
-    },
-  },
-  created() {
-    this.url = import.meta.env.VITE_API_URL;
-    // 權限驗證
-    const token = document.cookie.replace(/(?:(?:^|.*;\s*)adminToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
-    this.axios.defaults.headers.common.Authorization = token;
-    this.checkIdentity();
-  },
-};
-</script>
-
 <template>
   <button
     type="button"
@@ -164,25 +92,79 @@ export default {
   </div>
 </template>
 
-<style lang="scss">
-.menu-btn {
-  span {
-    width: 40px;
-    height: 40px;
-    display: inline-block;
-    vertical-align: bottom;
-    transition: all 0.5s ease-out;
-    &.menu-icon {
-      --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='m6.4 18.308l-.708-.708l5.6-5.6l-5.6-5.6l.708-.708l5.6 5.6l5.6-5.6l.708.708l-5.6 5.6l5.6 5.6l-.708.708l-5.6-5.6z'/%3E%3C/svg%3E");
-    }
-  }
-  &.collapsed {
-    .menu-icon {
-      --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath fill='%23000' d='M6.6665 28.7833V27.1167H33.3332V28.7833H6.6665ZM6.6665 20.8333V19.1667H33.3332V20.8333H6.6665ZM6.6665 12.8833V11.2167H33.3332V12.8833H6.6665Z'/%3E%3C/svg%3E");
-    }
-  }
-}
+<script>
+import { mapActions, mapState } from 'pinia';
+import AlertStore from '../../stores/AlertStore';
 
+export default {
+  data() {
+    return {
+      url: '',
+      isColse: false,
+      isLoading: false,
+      haveToken: false,
+    };
+  },
+  methods: {
+    ...mapActions(AlertStore, ['basicContent', 'closedAction']),
+    checkIdentity() {
+      // 全頁讀取
+      const loader = this.$loading.show();
+      this.axios
+        .post(`${this.url}/api/user/check`)
+        .then((res) => {
+          loader.hide();
+          const { success, message } = res.data;
+          if (!success) {
+            this.alertStyles.basic.fire({
+              ...this.basicContent(message.replace(', ', '，'), 2),
+              ...this.closedAction('replace', 'admin-login'),
+            });
+          }
+        })
+        .catch((err) => {
+          loader.hide();
+          const { message } = err.response.data;
+          this.alertStyles.basic.fire({
+            ...this.basicContent(`${message.replace(', ', '，')}`, 2),
+            ...this.closedAction('replace', 'admin-login'),
+          });
+        });
+    },
+    logout() {
+      this.isLoading = !this.isLoading;
+      this.axios
+        .post(`${this.url}/logout`)
+        .then((res) => {
+          this.isLoading = !this.isLoading;
+          this.alertStyles.basic.fire({
+            ...this.basicContent(res.data.message, 1),
+            ...this.closedAction('replace', 'admin-login'),
+          });
+        })
+        .catch((err) => {
+          this.isLoading = !this.isLoading;
+          this.alertStyles.basic.fire(this.basicContent(`錯誤${err.response.status}，請洽客服`, 2));
+        });
+    },
+  },
+  computed: {
+    ...mapState(AlertStore, ['alertStyles']),
+    sidebarWidth() {
+      return this.isColse ? 0 : 260;
+    },
+  },
+  created() {
+    this.url = import.meta.env.VITE_API_URL;
+    // 權限驗證
+    const token = document.cookie.replace(/(?:(?:^|.*;\s*)adminToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
+    this.axios.defaults.headers.common.Authorization = token;
+    this.checkIdentity();
+  },
+};
+</script>
+
+<style lang="scss">
 .admin-sidebar {
   display: flex;
   flex-direction: column;
