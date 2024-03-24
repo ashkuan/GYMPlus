@@ -40,5 +40,7 @@ export default defineStore('fackDataStore', {
           'https://storage.googleapis.com/vue-course-api.appspot.com/gymplus/1709447620951.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=O7fbmLEvyYW9quhMiwsV9P61rdqJYPk28b1zhG9HGNW05GgB972f3vcMf6a383AyavMz2Z2LZNDeWReyTEyjgRglmHHSz8jWUI6OfTtwp1aZs8QzBadHNpAmsc7sKpUPJSGCbw15TH5YBTsfz6Sbjt5IX5d4U9bKOqI2EwSeb4LfICWrnQpEitjNLV2gOlxA0G7Wz%2FAgI7QXSG0s3b%2B3LbQZB0OiBRlyo22KaGpYEYL1Ww%2FXrXO%2FW%2FBPMR1UDF2zO1OSTOKzLmQmSM%2BpVNCi8Q3F1OPnsJfCCRfLZZHPpGE1RlGLtv7spuK%2BQsxCYuMllwYsblvNy5bwN5LIw2f%2FTA%3D%3D',
       },
     },
+    // 文章分類
+    articleTags: ['健身好處', '健身知識', '營養素', '開課訊息'],
   }),
 });
