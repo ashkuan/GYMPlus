@@ -1,0 +1,1 @@
+.card:hover{transition:all .15s ease-in-out;background:linear-gradient(110.77deg,#655aea -6.41%,#95e2ff 107.79%);color:#fff}.card:hover .feature-cap span:first-child{display:none;transition:all .5s ease-in-out}.card:hover .hover-icon{transition:all .5s ease-in-out;border:1px solid rgba(255,255,255,.2)}.card:hover .hover-icon span{margin:10px}
