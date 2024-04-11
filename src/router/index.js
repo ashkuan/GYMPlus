@@ -110,6 +110,11 @@ const router = createRouter({
         },
       ],
     },
+    // 當進入未設定路徑時，將重新導向 (v4.x)
+    {
+      path: '/:catchAll(.*)',
+      redirect: '/',
+    },
   ],
   scrollBehavior() {
     return {
