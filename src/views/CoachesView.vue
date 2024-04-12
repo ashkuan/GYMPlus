@@ -1,5 +1,5 @@
 <template>
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="isLoading" />
   <div class="bg-white" style="min-height: 100vh">
     <div
       class="banner"
@@ -35,8 +35,7 @@
                 />
               </div>
               <h5 class="card-title text-center">{{ item.name }} 教練</h5>
-              <a href="#" class="stretched-link"
-              @click.prevent="showModal(item.name)"></a>
+              <a href="#" class="stretched-link" @click.prevent="showModal(item.name)"></a>
             </div>
           </div>
         </div>
@@ -68,32 +67,45 @@
                 <div class="row g-0 mb-3">
                   <div class="col">
                     <img
-                  :src="coacheData?.imageUrl"
-                  :alt="coacheData?.name"
-                  class="rounded-circle"
-                  style="width: 150px; height: 150px"
-                />
+                      :src="coacheData?.imageUrl"
+                      :alt="coacheData?.name"
+                      class="rounded-circle"
+                      style="width: 150px; height: 150px"
+                    />
                   </div>
                   <div class="col d-flex flex-column justify-content-center">
-                    <p v-for="(item, index) in coacheData?.motto" :key="index"
-                    :class="'ps-' + (index * 2 + 1) + ' mb-2' + ' fw-bold'">{{ item }}</p>
+                    <p
+                      v-for="(item, index) in coacheData?.motto"
+                      :key="index"
+                      :class="'ps-' + (index * 2 + 1) + ' mb-2' + ' fw-bold'"
+                    >
+                      {{ item }}
+                    </p>
                   </div>
                 </div>
                 <h5>教學專長</h5>
                 <ul>
-                  <li v-for="(item, index) in coacheData?.teachingExpertise" :key="index">{{ item }}</li>
+                  <li v-for="(item, index) in coacheData?.teachingExpertise" :key="index">
+                    {{ item }}
+                  </li>
                 </ul>
                 <h5>專業證照</h5>
                 <ul>
-                  <li v-for="(item, index) in coacheData?.certifications" :key="index">{{ item }}</li>
+                  <li v-for="(item, index) in coacheData?.certifications" :key="index">
+                    {{ item }}
+                  </li>
                 </ul>
                 <h5>教學經歷</h5>
                 <ul>
-                  <li v-for="(item, index) in coacheData?.teachingExperience" :key="index">{{ item }}</li>
+                  <li v-for="(item, index) in coacheData?.teachingExperience" :key="index">
+                    {{ item }}
+                  </li>
                 </ul>
                 <h5>參與比賽</h5>
                 <ul>
-                  <li v-for="(item, index) in coacheData?.competitionParticipation" :key="index">{{ item }}</li>
+                  <li v-for="(item, index) in coacheData?.competitionParticipation" :key="index">
+                    {{ item }}
+                  </li>
                 </ul>
               </div>
             </div>
@@ -101,11 +113,7 @@
               <button type="button" class="btn btn-primary" @click.prevent="pushPage">
                 相關課程
               </button>
-              <button
-                type="button"
-                class="btn btn-secondary"
-                @click.prevent="hideModal"
-              >
+              <button type="button" class="btn btn-secondary" @click.prevent="hideModal">
                 關閉
               </button>
             </div>
@@ -117,9 +125,9 @@
 </template>
 
 <script>
-import FakeDataStore from "@/stores/FakeDataStore";
-import { mapState } from "pinia";
-import { Modal } from "bootstrap";
+import FakeDataStore from '@/stores/FakeDataStore';
+import { mapState } from 'pinia';
+import { Modal } from 'bootstrap';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 
@@ -127,12 +135,12 @@ export default {
   data() {
     return {
       modal: {},
-      coacheData : {},
+      coacheData: {},
       isLoading: true,
     };
   },
   computed: {
-    ...mapState(FakeDataStore, ["coaches"]),
+    ...mapState(FakeDataStore, ['coaches']),
   },
   components: {
     Loading,

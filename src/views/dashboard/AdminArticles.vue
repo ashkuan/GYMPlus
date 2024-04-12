@@ -68,7 +68,7 @@
               </span>
             </button>
           </div>
-          <PaginationComponent :now-target="'articles'" :is-user="false"></PaginationComponent>
+          <PaginationComponent :now-target="'articles'" :is-user="false" />
         </div>
         <div class="col-6">
           <div class="shadow-sm rounded-3">

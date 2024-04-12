@@ -119,14 +119,14 @@
         資料讀取中請稍後
       </h2>
     </div>
-    <PaginationComponent :now-target="'orders'" :is-user="false"></PaginationComponent>
+    <PaginationComponent :now-target="'orders'" :is-user="false" />
     <OrderEditModal
       :single-order="singleOrder"
       :need-enit="needEnit"
       :is-order-finished="isOrderFinished"
       @update-need-enit="updateNeedEnit"
-    ></OrderEditModal>
-    <OrderDelModal :single-order="singleOrder"></OrderDelModal>
+    />
+    <OrderDelModal :single-order="singleOrder" />
   </div>
 </template>
 

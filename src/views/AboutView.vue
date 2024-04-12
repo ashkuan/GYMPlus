@@ -1,5 +1,5 @@
 <template>
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="isLoading" />
   <div class="bg-white" style="min-height: 100vh">
     <div
       class="banner"
@@ -32,9 +32,9 @@
           :space-between="50"
           :pagination="{ clickable: true }"
         >
-          <swiper-slide v-for="(item, index) in classRoom" :key="item.id">
+          <Swiper-Slide v-for="(item, index) in classRoom" :key="item.id">
             <img :src="item.imageUrl" :alt="index" />
-          </swiper-slide>
+          </Swiper-Slide>
         </Swiper>
       </section>
       <section class="my-3" data-aos="zoom-in">

@@ -1,5 +1,5 @@
 <template>
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="isLoading" />
   <div class="bg-white" style="min-height: 100vh">
     <div class="container">
       <nav aria-label="breadcrumb" class="pt-5">

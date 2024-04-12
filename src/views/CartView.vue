@@ -1,5 +1,5 @@
 <template>
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="isLoading" />
   <div class="bg-white" style="min-height: 100vh">
     <div class="container">
       <nav aria-label="breadcrumb" class="pt-5">
@@ -160,7 +160,7 @@
       <section class="bg-dark block-space overflow-hidden">
         <div class="container position-relative">
           <h5 class="text-secondary text-center py-3">推薦課程</h5>
-          <CoursesSwiper></CoursesSwiper>
+          <CoursesSwiper />
         </div>
       </section>
     </main>

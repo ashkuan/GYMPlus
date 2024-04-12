@@ -1,5 +1,5 @@
 <template>
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="isLoading" />
   <div class="bg-white" style="min-height: 100vh">
     <div
       class="banner"
@@ -169,7 +169,7 @@
         <h5>未查詢到此篩選結果</h5>
       </section>
       <section class="d-flex justify-content-center mt-5" v-if="filteredProducts.length !== 0">
-        <PaginationComponent :now-target="'products'" :isUser="true"></PaginationComponent>
+        <PaginationComponent :now-target="'products'" :isUser="true" />
       </section>
       <section class="d-flex justify-content-center mt-5" v-else>
         <nav aria-label="Page navigation example">

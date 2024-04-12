@@ -1,5 +1,5 @@
 <template>
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="isLoading" />
   <div class="bg-white" style="min-height: 100vh">
     <main v-if="!isLoading" data-aos="fade-up">
       <div class="container">
@@ -172,7 +172,7 @@
       <section class="bg-dark block-space overflow-hidden">
         <div class="container position-relative">
           <h5 class="text-secondary text-center py-3">你可能還喜歡</h5>
-          <CoursesSwiper></CoursesSwiper>
+          <CoursesSwiper />
         </div>
       </section>
     </main>

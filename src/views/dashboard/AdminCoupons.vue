@@ -84,7 +84,7 @@
         資料讀取中請稍後
       </h2>
     </div>
-    <PaginationComponent :now-target="'coupons'" :is-user="false"></PaginationComponent>
+    <PaginationComponent :now-target="'coupons'" :is-user="false" />
   </div>
   <CouponModal
     :coupon-info="couponInfo"

@@ -111,7 +111,7 @@
     </nav>
   </header>
 
-  <router-view></router-view>
+  <router-view />
 
   <footer class="bg-gray-1">
     <div class="footer-top-rounded pt-8 pt-md-6 rounded-bottom bg-white"></div>

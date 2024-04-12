@@ -93,7 +93,7 @@
         資料讀取中請稍後
       </h2>
     </div>
-    <PaginationComponent :now-target="'products'" :is-user="false"></PaginationComponent>
+    <PaginationComponent :now-target="'products'" :is-user="false" />
   </div>
   <CourseEditModal />
   <CourseDelModal />

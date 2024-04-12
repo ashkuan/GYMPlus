@@ -188,7 +188,7 @@
         <span>心動不如</span>
         <span class="text-secondary">馬上行動</span>
       </h2>
-      <CoursesSwiper></CoursesSwiper>
+      <CoursesSwiper />
     </div>
   </div>
   <!-- INBODY -->
@@ -208,7 +208,7 @@
         data-aos-anchor-placement="bottom-bottom"
       >
         <div class="col-md-10 col-lg col-xxl-10">
-          <InbodyCalculator></InbodyCalculator>
+          <InbodyCalculator />
         </div>
       </div>
     </div>
