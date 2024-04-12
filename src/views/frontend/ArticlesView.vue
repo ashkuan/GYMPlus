@@ -47,7 +47,7 @@
               </div>
               <div class="col-12 col-md-8">
                 <div class="card-body">
-                  <h5 class="card-title">{{ item.title }}</h5>
+                  <h2 class="h5 card-title">{{ item.title }}</h2>
                   <p class="card-text">
                     {{ formatUnixTimestamp(item.create_at) }}
                   </p>
@@ -72,7 +72,7 @@
             <div class="row g-0">
               <div class="col-12 col-md-8">
                 <div class="card-body">
-                  <h5 class="card-title">{{ item.title }}</h5>
+                  <h2 class="h5 card-title">{{ item.title }}</h2>
                   <p class="card-text">
                     {{ formatUnixTimestamp(item.create_at) }}
                   </p>
@@ -99,7 +99,7 @@
         </div>
       </section>
       <section v-else>
-        <h5 class="text-center">未查詢到此篩選結果</h5>
+        <p class="text-center">未查詢到此篩選結果</p>
       </section>
       <section class="d-flex justify-content-center mt-5">
         <nav aria-label="Page navigation example">

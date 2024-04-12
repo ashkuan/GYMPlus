@@ -34,7 +34,7 @@
                   style="width: 250px; height: 250px"
                 />
               </div>
-              <h5 class="card-title text-center">{{ item.name }} 教練</h5>
+              <h2 class="h5 card-title text-center">{{ item.name }} 教練</h2>
               <a href="#" class="stretched-link" @click.prevent="showModal(item.name)"></a>
             </div>
           </div>
@@ -54,7 +54,7 @@
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">{{ coacheData?.name }}教練</h5>
+              <h2 class="h5 modal-title" id="exampleModalLabel">{{ coacheData?.name }}教練</h2>
               <button
                 type="button"
                 class="btn-close"
@@ -83,25 +83,25 @@
                     </p>
                   </div>
                 </div>
-                <h5>教學專長</h5>
+                <h3 class="h5">教學專長</h3>
                 <ul>
                   <li v-for="(item, index) in coacheData?.teachingExpertise" :key="index">
                     {{ item }}
                   </li>
                 </ul>
-                <h5>專業證照</h5>
+                <h3 class="h5">專業證照</h3>
                 <ul>
                   <li v-for="(item, index) in coacheData?.certifications" :key="index">
                     {{ item }}
                   </li>
                 </ul>
-                <h5>教學經歷</h5>
+                <h3 class="h5">教學經歷</h3>
                 <ul>
                   <li v-for="(item, index) in coacheData?.teachingExperience" :key="index">
                     {{ item }}
                   </li>
                 </ul>
-                <h5>參與比賽</h5>
+                <h3 class="h5">參與比賽</h3>
                 <ul>
                   <li v-for="(item, index) in coacheData?.competitionParticipation" :key="index">
                     {{ item }}

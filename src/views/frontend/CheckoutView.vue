@@ -32,7 +32,7 @@
       <section class="py-5">
         <v-form class="row" v-slot="{ errors }" @submit="onSubmit">
           <div class="col-12 col-md-4">
-            <h4 class="text-center">訂購人資訊</h4>
+            <h2 class="h4 text-center">訂購人資訊</h2>
             <div class="mb-3">
               <label for="name" class="form-label">訂購人姓名</label>
               <v-field
@@ -100,7 +100,7 @@
             </div>
           </div>
           <div class="col-12 col-md-4">
-            <h4 class="text-center">付款方式</h4>
+            <h2 class="h4 text-center">付款方式</h2>
             <div class="d-flex justify-content-center">
               <div class="form-check form-check-inline">
                 <input
@@ -200,7 +200,7 @@
             </div>
           </div>
           <div class="col-12 col-md-4">
-            <h4 class="text-center">訂單內容</h4>
+            <h2 class="h4 text-center">訂單內容</h2>
             <div class="card mb-1" style="max-width: 540px" v-for="item in carts" :key="item.id">
               <div class="row g-0">
                 <div class="col-md-4">
@@ -212,7 +212,7 @@
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
-                    <h5 class="card-title">{{ item?.product?.title }}</h5>
+                    <h3 class="h6 card-title">{{ item?.product?.title }}</h3>
                     <div class="d-flex justify-content-end">
                       <p class="card-text">
                         <small class="text-decoration-line-through">

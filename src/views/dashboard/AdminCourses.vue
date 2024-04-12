@@ -88,10 +88,10 @@
       </table>
     </div>
     <div v-else>
-      <h2 class="fs-6 fw-light text-center">
+      <p class="fs-6 fw-light text-center">
         <span class="line-loading-loop bg-gray-3 align-top"></span>
         資料讀取中請稍後
-      </h2>
+      </p>
     </div>
     <PaginationComponent :now-target="'products'" :is-user="false" />
   </div>

@@ -84,7 +84,7 @@
           </div>
         </section>
         <section class="p-5">
-          <h4>注意事項</h4>
+          <h3 class="h4">注意事項</h3>
           <ul class="row row-cols-1 row-cols-md-2" style="list-style-type: none">
             <li class="px-3">
               <p class="mb-0 font-bold">
@@ -119,7 +119,7 @@
           </ul>
         </section>
         <section class="mb-5 pb-5">
-          <h5>學員回饋</h5>
+          <h3 class="h5">學員回饋</h3>
           <div class="row row-cols-1 row-cols-md-3 gy-4 gy-md-0">
             <div class="col">
               <div class="border border-3 border-secondary p-4 h-100">
@@ -171,7 +171,7 @@
       </div>
       <section class="bg-dark block-space overflow-hidden">
         <div class="container position-relative">
-          <h5 class="text-secondary text-center py-3">你可能還喜歡</h5>
+          <h3 class="h5 text-secondary text-center py-3">你可能還喜歡</h3>
           <CoursesSwiper />
         </div>
       </section>

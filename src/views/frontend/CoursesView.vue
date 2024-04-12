@@ -166,7 +166,7 @@
         </div>
       </section>
       <section v-else>
-        <h5>未查詢到此篩選結果</h5>
+        <p>未查詢到此篩選結果</p>
       </section>
       <section class="d-flex justify-content-center mt-5" v-if="filteredProducts.length !== 0">
         <PaginationComponent :now-target="'products'" :isUser="true" />

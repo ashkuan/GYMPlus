@@ -40,7 +40,7 @@
                     v-if="this.carts.length === 0"
                   >
                     <img src="../assets/icon/cartIcon.svg" alt="cartIcon" class="w-25" />
-                    <h3>尚未加入課程</h3>
+                    <p>尚未加入課程</p>
                   </div>
                   <table class="table align-middle table-hover" v-else>
                     <thead>
@@ -159,7 +159,7 @@
       </div>
       <section class="bg-dark block-space overflow-hidden">
         <div class="container position-relative">
-          <h5 class="text-secondary text-center py-3">推薦課程</h5>
+          <h2 class="h5 text-secondary text-center py-3">推薦課程</h2>
           <CoursesSwiper />
         </div>
       </section>

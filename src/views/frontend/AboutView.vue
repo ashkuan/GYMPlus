@@ -19,7 +19,7 @@
         </nav>
       </section>
       <section data-aos="zoom-in">
-        <h2 class="text-center">場地設施</h2>
+        <h2 class="h3 text-center">場地設施</h2>
         <Swiper
           navigation
           :modules="modules"
@@ -38,10 +38,10 @@
         </Swiper>
       </section>
       <section class="my-3" data-aos="zoom-in">
-        <h3>核心理念</h3>
+        <h2 class="h3">核心理念</h2>
         <div class="row g-0">
           <div class="col-12 col-lg-6 p-5">
-            <h6>歡迎來到GYM+，您的身心避風港。</h6>
+            <h3 class="h6">歡迎來到GYM+，您的身心避風港。</h3>
             <p class="mb-2">
               在GYM+，我們將健身視為生活的藝術，每一次鍛煉都是對自我承諾的體現。我們的空間融合了現代美學與實用性，旨在激發您的每一次運動潛力。
             </p>
@@ -66,7 +66,7 @@
         </div>
       </section>
       <section class="container my-5" data-aos="zoom-in">
-        <h3 class="text-center">門市地圖</h3>
+        <h2 class="text-center">門市地圖</h2>
         <div class="row g-0">
           <div class="col-12 col-lg-7">
             <iframe
@@ -85,10 +85,10 @@
             style="background: linear-gradient(110.77deg, #655aea -6.41%, #95e2ff 107.79%)"
           >
             <div class="info">
-              <h4 class="text-bold text-white">
+              <h3 class="h4 text-bold text-white">
                 <img src="../assets/logo_white.svg" alt="logo" />
                 土城館
-              </h4>
+              </h3>
               <p class="fs-5 text-light">
                 <img class="mx-2" src="../assets/icon/mapIcon.svg" alt="mapIcon" />
                 <span>地址:236新北市土城區中正路56巷12號</span>
