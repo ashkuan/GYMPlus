@@ -196,7 +196,7 @@
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 import { mapActions, mapState } from 'pinia';
-import CartStore from '@/stores/CartStore';
+import CartStore from '@/stores/frontend/CartStore';
 import PaginationComponent from '@/components/PaginationComponent.vue';
 import FakeDataStore from '@/stores/FakeDataStore';
 import GetDataStore from '@/stores/GetDataStore';
@@ -280,3 +280,4 @@ export default {
   },
 };
 </script>
+@/stores/frontend/CartStore

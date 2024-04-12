@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import ClassRoomStore from '@/stores/ClassroomStore';
+import ClassRoomStore from '@/stores/frontend/ClassroomStore';
 import { mapState } from 'pinia';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
@@ -159,4 +159,3 @@ export default {
   object-fit: cover;
 }
 </style>
-@/stores/ClassroomStore

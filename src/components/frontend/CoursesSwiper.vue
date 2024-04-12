@@ -100,7 +100,7 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import { mapActions, mapState } from 'pinia';
 import GetDataStore from '@/stores/GetDataStore';
 import FakeDataStore from '@/stores/FakeDataStore';
-import CartStore from '@/stores/CartStore';
+import CartStore from '@/stores/frontend/CartStore';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -344,3 +344,4 @@ export default {
   }
 }
 </style>
+@/stores/frontend/CartStore

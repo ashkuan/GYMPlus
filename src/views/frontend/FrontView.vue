@@ -216,7 +216,7 @@
 
 <script>
 import { mapActions, mapState } from 'pinia';
-import CartStore from '@/stores/CartStore';
+import CartStore from '@/stores/frontend/CartStore';
 
 export default {
   data() {
@@ -358,3 +358,4 @@ footer {
   }
 }
 </style>
+@/stores/frontend/CartStore

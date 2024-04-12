@@ -171,8 +171,8 @@
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 import { mapActions, mapState } from 'pinia';
-import CartStore from '@/stores/CartStore';
-import CoursesSwiper from '@/components/CoursesSwiper.vue';
+import CartStore from '@/stores/frontend/CartStore';
+import CoursesSwiper from '@/components/frontend/CoursesSwiper.vue';
 
 export default {
   data() {
@@ -232,3 +232,4 @@ export default {
   },
 };
 </script>
+@/stores/frontend/CartStore

@@ -5,22 +5,22 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: () => import('../views/FrontView.vue'),
+      component: () => import('../views/frontend/FrontView.vue'),
       children: [
         {
           path: '',
           name: 'home',
-          component: () => import('../views/HomeView.vue'),
+          component: () => import('../views/frontend/HomeView.vue'),
         },
         {
           path: 'courses',
           name: 'courses',
-          component: () => import('../views/CoursesView.vue'),
+          component: () => import('../views/frontend/CoursesView.vue'),
         },
         {
           path: 'course/:id',
           name: 'course',
-          component: () => import('../views/CourseView.vue'),
+          component: () => import('../views/frontend/CourseView.vue'),
           props: (route) => ({
             id: route.params.id,
           }),
@@ -28,17 +28,17 @@ const router = createRouter({
         {
           path: 'cart',
           name: 'cart',
-          component: () => import('../views/CartView.vue'),
+          component: () => import('../views/frontend/CartView.vue'),
         },
         {
           path: 'checkout',
           name: 'checkout',
-          component: () => import('../views/CheckoutView.vue'),
+          component: () => import('../views/frontend/CheckoutView.vue'),
         },
         {
           path: 'order-creation/:id',
           name: 'order-creation',
-          component: () => import('../views/OrderCreation.vue'),
+          component: () => import('../views/frontend/OrderCreation.vue'),
           props: (route) => ({
             id: route.params.id,
           }),
@@ -46,17 +46,17 @@ const router = createRouter({
         {
           path: 'favourite',
           name: 'favourite',
-          component: () => import('../views/FavouriteView.vue'),
+          component: () => import('../views/frontend/FavouriteView.vue'),
         },
         {
           path: 'articles',
           name: 'articles',
-          component: () => import('../views/ArticlesView.vue'),
+          component: () => import('../views/frontend/ArticlesView.vue'),
         },
         {
           path: 'article/:id',
           name: 'article',
-          component: () => import('../views/ArticleView.vue'),
+          component: () => import('../views/frontend/ArticleView.vue'),
           props: (route) => ({
             id: route.params.id,
           }),
@@ -64,19 +64,19 @@ const router = createRouter({
         {
           path: 'coaches',
           name: 'coaches',
-          component: () => import('../views/CoachesView.vue'),
+          component: () => import('../views/frontend/CoachesView.vue'),
         },
         {
           path: 'about',
           name: 'about',
-          component: () => import('../views/AboutView.vue'),
+          component: () => import('../views/frontend/AboutView.vue'),
         },
       ],
     },
     {
       path: '/admin-login',
       name: 'admin-login',
-      component: () => import('../views/AdminLogin.vue'),
+      component: () => import('../views/frontend/AdminLogin.vue'),
     },
     {
       path: '/admin',

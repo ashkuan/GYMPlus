@@ -217,10 +217,10 @@
 </template>
 
 <script>
-import CoursesSwiper from '@/components/CoursesSwiper.vue';
-import InbodyCalculator from '@/components/InbodyCalculator.vue';
+import CoursesSwiper from '@/components/frontend/CoursesSwiper.vue';
+import InbodyCalculator from '@/components/frontend/InbodyCalculator.vue';
 import { mapActions, mapState } from 'pinia';
-import CartStore from '@/stores/CartStore';
+import CartStore from '@/stores/frontend/CartStore';
 
 export default {
   components: { CoursesSwiper, InbodyCalculator },
@@ -489,3 +489,4 @@ a,
   }
 }
 </style>
+@/stores/frontend/CartStore
