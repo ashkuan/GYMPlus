@@ -61,7 +61,7 @@
 <script>
 import * as bootstrap from 'bootstrap';
 import { mapActions, mapState } from 'pinia';
-import adminCourseStore from '@/stores/dashboard/AdminCourseStore';
+import AdminCourseStore from '@/stores/dashboard/AdminCourseStore';
 
 export default {
   data() {
@@ -70,10 +70,10 @@ export default {
     };
   },
   methods: {
-    ...mapActions(adminCourseStore, ['delCourse']),
+    ...mapActions(AdminCourseStore, ['delCourse']),
   },
   computed: {
-    ...mapState(adminCourseStore, ['temp', 'isEditingCourse']),
+    ...mapState(AdminCourseStore, ['temp', 'isEditingCourse']),
   },
   mounted() {
     this.delModal = new bootstrap.Modal(this.$refs.courseDelModal);

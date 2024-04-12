@@ -298,7 +298,7 @@
 <script>
 import * as bootstrap from 'bootstrap';
 import { mapActions, mapState } from 'pinia';
-import adminCourseStore from '@/stores/dashboard/AdminCourseStore';
+import AdminCourseStore from '@/stores/dashboard/AdminCourseStore';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.css';
 
@@ -315,7 +315,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(adminCourseStore, [
+    ...mapActions(AdminCourseStore, [
       'getCourse',
       'resetTemp',
       'editCourse',
@@ -324,7 +324,7 @@ export default {
     ]),
   },
   computed: {
-    ...mapState(adminCourseStore, ['temp', 'isEditingCourse', 'isAddingImg']),
+    ...mapState(AdminCourseStore, ['temp', 'isEditingCourse', 'isAddingImg']),
     checkedtargets() {
       return this.targets.map((ele) => {
         const tempTargets = this.temp.target;

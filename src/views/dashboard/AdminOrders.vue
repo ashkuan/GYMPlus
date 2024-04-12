@@ -132,7 +132,7 @@
 
 <script>
 import { mapActions, mapState } from 'pinia';
-import getDataStore from '@/stores/GetDataStore';
+import GetDataStore from '@/stores/GetDataStore';
 import OrderEditModal from '@/components/dashboard/OrderEditModal.vue';
 import OrderDelModal from '@/components/dashboard/OrderDelModal.vue';
 import PaginationComponent from '@/components/PaginationComponent.vue';
@@ -148,7 +148,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(getDataStore, ['getRemoteData', 'addSeparator']),
+    ...mapActions(GetDataStore, ['getRemoteData', 'addSeparator']),
     getOrder(id, isfinished = false) {
       this.isOrderFinished = isfinished;
       this.singleOrder = this.orders.find((order) => order.id === id);
@@ -158,7 +158,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(getDataStore, ['targetData']),
+    ...mapState(GetDataStore, ['targetData']),
     UnixtoText() {
       return this.targetData.map((order) => {
         const date = new Date(order.create_at * 1000);

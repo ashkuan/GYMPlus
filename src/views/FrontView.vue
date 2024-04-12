@@ -216,7 +216,7 @@
 
 <script>
 import { mapActions, mapState } from 'pinia';
-import CartStore from '@/stores/cartStore';
+import CartStore from '@/stores/CartStore';
 
 export default {
   data() {

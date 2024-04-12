@@ -44,7 +44,7 @@
 
 <script>
 import { mapActions, mapState } from 'pinia';
-import getDataStore from '@/stores/GetDataStore';
+import GetDataStore from '@/stores/GetDataStore';
 
 export default {
   props: ['nowTarget', 'isUser'],
@@ -56,10 +56,10 @@ export default {
     };
   },
   methods: {
-    ...mapActions(getDataStore, ['getRemoteData']),
+    ...mapActions(GetDataStore, ['getRemoteData']),
   },
   computed: {
-    ...mapState(getDataStore, ['pagination']),
+    ...mapState(GetDataStore, ['pagination']),
   },
   watch: {
     pagination(value) {

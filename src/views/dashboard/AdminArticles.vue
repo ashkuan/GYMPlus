@@ -88,8 +88,8 @@
 
 <script>
 import { mapActions, mapState } from 'pinia';
-import getDataStore from '@/stores/GetDataStore';
-import fakeDataStore from '@/stores/FakeDataStore';
+import GetDataStore from '@/stores/GetDataStore';
+import FakeDataStore from '@/stores/FakeDataStore';
 import PaginationComponent from '@/components/PaginationComponent.vue';
 import ArticleEditBlock from '@/components/dashboard/ArticleEditBlock.vue';
 
@@ -102,15 +102,15 @@ export default {
     };
   },
   methods: {
-    ...mapActions(getDataStore, ['getRemoteData', 'getSingleInfo']),
+    ...mapActions(GetDataStore, ['getRemoteData', 'getSingleInfo']),
     getNewData() {
       const page = this.pagination.current_page;
       this.getRemoteData('articles', page, false);
     },
   },
   computed: {
-    ...mapState(getDataStore, ['targetData', 'pagination', 'isGettingInfo']),
-    ...mapState(fakeDataStore, ['coaches', 'articleTags']),
+    ...mapState(GetDataStore, ['targetData', 'pagination', 'isGettingInfo']),
+    ...mapState(FakeDataStore, ['coaches', 'articleTags']),
   },
   watch: {
     targetData(articles) {

@@ -101,7 +101,7 @@
 
 <script>
 import { mapActions, mapState } from 'pinia';
-import getDataStore from '@/stores/GetDataStore';
+import GetDataStore from '@/stores/GetDataStore';
 import AdminCourseStore from '@/stores/dashboard/AdminCourseStore';
 import PaginationComponent from '@/components/PaginationComponent.vue';
 import CourseEditModal from '@/components/dashboard/CourseEditModal.vue';
@@ -125,7 +125,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(getDataStore, ['getRemoteData']),
+    ...mapActions(GetDataStore, ['getRemoteData']),
     ...mapActions(AdminCourseStore, ['getCourse']),
     chooseBadgeStyle(zhName) {
       switch (zhName) {
@@ -141,7 +141,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(getDataStore, ['targetData']),
+    ...mapState(GetDataStore, ['targetData']),
   },
   watch: {
     targetData(vaule) {

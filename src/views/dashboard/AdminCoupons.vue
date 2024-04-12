@@ -95,7 +95,7 @@
 
 <script>
 import { mapActions, mapState } from 'pinia';
-import getDataStore from '@/stores/GetDataStore';
+import GetDataStore from '@/stores/GetDataStore';
 import PaginationComponent from '@/components/PaginationComponent.vue';
 import CouponModal from '@/components/dashboard/CouponModal.vue';
 
@@ -109,7 +109,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(getDataStore, ['getRemoteData']),
+    ...mapActions(GetDataStore, ['getRemoteData']),
     getCoupon(couponInfo, editStatus) {
       this.couponInfo = couponInfo;
       this.editStatus = editStatus;
@@ -120,7 +120,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(getDataStore, ['targetData', 'pagination']),
+    ...mapState(GetDataStore, ['targetData', 'pagination']),
   },
   watch: {
     targetData(coupons) {
