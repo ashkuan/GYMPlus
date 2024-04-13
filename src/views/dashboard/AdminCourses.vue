@@ -10,11 +10,11 @@
         data-bs-toggle="modal"
         data-bs-target="#courseEditModal"
       >
-        <span class="icon-base icon-sm icon-add me-1 bg-white align-text-top"></span>
+        <span class="icon-base icon-sm icon-add me#-1 bg-white align-text-top"></span>
         <span>新增課程</span>
       </button>
     </div>
-    <div v-if="courses.length !== 0" class="table-responsive mb-5">
+    <div v-if="courses.length !== 0" class="vl-parent table-responsive mb-5">
       <table class="table table-hover text-center align-middle ls-0" style="min-width: 720px">
         <thead>
           <tr class="table-gray-4">
@@ -86,10 +86,16 @@
           </tr>
         </tbody>
       </table>
+      <Loading
+        v-model:active="isGettingData"
+        :is-full-page="false"
+        :enforce-focus="false"
+        :z-index="2"
+      />
     </div>
-    <div v-else>
+    <div v-else class="py-6">
       <p class="fs-6 fw-light text-center">
-        <span class="line-loading-loop bg-gray-3 align-top"></span>
+        <span class="line-loading-loop bg-gray-3 align-text-top"></span>
         資料讀取中請稍後
       </p>
     </div>
@@ -106,13 +112,13 @@ import AdminCourseStore from '@/stores/dashboard/AdminCourseStore';
 import PaginationComponent from '@/components/PaginationComponent.vue';
 import CourseEditModal from '@/components/dashboard/CourseEditModal.vue';
 import CourseDelModal from '@/components/dashboard/CourseDelModal.vue';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
 
 export default {
-  components: { PaginationComponent, CourseEditModal, CourseDelModal },
+  components: { PaginationComponent, CourseEditModal, CourseDelModal, Loading },
   data() {
     return {
-      url: '',
-      path: '',
       courses: [],
       pageInfo: {},
       badgeStyles: {
@@ -140,11 +146,11 @@ export default {
     },
   },
   computed: {
-    ...mapState(GetDataStore, ['targetData']),
+    ...mapState(GetDataStore, ['targetData', 'isGettingData']),
   },
   watch: {
-    targetData(vaule) {
-      this.courses = vaule;
+    targetData(value) {
+      this.courses = value;
     },
   },
   mounted() {
