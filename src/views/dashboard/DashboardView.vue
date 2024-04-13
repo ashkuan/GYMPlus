@@ -85,8 +85,8 @@
         </div>
       </nav>
     </header>
-    <!-- 在元件上直接下 class="" 會出現報錯 -->
-    <div class="contaner">
+    <!-- 在元件上直接下 class="" 會出現報錯；驗證成功再顯示 -->
+    <div class="contaner" v-if="isAdmin">
       <router-view />
     </div>
   </div>
@@ -102,7 +102,7 @@ export default {
       url: '',
       isColse: false,
       isLoading: false,
-      haveToken: false,
+      isAdmin: false,
     };
   },
   methods: {
@@ -114,6 +114,7 @@ export default {
         .post(`${this.url}/api/user/check`)
         .then((res) => {
           loader.hide();
+          this.isAdmin = true;
           const { success, message } = res.data;
           if (!success) {
             this.alertStyles.basic.fire({
@@ -126,7 +127,7 @@ export default {
           loader.hide();
           const { message } = err.response.data;
           this.alertStyles.basic.fire({
-            ...this.basicContent(`${message.replace(', ', '，')}`, 2),
+            ...this.basicContent(`${message.replace(', ', '，')}`, 2, '返回登入頁面'),
             ...this.closedAction('replace', 'admin-login'),
           });
         });
@@ -136,6 +137,8 @@ export default {
       this.axios
         .post(`${this.url}/logout`)
         .then((res) => {
+          this.isAdmin = false;
+          document.cookie = `adminToken=; expires=;`;
           this.isLoading = !this.isLoading;
           this.alertStyles.basic.fire({
             ...this.basicContent(res.data.message, 1),
