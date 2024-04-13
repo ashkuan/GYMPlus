@@ -53,26 +53,6 @@
               </small>
             </ErrorMessage>
           </div>
-          <div class="row align-items-center mb-6 gx-3">
-            <label class="col-2 form-label" for="passwordCheck">確認密碼</label>
-            {{ errors.valus }}
-            <div class="col-10">
-              <VField
-                name="checkPassword"
-                rules="required|confirmed:@password"
-                type="password"
-                class="form-control border-0"
-                :class="{ 'is-invalid': errors['checkPassword'] }"
-                placeholder="請再次輸入密碼"
-                id="passwordCheck"
-              ></VField>
-            </div>
-            <ErrorMessage name="checkPassword" v-slot="{ message }" class="invalid-feedback">
-              <small class="col-10 ms-auto mt-1 text-danger">
-                {{ message.replace('checkPassword', '密碼') }}
-              </small>
-            </ErrorMessage>
-          </div>
           <button type="submit" class="btn btn-primary w-100 mb-6" :disabled="isLoading">
             <span v-show="isLoading" class="line-loading-loop bg-gray-3"></span>
             登入
