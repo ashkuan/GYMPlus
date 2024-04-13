@@ -50,9 +50,7 @@ export default {
   props: ['nowTarget', 'isUser'],
   data() {
     return {
-      url: import.meta.env.VITE_API_URL,
-      path: import.meta.env.VITE_API_PATH,
-      nowPage: 1,
+      nowPage: 1, // 預設為第一頁
     };
   },
   methods: {
@@ -64,6 +62,10 @@ export default {
   watch: {
     pagination(value) {
       this.nowPage = value.current_page;
+      // 切換後向上滾動
+      let scrollY = 0;
+      if (this.isUser) scrollY = 250;
+      window.scrollTo(0, scrollY);
     },
   },
 };
@@ -77,6 +79,9 @@ export default {
   &.active {
     .icon-d-arrow {
       background: #fff;
+    }
+    a {
+      pointer-events: none; // 當頁連結禁止點擊
     }
   }
 }
