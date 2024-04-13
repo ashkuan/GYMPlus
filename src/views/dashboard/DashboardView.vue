@@ -1,7 +1,7 @@
 <template>
   <button
     type="button"
-    class="admin-sidebar-btn btn btn-secondary rounded-start z-1 shadow"
+    class="admin-sidebar-btn btn btn-secondary rounded-start z-3 shadow"
     :style="`left: ${sidebarWidth - 4}px`"
     @click="isColse = !isColse"
   >

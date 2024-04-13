@@ -1,18 +1,7 @@
 <template>
   <div class="container">
     <h2 class="fs-3 fw-normal mb-5 ls-0 text-center">訂單管理</h2>
-    <!-- <div class="text-center text-md-end mb-3">
-      <button
-        type="button"
-        class="btn btn-outline-danger py-1 border-2"
-        data-bs-toggle="modal"
-        data-bs-target="#"
-      >
-        <span class="icon-base icon-sm icon-trash align-text-top me-1 bg-danger"></span>
-        <span>清空訂單</span>
-      </button>
-    </div> -->
-    <div v-if="orders.length !== 0" class="table-responsive mb-5">
+    <div v-if="orders.length !== 0" class="vl-parent table-responsive mb-5">
       <table class="table table-hover text-center align-middle ls-0" style="min-width: 760px">
         <thead>
           <tr class="table-gray-4">
@@ -112,10 +101,16 @@
           </tr>
         </tbody>
       </table>
+      <Loading
+        v-model:active="isGettingData"
+        :is-full-page="false"
+        :enforce-focus="false"
+        :z-index="2"
+      />
     </div>
-    <div v-else>
+    <div v-else class="py-6">
       <p class="fs-6 fw-light text-center">
-        <span class="line-loading-loop bg-gray-3 align-top"></span>
+        <span class="line-loading-loop bg-gray-3 align-text-top"></span>
         資料讀取中請稍後
       </p>
     </div>
@@ -136,9 +131,11 @@ import GetDataStore from '@/stores/GetDataStore';
 import OrderEditModal from '@/components/dashboard/OrderEditModal.vue';
 import OrderDelModal from '@/components/dashboard/OrderDelModal.vue';
 import PaginationComponent from '@/components/PaginationComponent.vue';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
 
 export default {
-  components: { PaginationComponent, OrderEditModal, OrderDelModal },
+  components: { PaginationComponent, OrderEditModal, OrderDelModal, Loading },
   data() {
     return {
       orders: [],
@@ -158,7 +155,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(GetDataStore, ['targetData']),
+    ...mapState(GetDataStore, ['targetData', 'isGettingData']),
     UnixtoText() {
       return this.targetData.map((order) => {
         const date = new Date(order.create_at * 1000);

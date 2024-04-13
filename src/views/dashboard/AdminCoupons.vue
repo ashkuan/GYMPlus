@@ -15,7 +15,7 @@
         <span>新增優惠券</span>
       </button>
     </div>
-    <div v-if="coupons.length !== 0" class="table-responsive mb-5">
+    <div v-if="coupons.length !== 0" class="vl-parent table-responsive mb-5">
       <table class="table table-hover text-center align-middle ls-0" style="min-width: 620px">
         <thead>
           <tr class="table-gray-4">
@@ -77,10 +77,16 @@
           </tr>
         </tbody>
       </table>
+      <Loading
+        v-model:active="isGettingData"
+        :is-full-page="false"
+        :enforce-focus="false"
+        :z-index="2"
+      />
     </div>
-    <div v-else>
+    <div v-else class="py-6">
       <p class="fs-6 fw-light text-center">
-        <span class="line-loading-loop bg-gray-3 align-top"></span>
+        <span class="line-loading-loop bg-gray-3 align-text-top"></span>
         資料讀取中請稍後
       </p>
     </div>
@@ -98,9 +104,11 @@ import { mapActions, mapState } from 'pinia';
 import GetDataStore from '@/stores/GetDataStore';
 import PaginationComponent from '@/components/PaginationComponent.vue';
 import CouponModal from '@/components/dashboard/CouponModal.vue';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
 
 export default {
-  components: { PaginationComponent, CouponModal },
+  components: { PaginationComponent, CouponModal, Loading },
   data() {
     return {
       coupons: [],
@@ -120,7 +128,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(GetDataStore, ['targetData', 'pagination']),
+    ...mapState(GetDataStore, ['targetData', 'pagination', 'isGettingData']),
   },
   watch: {
     targetData(coupons) {
