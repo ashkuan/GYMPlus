@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
-import alertStore from './AlertStore';
+import AlertStore from './AlertStore';
 
 const url = import.meta.env.VITE_API_URL;
 const path = import.meta.env.VITE_API_PATH;
-const { alertStyles, basicContent } = alertStore();
+const { alertStyles, basicContent } = AlertStore();
 
 export default defineStore('getDataStore', {
   state: () => ({
@@ -29,10 +29,10 @@ export default defineStore('getDataStore', {
           }
         });
     },
-    getFrontSingleInfo(target, id) {
+    getSingleInfo(target, id, isUser = true) {
       this.isGettingInfo = !this.isGettingInfo;
       axios
-        .get(`${url}/api/${path}/${target}/${id}`)
+        .get(`${url}/api/${path}${isUser ? '' : '/admin'}/${target}/${id}`)
         .then((res) => {
           this.singleInfo = res.data[target];
           this.isGettingInfo = !this.isGettingInfo;
@@ -42,6 +42,7 @@ export default defineStore('getDataStore', {
           this.isGettingInfo = !this.isGettingInfo;
         });
     },
+    // 價格千位符
     addSeparator(price) {
       let priceStr = price.toString();
       let i = 0;

@@ -1,6 +1,6 @@
 <template>
-  <Loading :active="isLoading"></Loading>
-  <div class="bg-light" style="min-height: 100vh;">
+  <Loading :active="isLoading" />
+  <div class="bg-light" style="min-height: 100vh">
     <div class="container">
       <nav aria-label="breadcrumb" class="pt-5">
         <ol class="breadcrumb">
@@ -77,21 +77,31 @@
             </tr>
             <tr>
               <th>付款狀態</th>
-              <td :class="[order?.is_paid ? 'text-success' : '' ]">
-                {{ order?.is_paid ? '已完成付款' : '審核中...' }}</td>
+              <td :class="[order?.is_paid ? 'text-success' : '']">
+                {{ order?.is_paid ? '已完成付款' : '審核中...' }}
+              </td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
               <th scope="row" colspan="2">
                 <div class="d-flex justify-content-center">
-                  <button type="button" v-if="order?.is_paid"
-                 class="btn btn-outline-success btn-lg rounded"
-                 @click.prevent="this.$router.push('/');">返回首頁</button>
-                  <button type="button" v-else
-                 class="btn btn-outline-danger btn-lg rounded"
-                 @click.prevent="payOrder">完成訂單</button>
-
+                  <button
+                    type="button"
+                    v-if="order?.is_paid"
+                    class="btn btn-outline-success btn-lg rounded"
+                    @click.prevent="this.$router.push('/')"
+                  >
+                    返回首頁
+                  </button>
+                  <button
+                    type="button"
+                    v-else
+                    class="btn btn-outline-danger btn-lg rounded"
+                    @click.prevent="payOrder"
+                  >
+                    完成訂單
+                  </button>
                 </div>
               </th>
             </tr>
@@ -120,7 +130,8 @@ export default {
     };
   },
   methods: {
-    formatUnixTimestamp(time) { // 轉換為訂單時間
+    formatUnixTimestamp(time) {
+      // 轉換為訂單時間
       const date = new Date(time * 1000);
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -131,7 +142,8 @@ export default {
       const formattedDate = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
       return formattedDate;
     },
-    formatOrderNumber(time) { // 轉換為訂單編號
+    formatOrderNumber(time) {
+      // 轉換為訂單編號
       const date = new Date(time * 1000);
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -144,41 +156,39 @@ export default {
       return orderNumber;
     },
     getData() {
-      this.axios
-        .get(`${this.url}api/${this.path}/order/${this.id}`)
-        .then((res) => {
-          this.order = { ...res.data.order };
-          this.orderTime = this.formatUnixTimestamp(this.order.create_at);
-          this.orderId = this.formatOrderNumber(this.order.create_at);
-          // 取出order products的第一筆物件資料
-          const { products } = this.order;
-          const keys = Object.keys(products);
-          const firstKey = keys[0];
-          const firstValue = products[firstKey];
-          if (Object.prototype.hasOwnProperty.call(firstValue, 'coupon')) { // 判斷物件是否有coupon這個key
-            this.coupon = firstValue.coupon.title;
-          }
-          setTimeout(() => {
-            this.isLoading = false;
-          }, 1000);
-        });
+      this.axios.get(`${this.url}api/${this.path}/order/${this.id}`).then((res) => {
+        this.order = { ...res.data.order };
+        this.orderTime = this.formatUnixTimestamp(this.order.create_at);
+        this.orderId = this.formatOrderNumber(this.order.create_at);
+        // 取出order products的第一筆物件資料
+        const { products } = this.order;
+        const keys = Object.keys(products);
+        const firstKey = keys[0];
+        const firstValue = products[firstKey];
+        if (Object.prototype.hasOwnProperty.call(firstValue, 'coupon')) {
+          // 判斷物件是否有coupon這個key
+          this.coupon = firstValue.coupon.title;
+        }
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 1000);
+      });
     },
     payOrder() {
-      this.axios.post(`${this.url}api/${this.path}/pay/${this.id}`)
-        .then((res) => {
-          if (res.data.success) {
-            this.$swal({
-              icon: 'success',
-              title: '系統通知',
-              text: '謝謝您的訂購!',
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            setTimeout(() => {
-              this.$router.push('/');
-            }, 1500);
-          }
-        });
+      this.axios.post(`${this.url}api/${this.path}/pay/${this.id}`).then((res) => {
+        if (res.data.success) {
+          this.$swal({
+            icon: 'success',
+            title: '系統通知',
+            text: '謝謝您的訂購!',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setTimeout(() => {
+            this.$router.push('/');
+          }, 1500);
+        }
+      });
     },
   },
   components: {

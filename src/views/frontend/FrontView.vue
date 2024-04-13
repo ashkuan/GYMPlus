@@ -111,7 +111,7 @@
     </nav>
   </header>
 
-  <router-view></router-view>
+  <router-view />
 
   <footer class="bg-gray-1">
     <div class="footer-top-rounded pt-8 pt-md-6 rounded-bottom bg-white"></div>
@@ -170,7 +170,7 @@
         <ul class="fs-8 fs-lg-7 ls-md-2 text-gray-3 list-unstyled text-center text-md-start py-1">
           <li class="mb-2">
             <span class="me-2">地址</span>
-            <span class="text-white">新北市某某區某某路一段233號</span>
+            <span class="text-white">236新北市土城區中正路56巷12號</span>
           </li>
           <li>
             <span class="me-2">電話</span>
@@ -216,7 +216,7 @@
 
 <script>
 import { mapActions, mapState } from 'pinia';
-import CartStore from '@/stores/cartStore';
+import CartStore from '@/stores/frontend/CartStore';
 
 export default {
   data() {
@@ -358,3 +358,4 @@ footer {
   }
 }
 </style>
+@/stores/frontend/CartStore

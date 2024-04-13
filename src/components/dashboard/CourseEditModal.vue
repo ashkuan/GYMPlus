@@ -171,7 +171,7 @@
                           id="description"
                           class="form-control form-control-sm"
                           placeholder="請輸入課程描述"
-                          style="height: 157px"
+                          style="height: 121px"
                           v-model="temp.description"
                         ></textarea>
                       </div>
@@ -184,7 +184,6 @@
                 <div class="position-relative mb-2" style="height: 180px">
                   <img
                     v-if="temp.imageUrl"
-                    v-show="temp.imageUrl"
                     :src="temp.imageUrl"
                     alt="主要圖片"
                     class="img-fluid w-100 h-100 rounded-2"
@@ -299,7 +298,7 @@
 <script>
 import * as bootstrap from 'bootstrap';
 import { mapActions, mapState } from 'pinia';
-import adminCourseStore from '@/stores/dashboard/AdminCourseStore';
+import AdminCourseStore from '@/stores/dashboard/AdminCourseStore';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.css';
 
@@ -316,7 +315,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(adminCourseStore, [
+    ...mapActions(AdminCourseStore, [
       'getCourse',
       'resetTemp',
       'editCourse',
@@ -325,7 +324,7 @@ export default {
     ]),
   },
   computed: {
-    ...mapState(adminCourseStore, ['temp', 'isEditingCourse', 'isAddingImg']),
+    ...mapState(AdminCourseStore, ['temp', 'isEditingCourse', 'isAddingImg']),
     checkedtargets() {
       return this.targets.map((ele) => {
         const tempTargets = this.temp.target;

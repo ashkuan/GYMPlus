@@ -1,16 +1,16 @@
+<template>
+  <RouterView />
+</template>
+
 <script>
-import AOS from 'aos';
+import aos from 'aos';
 import 'aos/dist/aos.css';
 
 export default {
   mounted() {
-    AOS.init();
+    aos.init();
   },
 };
 </script>
-
-<template>
-  <RouterView />
-</template>
 
 <style scoped lang="scss"></style>

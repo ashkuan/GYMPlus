@@ -6,7 +6,8 @@ import eslintPlugin from 'vite-plugin-eslint';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/GYMPlus/',
+  // 需要區分開發與部屬路徑
+  base: process.env.MODE === 'production' ? '/GYMPlus/' : '/',
   plugins: [
     vue(),
     eslintPlugin({

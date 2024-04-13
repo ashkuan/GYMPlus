@@ -1,5 +1,5 @@
 <template>
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="isLoading" />
   <div class="bg-white" style="min-height: 100vh">
     <div
       class="banner"
@@ -43,24 +43,16 @@
           <div class="card border shadow-sm mb-3" v-if="index % 2 === 0">
             <div class="row g-0">
               <div class="col-12 col-md-4">
-                <img
-                  :src="item.image"
-                  class="img-fluid rounded-start h-100"
-                  :alt="item.title"
-                />
+                <img :src="item.image" class="img-fluid rounded-start h-100" :alt="item.title" />
               </div>
               <div class="col-12 col-md-8">
                 <div class="card-body">
-                  <h5 class="card-title">{{ item.title }}</h5>
+                  <h2 class="h5 card-title">{{ item.title }}</h2>
                   <p class="card-text">
                     {{ formatUnixTimestamp(item.create_at) }}
                   </p>
                   <p class="card-text">{{ item.description }}</p>
-                  <p
-                    class="card-text"
-                    v-for="(type, index) in item.tag"
-                    :key="index"
-                  >
+                  <p class="card-text" v-for="(type, index) in item.tag" :key="index">
                     # {{ type }}
                   </p>
                   <div class="d-flex justify-content-end">
@@ -80,16 +72,12 @@
             <div class="row g-0">
               <div class="col-12 col-md-8">
                 <div class="card-body">
-                  <h5 class="card-title">{{ item.title }}</h5>
+                  <h2 class="h5 card-title">{{ item.title }}</h2>
                   <p class="card-text">
                     {{ formatUnixTimestamp(item.create_at) }}
                   </p>
                   <p class="card-text">{{ item.description }}</p>
-                  <p
-                    class="card-text"
-                    v-for="(type, index) in item.tag"
-                    :key="index"
-                  >
+                  <p class="card-text" v-for="(type, index) in item.tag" :key="index">
                     # {{ type }}
                   </p>
                   <div class="d-flex justify-content-end">
@@ -104,18 +92,14 @@
                 </div>
               </div>
               <div class="col-12 col-md-4">
-                <img
-                  :src="item.image"
-                  class="img-fluid rounded-end h-100"
-                  :alt="item.title"
-                />
+                <img :src="item.image" class="img-fluid rounded-end h-100" :alt="item.title" />
               </div>
             </div>
           </div>
         </div>
       </section>
       <section v-else>
-        <h5 class="text-center">未查詢到此篩選結果</h5>
+        <p class="text-center">未查詢到此篩選結果</p>
       </section>
       <section class="d-flex justify-content-center mt-5">
         <nav aria-label="Page navigation example">
@@ -141,16 +125,16 @@
 </template>
 
 <script>
-import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/css/index.css";
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
 
 export default {
   data() {
     return {
-      url: "",
-      path: "",
-      article: "全部",
-      articlesType: ["全部", "健身好處", "健身知識", "營養素", "開課訊息"],
+      url: '',
+      path: '',
+      article: '全部',
+      articlesType: ['全部', '健身好處', '健身知識', '營養素', '開課訊息'],
       articles: [],
       isLoading: true,
     };
@@ -171,8 +155,8 @@ export default {
       // 轉換為時間
       const date = new Date(time * 1000);
       const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, "0");
-      const day = String(date.getDate()).padStart(2, "0");
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
       const formattedDate = `${year}-${month}-${day}`;
       return formattedDate;
     },
@@ -180,7 +164,7 @@ export default {
   computed: {
     filteredArticles() {
       let filtered = this.articles;
-      if (this.article !== "全部") {
+      if (this.article !== '全部') {
         filtered = filtered.filter((item) => item.tag.includes(this.article));
       }
       return filtered;

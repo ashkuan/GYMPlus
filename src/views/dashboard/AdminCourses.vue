@@ -1,58 +1,3 @@
-<script>
-import { mapActions, mapState } from 'pinia';
-import getDataStore from '@/stores/GetDataStore';
-import AdminCourseStore from '@/stores/dashboard/AdminCourseStore';
-import PaginationComponent from '@/components/PaginationComponent.vue';
-import CourseEditModal from '@/components/dashboard/CourseEditModal.vue';
-import CourseDelModal from '@/components/dashboard/CourseDelModal.vue';
-
-export default {
-  components: { PaginationComponent, CourseEditModal, CourseDelModal },
-  props: ['haveToken'],
-  data() {
-    return {
-      url: '',
-      path: '',
-      courses: [],
-      pageInfo: {},
-      badgeStyles: {
-        yoga: 'bg-primary bg-opacity-50',
-        strength: 'bg-gray-1 bg-opacity-50',
-        cardio: 'bg-secondary',
-      },
-      yoga: 'bg-primary bg-opacity-50',
-    };
-  },
-  methods: {
-    ...mapActions(getDataStore, ['getRemoteData']),
-    ...mapActions(AdminCourseStore, ['getCourse']),
-    chooseBadgeStyle(zhName) {
-      switch (zhName) {
-        case '瑜珈':
-          return this.badgeStyles.yoga;
-        case '重量訓練':
-          return this.badgeStyles.strength;
-        case '有氧運動':
-          return this.badgeStyles.cardio;
-        default:
-          return '';
-      }
-    },
-  },
-  computed: {
-    ...mapState(getDataStore, ['targetData']),
-  },
-  watch: {
-    targetData(vaule) {
-      this.courses = vaule;
-    },
-  },
-  mounted() {
-    this.getRemoteData('products', 1, false);
-  },
-};
-</script>
-
 <template>
   <div class="container">
     <h2 class="fs-3 fw-normal ls-0 mb-md-0 text-center">
@@ -143,15 +88,70 @@ export default {
       </table>
     </div>
     <div v-else>
-      <h2 class="fs-6 fw-light text-center">
+      <p class="fs-6 fw-light text-center">
         <span class="line-loading-loop bg-gray-3 align-top"></span>
         資料讀取中請稍後
-      </h2>
+      </p>
     </div>
-    <PaginationComponent :now-target="'products'" :is-user="false"></PaginationComponent>
+    <PaginationComponent :now-target="'products'" :is-user="false" />
   </div>
   <CourseEditModal />
   <CourseDelModal />
 </template>
+
+<script>
+import { mapActions, mapState } from 'pinia';
+import GetDataStore from '@/stores/GetDataStore';
+import AdminCourseStore from '@/stores/dashboard/AdminCourseStore';
+import PaginationComponent from '@/components/PaginationComponent.vue';
+import CourseEditModal from '@/components/dashboard/CourseEditModal.vue';
+import CourseDelModal from '@/components/dashboard/CourseDelModal.vue';
+
+export default {
+  components: { PaginationComponent, CourseEditModal, CourseDelModal },
+  props: ['haveToken'],
+  data() {
+    return {
+      url: '',
+      path: '',
+      courses: [],
+      pageInfo: {},
+      badgeStyles: {
+        yoga: 'bg-primary bg-opacity-50',
+        strength: 'bg-gray-1 bg-opacity-50',
+        cardio: 'bg-secondary',
+      },
+      yoga: 'bg-primary bg-opacity-50',
+    };
+  },
+  methods: {
+    ...mapActions(GetDataStore, ['getRemoteData']),
+    ...mapActions(AdminCourseStore, ['getCourse']),
+    chooseBadgeStyle(zhName) {
+      switch (zhName) {
+        case '瑜珈':
+          return this.badgeStyles.yoga;
+        case '重量訓練':
+          return this.badgeStyles.strength;
+        case '有氧運動':
+          return this.badgeStyles.cardio;
+        default:
+          return '';
+      }
+    },
+  },
+  computed: {
+    ...mapState(GetDataStore, ['targetData']),
+  },
+  watch: {
+    targetData(vaule) {
+      this.courses = vaule;
+    },
+  },
+  mounted() {
+    this.getRemoteData('products', 1, false);
+  },
+};
+</script>
 
 <style lang="scss"></style>

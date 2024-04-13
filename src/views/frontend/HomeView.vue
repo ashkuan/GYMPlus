@@ -36,13 +36,13 @@
   </div>
   <!-- FEATURES -->
   <div class="feature block-space pt-8 pt-md-7 container text-center">
-    <h3 class="subtitle-border text-linear display-4 display-md-3 mb-1 mb-md-2 pt-1 pt-md-0">
+    <h4 class="subtitle-border text-linear display-4 display-md-3 mb-1 mb-md-2 pt-1 pt-md-0">
       FEATURES
-    </h3>
-    <h2 class="fs-4 fs-md-3 fs-lg-2 pt-3 pt-md-5 mb-4 mb-md-6">
+    </h4>
+    <h3 class="fs-4 fs-md-3 fs-lg-2 pt-3 pt-md-5 mb-4 mb-md-6">
       <span>服務</span>
       <span class="text-primary">特色</span>
-    </h2>
+    </h3>
     <div class="row gy-8 gx-3 gx-lg-5">
       <div
         class="col-12 col-md"
@@ -67,7 +67,7 @@
                 </span>
               </span>
             </div>
-            <h3 class="card-title fs-6 fs-xl-5 mb-4">{{ feature.title }}</h3>
+            <h5 class="card-title fs-6 fs-xl-5 mb-4">{{ feature.title }}</h5>
             <p class="card-text small fs-xl-7 ls-xl-2">
               {{ feature.content }}
             </p>
@@ -79,8 +79,8 @@
   <!-- WHAT’s GOOD -->
   <div class="bg-light overflow-hidden">
     <div class="container block-space text-center">
-      <h3 class="subtitle-border text-linear display-4 display-md-3 mb-0">WHAT’s GOOD</h3>
-      <h2 class="good-title fs-4 fs-md-3 fs-lg-2 pt-2 pt-md-4 mb-8 mb-md-6 mb-lg-7">
+      <h4 class="subtitle-border text-linear display-4 display-md-3 mb-0">WHAT’s GOOD</h4>
+      <h3 class="good-title fs-4 fs-md-3 fs-lg-2 pt-2 pt-md-4 mb-8 mb-md-6 mb-lg-7">
         <span class="fs-3 fs-md-2 fs-lg-1">健身</span>
         <span>帶來的</span>
         <span class="text-primary">好處</span>
@@ -95,7 +95,7 @@
             ？
           </span>
         </span>
-      </h2>
+      </h3>
       <div class="d-flex flex-column text-start px-3 px-md-0">
         <div class="good-card card mb-8 mb-md-6 bg-transparent">
           <div class="row justify-content-center align-items-center position-relative">
@@ -183,22 +183,22 @@
   <!-- COURSE -->
   <div class="bg-dark block-space overflow-hidden">
     <div class="container text-center position-relative">
-      <h3 class="subtitle-border text-linear display-4 display-md-3 mb-0">COURSE</h3>
-      <h2 class="fs-4 fs-md-3 fs-lg-2 pt-3 pt-md-5 mb-8 mb-md-6 mb-lg-7 text-white">
+      <h4 class="subtitle-border text-linear display-4 display-md-3 mb-0">COURSE</h4>
+      <h3 class="fs-4 fs-md-3 fs-lg-2 pt-3 pt-md-5 mb-8 mb-md-6 mb-lg-7 text-white">
         <span>心動不如</span>
         <span class="text-secondary">馬上行動</span>
-      </h2>
-      <CoursesSwiper></CoursesSwiper>
+      </h3>
+      <CoursesSwiper />
     </div>
   </div>
   <!-- INBODY -->
   <div class="bg-white block-space pb-8 pb-md-6">
     <div class="container text-center">
-      <h3 class="subtitle-border text-linear display-4 display-md-3 mb-0">INBODY</h3>
-      <h2 class="fs-4 fs-md-3 fs-lg-2 pt-3 pt-md-5 mb-4 mb-md-6 mb-lg-7">
+      <h4 class="subtitle-border text-linear display-4 display-md-3 mb-0">INBODY</h4>
+      <h3 class="fs-4 fs-md-3 fs-lg-2 pt-3 pt-md-5 mb-4 mb-md-6 mb-lg-7">
         <span>認識</span>
         <span class="text-primary">身體數值</span>
-      </h2>
+      </h3>
       <div
         class="row text-start justify-content-center"
         data-aos="fade-up"
@@ -208,7 +208,7 @@
         data-aos-anchor-placement="bottom-bottom"
       >
         <div class="col-md-10 col-lg col-xxl-10">
-          <InbodyCalculator></InbodyCalculator>
+          <InbodyCalculator />
         </div>
       </div>
     </div>
@@ -217,10 +217,10 @@
 </template>
 
 <script>
-import CoursesSwiper from '@/components/SwiperComponents.vue';
-import InbodyCalculator from '@/components/InbodyCalculator.vue';
+import CoursesSwiper from '@/components/frontend/CoursesSwiper.vue';
+import InbodyCalculator from '@/components/frontend/InbodyCalculator.vue';
 import { mapActions, mapState } from 'pinia';
-import CartStore from '@/stores/cartStore';
+import CartStore from '@/stores/frontend/CartStore';
 
 export default {
   components: { CoursesSwiper, InbodyCalculator },
@@ -289,7 +289,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 /* banner 客製化 */
 .banner-img {
   .icon-base {
@@ -489,3 +489,4 @@ a,
   }
 }
 </style>
+@/stores/frontend/CartStore
