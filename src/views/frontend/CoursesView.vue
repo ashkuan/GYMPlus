@@ -109,7 +109,7 @@
               type="button"
               class="position-absolute bookmark btn btn-dark rounded-circle border-0 align-self-start p-2 p-lg-3 ms-auto"
             >
-              <img src="../assets/icon/bookmark.svg" alt="bookmark" />
+              <img src="@/assets/icon/bookmark.svg" alt="bookmark" />
             </button>
             <a href="#" class="position-relative ground-floor" @click.prevent="pushPage(item.id)">
               <img

@@ -39,7 +39,7 @@
                     class="d-flex flex-column justify-content-center align-items-center"
                     v-if="this.carts.length === 0"
                   >
-                    <img src="../assets/icon/cartIcon.svg" alt="cartIcon" class="w-25" />
+                    <img src="@/assets/icon/cartIcon.svg" alt="cartIcon" class="w-25" />
                     <p>尚未加入課程</p>
                   </div>
                   <table class="table align-middle table-hover" v-else>
@@ -59,7 +59,7 @@
                             class="btn btn-outline-danger rounded"
                             @click.prevent="delCart(item.id, item?.product?.title)"
                           >
-                            <img src="../assets/icon/delecticon.svg" alt="deleteIcon" />
+                            <img src="@/assets/icon/delecticon.svg" alt="deleteIcon" />
                           </button>
                         </td>
                         <td style="width: 200px" class="d-none d-md-table-cell">

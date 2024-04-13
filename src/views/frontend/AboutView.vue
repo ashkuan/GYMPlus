@@ -86,19 +86,19 @@
           >
             <div class="info">
               <h3 class="h4 text-bold text-white">
-                <img src="../assets/logo_white.svg" alt="logo" />
+                <img src="@/assets/logo_white.svg" alt="logo" />
                 土城館
               </h3>
               <p class="fs-5 text-light">
-                <img class="mx-2" src="../assets/icon/mapIcon.svg" alt="mapIcon" />
+                <img class="mx-2" src="@/assets/icon/mapIcon.svg" alt="mapIcon" />
                 <span>地址:236新北市土城區中正路56巷12號</span>
               </p>
               <p class="fs-5 text-light">
-                <img class="mx-2" src="../assets/icon/phoneIcon.svg" alt="phoneIcon" />
+                <img class="mx-2" src="@/assets/icon/phoneIcon.svg" alt="phoneIcon" />
                 <span>電話:02-1234567</span>
               </p>
               <p class="fs-5 text-light">
-                <img class="mx-2" src="../assets/icon/dateIcon.svg" alt="dateIcon" />
+                <img class="mx-2" src="@/assets/icon/dateIcon.svg" alt="dateIcon" />
                 <span>營業時間:周一至周日0600-2200</span>
               </p>
             </div>
