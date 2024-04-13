@@ -3,12 +3,12 @@
 </template>
 
 <script>
-import AOS from 'aos';
+import aos from 'aos';
 import 'aos/dist/aos.css';
 
 export default {
   mounted() {
-    AOS.init();
+    aos.init();
   },
 };
 </script>

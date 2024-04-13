@@ -149,8 +149,8 @@
 <script>
 import { mapActions, mapState } from 'pinia';
 import GetDataStore from '@/stores/GetDataStore';
-import fakeDataStore from '@/stores/FakeDataStore';
-import adminCourseStore from '@/stores/dashboard/AdminCourseStore'; // 借用圖片上傳功能
+import FakeDataStore from '@/stores/FakeDataStore';
+import AdminCourseStore from '@/stores/dashboard/AdminCourseStore'; // 借用圖片上傳功能
 import AlertStore from '@/stores/AlertStore';
 
 export default {
@@ -169,7 +169,7 @@ export default {
   },
   methods: {
     ...mapActions(GetDataStore, ['getRemoteData']),
-    ...mapActions(adminCourseStore, ['getImgFile', 'uploadImg']),
+    ...mapActions(AdminCourseStore, ['getImgFile', 'uploadImg']),
     ...mapActions(AlertStore, ['basicContent']),
     resetTemp() {
       this.singleArticle = this.$options.data().singleArticle;
@@ -205,9 +205,9 @@ export default {
     },
   },
   computed: {
-    ...mapState(fakeDataStore, ['coaches', 'articleTags']),
+    ...mapState(FakeDataStore, ['coaches', 'articleTags']),
     ...mapState(GetDataStore, ['singleInfo']),
-    ...mapState(adminCourseStore, ['temp', 'isAddingImg']),
+    ...mapState(AdminCourseStore, ['temp', 'isAddingImg']),
     ...mapState(AlertStore, ['alertStyles']),
     checkedtags() {
       return this.articleTags.map((ele) => {

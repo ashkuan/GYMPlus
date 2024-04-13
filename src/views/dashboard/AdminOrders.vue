@@ -114,25 +114,25 @@
       </table>
     </div>
     <div v-else>
-      <h2 class="fs-6 fw-light text-center">
+      <p class="fs-6 fw-light text-center">
         <span class="line-loading-loop bg-gray-3 align-top"></span>
         資料讀取中請稍後
-      </h2>
+      </p>
     </div>
-    <PaginationComponent :now-target="'orders'" :is-user="false"></PaginationComponent>
+    <PaginationComponent :now-target="'orders'" :is-user="false" />
     <OrderEditModal
       :single-order="singleOrder"
       :need-enit="needEnit"
       :is-order-finished="isOrderFinished"
       @update-need-enit="updateNeedEnit"
-    ></OrderEditModal>
-    <OrderDelModal :single-order="singleOrder"></OrderDelModal>
+    />
+    <OrderDelModal :single-order="singleOrder" />
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'pinia';
-import getDataStore from '@/stores/GetDataStore';
+import GetDataStore from '@/stores/GetDataStore';
 import OrderEditModal from '@/components/dashboard/OrderEditModal.vue';
 import OrderDelModal from '@/components/dashboard/OrderDelModal.vue';
 import PaginationComponent from '@/components/PaginationComponent.vue';
@@ -148,7 +148,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(getDataStore, ['getRemoteData', 'addSeparator']),
+    ...mapActions(GetDataStore, ['getRemoteData', 'addSeparator']),
     getOrder(id, isfinished = false) {
       this.isOrderFinished = isfinished;
       this.singleOrder = this.orders.find((order) => order.id === id);
@@ -158,7 +158,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(getDataStore, ['targetData']),
+    ...mapState(GetDataStore, ['targetData']),
     UnixtoText() {
       return this.targetData.map((order) => {
         const date = new Date(order.create_at * 1000);

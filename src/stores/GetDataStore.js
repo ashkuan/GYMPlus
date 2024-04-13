@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
-import alertStore from './AlertStore';
+import AlertStore from './AlertStore';
 
 const url = import.meta.env.VITE_API_URL;
 const path = import.meta.env.VITE_API_PATH;
-const { alertStyles, basicContent } = alertStore();
+const { alertStyles, basicContent } = AlertStore();
 
 export default defineStore('getDataStore', {
   state: () => ({

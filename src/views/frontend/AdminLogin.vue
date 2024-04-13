@@ -85,7 +85,7 @@
 
 <script>
 import { mapActions, mapState } from 'pinia';
-import AlertStore from '../stores/AlertStore';
+import AlertStore from '@/stores/AlertStore';
 
 export default {
   data() {

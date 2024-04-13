@@ -1,5 +1,5 @@
 <template>
-  <swiper
+  <Swiper
     class="course-swiper"
     ref="swiper"
     @swiper="onSwiper"
@@ -30,7 +30,7 @@
       },
     }"
   >
-    <swiper-slide v-for="(course, index) in courses" :key="course.key">
+    <Swiper-Slide v-for="(course, index) in courses" :key="course.key">
       <div class="card text-white text-start bg-transparent">
         <div class="position-relative">
           <img :src="course.imageUrl" class="card-img-top rounded-4" alt="course.title" />
@@ -87,8 +87,8 @@
           </div>
         </div>
       </div>
-    </swiper-slide>
-  </swiper>
+    </Swiper-Slide>
+  </Swiper>
 
   <div class="swiper-button-prev" @click="goLeft"></div>
   <div class="swiper-button-next" @click="goRight"></div>
@@ -100,7 +100,7 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import { mapActions, mapState } from 'pinia';
 import GetDataStore from '@/stores/GetDataStore';
 import FakeDataStore from '@/stores/FakeDataStore';
-import CartStore from '@/stores/cartStore';
+import CartStore from '@/stores/frontend/CartStore';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -344,3 +344,4 @@ export default {
   }
 }
 </style>
+@/stores/frontend/CartStore

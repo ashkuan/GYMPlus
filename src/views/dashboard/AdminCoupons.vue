@@ -79,12 +79,12 @@
       </table>
     </div>
     <div v-else>
-      <h2 class="fs-6 fw-light text-center">
+      <p class="fs-6 fw-light text-center">
         <span class="line-loading-loop bg-gray-3 align-top"></span>
         資料讀取中請稍後
-      </h2>
+      </p>
     </div>
-    <PaginationComponent :now-target="'coupons'" :is-user="false"></PaginationComponent>
+    <PaginationComponent :now-target="'coupons'" :is-user="false" />
   </div>
   <CouponModal
     :coupon-info="couponInfo"
@@ -95,7 +95,7 @@
 
 <script>
 import { mapActions, mapState } from 'pinia';
-import getDataStore from '@/stores/GetDataStore';
+import GetDataStore from '@/stores/GetDataStore';
 import PaginationComponent from '@/components/PaginationComponent.vue';
 import CouponModal from '@/components/dashboard/CouponModal.vue';
 
@@ -109,7 +109,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(getDataStore, ['getRemoteData']),
+    ...mapActions(GetDataStore, ['getRemoteData']),
     getCoupon(couponInfo, editStatus) {
       this.couponInfo = couponInfo;
       this.editStatus = editStatus;
@@ -120,7 +120,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(getDataStore, ['targetData', 'pagination']),
+    ...mapState(GetDataStore, ['targetData', 'pagination']),
   },
   watch: {
     targetData(coupons) {

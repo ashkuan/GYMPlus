@@ -68,7 +68,7 @@
               </span>
             </button>
           </div>
-          <PaginationComponent :now-target="'articles'" :is-user="false"></PaginationComponent>
+          <PaginationComponent :now-target="'articles'" :is-user="false" />
         </div>
         <div class="col-6">
           <div class="shadow-sm rounded-3">
@@ -78,18 +78,18 @@
       </div>
     </div>
     <div v-else>
-      <h2 class="fs-6 fw-light text-center">
+      <p class="fs-6 fw-light text-center">
         <span class="line-loading-loop bg-gray-3 align-top"></span>
         資料讀取中請稍後
-      </h2>
+      </p>
     </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'pinia';
-import getDataStore from '@/stores/GetDataStore';
-import fakeDataStore from '@/stores/FakeDataStore';
+import GetDataStore from '@/stores/GetDataStore';
+import FakeDataStore from '@/stores/FakeDataStore';
 import PaginationComponent from '@/components/PaginationComponent.vue';
 import ArticleEditBlock from '@/components/dashboard/ArticleEditBlock.vue';
 
@@ -102,15 +102,15 @@ export default {
     };
   },
   methods: {
-    ...mapActions(getDataStore, ['getRemoteData', 'getSingleInfo']),
+    ...mapActions(GetDataStore, ['getRemoteData', 'getSingleInfo']),
     getNewData() {
       const page = this.pagination.current_page;
       this.getRemoteData('articles', page, false);
     },
   },
   computed: {
-    ...mapState(getDataStore, ['targetData', 'pagination', 'isGettingInfo']),
-    ...mapState(fakeDataStore, ['coaches', 'articleTags']),
+    ...mapState(GetDataStore, ['targetData', 'pagination', 'isGettingInfo']),
+    ...mapState(FakeDataStore, ['coaches', 'articleTags']),
   },
   watch: {
     targetData(articles) {
