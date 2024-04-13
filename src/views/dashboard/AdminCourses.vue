@@ -109,7 +109,6 @@ import CourseDelModal from '@/components/dashboard/CourseDelModal.vue';
 
 export default {
   components: { PaginationComponent, CourseEditModal, CourseDelModal },
-  props: ['haveToken'],
   data() {
     return {
       url: '',
