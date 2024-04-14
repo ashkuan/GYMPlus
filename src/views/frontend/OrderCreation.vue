@@ -61,7 +61,7 @@
             </tr>
             <tr>
               <th>訂單總計</th>
-              <td>NT$ {{ order?.total }}</td>
+              <td>NT$ {{ thousands(order?.total) }}</td>
             </tr>
             <tr>
               <th>折價卷</th>
@@ -90,7 +90,7 @@
                     type="button"
                     v-if="order?.is_paid"
                     class="btn btn-outline-success btn-lg rounded"
-                    @click.prevent="this.$router.push('/')"
+                    @click.prevent="this.$router.push('/courses')"
                   >
                     返回首頁
                   </button>
@@ -185,10 +185,19 @@ export default {
             timer: 1500,
           });
           setTimeout(() => {
-            this.$router.push('/');
+            this.$router.push('/courses');
           }, 1500);
         }
       });
+    },
+    thousands(value) {
+      if(value) {
+        const comma=/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g
+        const num = value.toString().replace(comma, ',')
+        return num;
+      }
+        return '';
+      
     },
   },
   components: {

@@ -16,11 +16,11 @@
           <li class="breadcrumb-item active" aria-current="page">購買課程</li>
         </ol>
       </nav>
-      <div class="row justify-content-center">
-        <div class="btn-group mb-4 mx-auth col-12 col-lg-6">
+      <div class="row justify-content-center g-0">
+        <div class="btn-group mb-4 col-12 col-lg-6">
           <button
             type="button"
-            class="btn btn-primary"
+            class="btn btn-primary text-nowrap py-2 px-3 py-md-3 px-md-4"
             :class="{ active: item === category }"
             v-for="(item, index) in categorys"
             :key="index"

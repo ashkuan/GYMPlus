@@ -31,10 +31,12 @@
       </section>
       <section class="py-5">
         <v-form class="row" v-slot="{ errors }" @submit="onSubmit">
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-md-6 mb-5 mb-md-0">
             <h2 class="h4 text-center">訂購人資訊</h2>
             <div class="mb-3">
-              <label for="name" class="form-label">訂購人姓名</label>
+              <label for="name" class="form-label"
+                >訂購人姓名<span class="text-danger fs-5">*</span></label
+              >
               <v-field
                 type="text"
                 class="form-control"
@@ -45,10 +47,15 @@
                 placeholder="請填寫姓名"
                 v-model="form.user.name"
               ></v-field>
-              <error-message class="invalid-feedback" name="name"></error-message>
+              <error-message
+                class="invalid-feedback"
+                name="name"
+              ></error-message>
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label">聯絡信箱</label>
+              <label for="email" class="form-label"
+                >聯絡信箱<span class="text-danger fs-5">*</span></label
+              >
               <v-field
                 type="email"
                 class="form-control"
@@ -59,10 +66,15 @@
                 placeholder="請填寫聯絡信箱"
                 v-model="form.user.email"
               ></v-field>
-              <error-message class="invalid-feedback" name="email"></error-message>
+              <error-message
+                class="invalid-feedback"
+                name="email"
+              ></error-message>
             </div>
             <div class="mb-3">
-              <label for="phone" class="form-label">手機號碼</label>
+              <label for="phone" class="form-label"
+                >手機號碼<span class="text-danger fs-5">*</span></label
+              >
               <v-field
                 type="tel"
                 class="form-control"
@@ -73,10 +85,15 @@
                 placeholder="請填寫手機號碼"
                 v-model="form.user.tel"
               ></v-field>
-              <error-message class="invalid-feedback" name="phone"></error-message>
+              <error-message
+                class="invalid-feedback"
+                name="phone"
+              ></error-message>
             </div>
             <div class="mb-3">
-              <label for="contact" class="form-label">聯絡地址</label>
+              <label for="contact" class="form-label"
+                >聯絡地址<span class="text-danger fs-5">*</span></label
+              >
               <v-field
                 type="text"
                 class="form-control"
@@ -87,7 +104,10 @@
                 placeholder="請填寫聯絡地址"
                 v-model="form.user.address"
               ></v-field>
-              <error-message class="invalid-feedback" name="contact"></error-message>
+              <error-message
+                class="invalid-feedback"
+                name="contact"
+              ></error-message>
             </div>
             <div class="mb-3">
               <label for="comment" class="form-label">備註</label>
@@ -98,8 +118,6 @@
                 v-model="form.message"
               ></textarea>
             </div>
-          </div>
-          <div class="col-12 col-md-4">
             <h2 class="h4 text-center">付款方式</h2>
             <div class="d-flex justify-content-center">
               <div class="form-check form-check-inline">
@@ -122,12 +140,19 @@
                   value="bank-account"
                   v-model="form.user.payment"
                 />
-                <label class="form-check-label" for="bank_account">銀行轉帳</label>
+                <label class="form-check-label" for="bank_account"
+                  >銀行轉帳</label
+                >
               </div>
             </div>
-            <div class="credit-card" v-if="this.form.user.payment === 'credit-card'">
+            <div
+              class="credit-card"
+              v-if="this.form.user.payment === 'credit-card'"
+            >
               <div class="mb-3">
-                <label for="cardName" class="form-label">持卡人</label>
+                <label for="cardName" class="form-label"
+                  >持卡人<span class="text-danger fs-5">*</span></label
+                >
                 <v-field
                   type="text"
                   class="form-control"
@@ -138,10 +163,15 @@
                   maxlength="16"
                   placeholder="請輸入持卡人姓名"
                 ></v-field>
-                <error-message class="invalid-feedback" name="cardName"></error-message>
+                <error-message
+                  class="invalid-feedback"
+                  name="cardName"
+                ></error-message>
               </div>
               <div class="mb-3">
-                <label for="cardholderNumber" class="form-label">信用卡號碼</label>
+                <label for="cardholderNumber" class="form-label"
+                  >信用卡號碼<span class="text-danger fs-5">*</span></label
+                >
                 <v-field
                   type="tel"
                   class="form-control"
@@ -151,12 +181,17 @@
                   rules="cardholderNumber|required"
                   placeholder="請填寫信用卡號碼"
                 ></v-field>
-                <error-message class="invalid-feedback" name="cardholderNumber"></error-message>
+                <error-message
+                  class="invalid-feedback"
+                  name="cardholderNumber"
+                ></error-message>
               </div>
               <div class="row g-0">
                 <div class="col d-flex flex-column">
                   <div class="mb-0">
-                    <label for="expires-month" class="form-label">有效期限</label>
+                    <label for="expires-month" class="form-label"
+                      >有效期限<span class="text-danger fs-5">*</span></label
+                    >
                   </div>
                   <div class="mb-1 d-flex">
                     <v-field
@@ -180,11 +215,15 @@
                   </div>
                 </div>
                 <div class="col-4">
-                  <label for="credit-card-security-code" class="form-label">安全碼</label>
+                  <label for="credit-card-security-code" class="form-label"
+                    >安全碼<span class="text-danger fs-5">*</span></label
+                  >
                   <v-field
                     type="tel"
                     class="form-control me-1"
-                    :class="{ 'is-invalid': errors['credit-card-security-code'] }"
+                    :class="{
+                      'is-invalid': errors['credit-card-security-code'],
+                    }"
                     id="credit-card-security-code"
                     maxlength="3"
                     name="credit-card-security-code"
@@ -199,44 +238,67 @@
               <p>繳費虛擬帳號:5219 3025 4107 5893</p>
             </div>
           </div>
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-md-6">
             <h2 class="h4 text-center">訂單內容</h2>
-            <div class="card mb-1" style="max-width: 540px" v-for="item in carts" :key="item.id">
-              <div class="row g-0">
-                <div class="col-md-4">
-                  <img
-                    :src="item?.product?.imageUrl"
-                    class="img-fluid rounded-start"
-                    :alt="item?.product?.title"
-                  />
-                </div>
-                <div class="col-md-8">
-                  <div class="card-body">
-                    <h3 class="h6 card-title">{{ item?.product?.title }}</h3>
-                    <div class="d-flex justify-content-end">
-                      <p class="card-text">
-                        <small class="text-decoration-line-through">
-                          $ {{ item?.product?.origin_price }}
-                        </small>
+            <table class="table align-middle table-hover">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th class="d-none d-md-table-cell"></th>
+                  <th class="text-start">課程名稱</th>
+                  <th>金額</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="item in carts" :key="item.id">
+                  <td></td>
+                  <td style="width: 200px" class="d-none d-md-table-cell">
+                    <img
+                      :src="item?.product?.imageUrl"
+                      alt="img"
+                      class="img-fluid"
+                    />
+                  </td>
+                  <td>{{ item?.product?.title }}</td>
+                  <td class="text-end">
+                    <div class="d-flex">
+                      <p
+                        class="card-text mb-0 text-decoration-line-through text-nowrap"
+                      >
+                        $ {{ thousands(item?.product?.origin_price) }}
                       </p>
-                      <p class="card-text">${{ item?.product?.price }}</p>
+                      <span class="px-3 text-nowrap"
+                        >$ {{ thousands(item?.product?.price) }}</span
+                      >
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="d-flex flex-column align-items-end">
-              <p>
-                商品合計:
-                <span :class="[total === final_total ? '' : 'text-decoration-line-through']">
-                  NT$ {{ total }}
-                </span>
-              </p>
-              <p>
-                訂單總計:
-                <span>NT$ {{ final_total }}</span>
-              </p>
-            </div>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th scope="col" colspan="4" class="border-0">
+                    <td class="d-flex flex-column align-items-end">
+                      <p class="text-end">
+                      商品合計:
+                      <span
+                        :class="[
+                          total === final_total
+                            ? ''
+                            : 'text-decoration-line-through',
+                        ]"
+                      >
+                        NT$ {{ thousands(total) }}
+                      </span>
+                    </p>
+                    <p>
+                      訂單總計:
+                      <span>NT$ {{ thousands(final_total) }}</span>
+                    </p>
+                    </td>
+                  </th>
+                </tr>
+              </tfoot>
+            </table>
           </div>
           <div class="col-12 d-flex justify-content-center py-3">
             <button
@@ -246,7 +308,10 @@
             >
               回到上一頁
             </button>
-            <button type="submit" class="btn btn-lg btn-outline-danger rounded mx-2">
+            <button
+              type="submit"
+              class="btn btn-lg btn-outline-danger rounded mx-2"
+            >
               送出訂單
             </button>
           </div>
@@ -257,25 +322,25 @@
 </template>
 
 <script>
-import Loading from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/css/index.css';
-import { mapActions, mapState } from 'pinia';
-import CartStore from '@/stores/frontend/CartStore';
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/css/index.css";
+import { mapActions, mapState } from "pinia";
+import CartStore from "@/stores/frontend/CartStore";
 
 export default {
   data() {
     return {
-      orderId: '',
+      orderId: "",
       form: {
         user: {
-          name: '',
-          email: '',
-          tel: '',
-          address: '',
-          payment: 'credit-card',
-          cartTitle: '',
+          name: "",
+          email: "",
+          tel: "",
+          address: "",
+          payment: "credit-card",
+          cartTitle: "",
         },
-        message: '',
+        message: "",
       },
     };
   },
@@ -283,56 +348,70 @@ export default {
     Loading,
   },
   methods: {
-    ...mapActions(CartStore, ['getCarts']),
+    ...mapActions(CartStore, ["getCarts"]),
     checkData() {
       if (this.carts.length === 0) {
         this.$swal({
-          icon: 'error',
-          title: '購物車為空',
-          text: '您還沒選購課程~',
+          icon: "error",
+          title: "購物車為空",
+          text: "您還沒選購課程~",
           showConfirmButton: false,
           timer: 1500,
         });
         setTimeout(() => {
-          this.$router.push('/courses');
+          this.$router.push("/courses");
         }, 1500);
       }
     },
     onSubmit() {
       this.$swal({
-        icon: 'question',
-        title: '是否送出訂單?',
+        icon: "question",
+        title: "是否送出訂單?",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: '確定',
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "確定",
+        cancelButtonText: "取消",
+        reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
           this.form.payment = this.ispayment;
-          const cartTitle = this.carts.map((item) => item.product.title).join('、');
+          const cartTitle = this.carts
+            .map((item) => item.product.title)
+            .join("、");
           this.form.user.cartTitle = cartTitle;
           const order = this.form;
-          this.axios.post(`${this.url}api/${this.path}/order`, { data: order }).then((res) => {
-            this.orderId = res.data.orderId;
-            this.$swal({
-              icon: 'success',
-              title: res.data.message,
-              showConfirmButton: false,
-              timer: 1500,
+          this.axios
+            .post(`${this.url}api/${this.path}/order`, { data: order })
+            .then((res) => {
+              this.orderId = res.data.orderId;
+              this.$swal({
+                icon: "success",
+                title: res.data.message,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              setTimeout(() => {
+                this.$router.push(`order-creation/${this.orderId}`);
+              }, 1500);
             });
-            setTimeout(() => {
-              this.$router.push(`order-creation/${this.orderId}`);
-            }, 1500);
-          });
         }
       });
     },
+    thousands(value) {
+      if (value) {
+        const comma = /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g;
+        const num = value.toString().replace(comma, ",");
+        return num;
+      }
+      return "";
+    },
   },
   computed: {
-    ...mapState(CartStore, ['carts']),
-    ...mapState(CartStore, ['total']),
-    ...mapState(CartStore, ['final_total']),
-    ...mapState(CartStore, ['isLoading']),
+    ...mapState(CartStore, ["carts"]),
+    ...mapState(CartStore, ["total"]),
+    ...mapState(CartStore, ["final_total"]),
+    ...mapState(CartStore, ["isLoading"]),
   },
   mounted() {
     this.url = import.meta.env.VITE_API_URL;
@@ -340,7 +419,7 @@ export default {
     this.getCarts();
     setTimeout(() => {
       this.checkData();
-    }, 500);
+    }, 1000);
   },
 };
 </script>

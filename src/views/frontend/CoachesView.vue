@@ -174,21 +174,3 @@ export default {
 };
 </script>
 
-<style>
-.card:hover {
-  transition: all 0.15s ease-in-out;
-  background: linear-gradient(110.77deg, #655aea -6.41%, #95e2ff 107.79%);
-  color: #fff;
-  .feature-cap span:first-child {
-    display: none;
-    transition: all 0.5s ease-in-out;
-  }
-  .hover-icon {
-    transition: all 0.5s ease-in-out;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    span {
-      margin: 10px;
-    }
-  }
-}
-</style>

@@ -64,6 +64,8 @@ export default defineStore('cart', {
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
           confirmButtonText: '確定',
+          cancelButtonText: "取消",
+          reverseButtons: true
         })
         .then((result) => {
           if (result.isConfirmed) {
@@ -92,6 +94,8 @@ export default defineStore('cart', {
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
           confirmButtonText: '確定',
+          cancelButtonText: "取消",
+          reverseButtons: true
         })
         .then((result) => {
           if (result.isConfirmed) {

@@ -31,8 +31,8 @@
               <img :src="product?.imageUrl" class="img-fluid rounded-start" alt="img" />
             </div>
             <div class="col-12 col-lg-6">
-              <div class="card-body d-flex flex-column justify-content-between h-100 pe-0">
-                <ul>
+              <div class="card-body d-flex flex-column justify-content-between h-100 pe-0 ps-0 ps-md-3">
+                <ul class="p-0 ps-md-5">
                   <li>
                     <p class="card-text">開課時間：{{ product?.time }}</p>
                   </li>

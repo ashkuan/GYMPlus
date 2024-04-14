@@ -141,7 +141,11 @@ export default {
   },
   methods: {
     checkArticle(type) {
+      this.isLoading = true;
       this.article = type;
+      setTimeout(() => {
+        this.isLoading = false;
+      },500)
     },
     getData() {
       this.axios.get(`${this.url}api/${this.path}/articles`).then((res) => {

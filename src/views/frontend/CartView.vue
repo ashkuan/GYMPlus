@@ -39,8 +39,12 @@
                     class="d-flex flex-column justify-content-center align-items-center"
                     v-if="this.carts.length === 0"
                   >
-                    <img src="@/assets/icon/cartIcon.svg" alt="cartIcon" class="w-25" />
-                    <p>尚未加入課程</p>
+                    <img
+                      src="@/assets/icon/cartIcon.svg"
+                      alt="cartIcon"
+                      class="w-25"
+                    />
+                    <p class="mt-5 fs-4 font-bold">尚未加入課程</p>
                   </div>
                   <table class="table align-middle table-hover" v-else>
                     <thead>
@@ -56,22 +60,43 @@
                         <td>
                           <button
                             type="button"
-                            class="btn btn-outline-danger rounded"
-                            @click.prevent="delCart(item.id, item?.product?.title)"
+                            class="btn btn-outline-danger rounded px-2 py-1 px-md-4 py-md-3"
+                            @click.prevent="
+                              delCart(item.id, item?.product?.title)
+                            "
                           >
-                            <img src="@/assets/icon/delecticon.svg" alt="deleteIcon" />
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              class="bi bi-x-lg"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+                              />
+                            </svg>
                           </button>
                         </td>
                         <td style="width: 200px" class="d-none d-md-table-cell">
-                          <img :src="item?.product?.imageUrl" alt="img" class="img-fluid" />
+                          <img
+                            :src="item?.product?.imageUrl"
+                            alt="img"
+                            class="img-fluid"
+                          />
                         </td>
                         <td>{{ item?.product?.title }}</td>
                         <td class="text-end">
                           <div class="d-flex">
-                            <p class="card-text mb-0 text-decoration-line-through text-nowrap">
-                              $ {{ item?.product?.origin_price }}
+                            <p
+                              class="card-text mb-0 text-decoration-line-through text-nowrap"
+                            >
+                              $ {{ thousands(item?.product?.origin_price) }}
                             </p>
-                            <span class="px-3 text-nowrap">$ {{ item?.product?.price }}</span>
+                            <span class="px-3 text-nowrap"
+                              >$ {{ thousands(item?.product?.price) }}</span
+                            >
                           </div>
                         </td>
                       </tr>
@@ -91,7 +116,14 @@
                     </tfoot>
                   </table>
                 </div>
-                <div class="container row align-items-center mb-4">
+                <div
+                  class="container row align-items-center mb-4"
+                  :class="[
+                    this.carts.length === 0
+                      ? 'd-none'
+                      : 'container row align-items-center mb-4',
+                  ]"
+                >
                   <div class="col-12 col-md-6">
                     <div class="input-group">
                       <input
@@ -101,14 +133,18 @@
                         aria-label="Recipient's username"
                         aria-describedby="button-addon2"
                         v-model="this.code"
-                        :disabled="this.isconponStatus || this.carts.length === 0"
+                        :disabled="
+                          this.isconponStatus || this.carts.length === 0
+                        "
                       />
                       <button
                         class="btn btn-outline-secondary"
                         type="button"
                         id="button-addon2"
                         @click.prevent="addCouponCode"
-                        :disabled="this.isconponStatus || this.carts.length === 0"
+                        :disabled="
+                          this.isconponStatus || this.carts.length === 0
+                        "
                       >
                         套用
                       </button>
@@ -116,22 +152,32 @@
                   </div>
                   <div class="col-12 col-md-6 my-2 my-md-0">
                     <p
-                      class="mb-0 text-center text-md-start"
+                      class="mb-0 text-start"
                       :class="[this.conponTitle === '' ? '' : 'text-success']"
                     >
-                      {{ this.conponTitle === '' ? '未套用優惠券' : this.conponTitle }}
+                      {{
+                        this.conponTitle === ""
+                          ? "未套用優惠券"
+                          : this.conponTitle
+                      }}
                     </p>
                   </div>
                   <div class="col-12 d-flex flex-column align-items-end">
                     <p>
                       商品合計:
-                      <span :class="[total === final_total ? '' : 'text-decoration-line-through']">
-                        NT$ {{ total }}
+                      <span
+                        :class="[
+                          total === final_total
+                            ? ''
+                            : 'text-decoration-line-through',
+                        ]"
+                      >
+                        NT$ {{ thousands(total) }}
                       </span>
                     </p>
                     <p>
                       訂單總計:
-                      <span>NT$ {{ final_total }}</span>
+                      <span>NT$ {{ thousands(final_total) }}</span>
                     </p>
                   </div>
                 </div>
@@ -146,6 +192,11 @@
                   <button
                     type="button"
                     class="btn btn-outline-danger btn-lg mx-3"
+                    :class="[
+                      this.carts.length === 0
+                        ? 'd-none'
+                        : 'btn btn-outline-danger btn-lg mx-3',
+                    ]"
                     :disabled="this.carts.length === 0"
                     @click.prevent="this.$router.push('/checkout')"
                   >
@@ -168,51 +219,69 @@
 </template>
 
 <script>
-import Loading from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/css/index.css';
-import { mapActions, mapState } from 'pinia';
-import CartStore from '@/stores/frontend/CartStore';
-import CoursesSwiper from '@/components/frontend/CoursesSwiper.vue';
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/css/index.css";
+import { mapActions, mapState } from "pinia";
+import CartStore from "@/stores/frontend/CartStore";
+import CoursesSwiper from "@/components/frontend/CoursesSwiper.vue";
 
 export default {
   data() {
     return {
-      url: '',
-      path: '',
-      code: '',
-      conponTitle: '',
+      url: "",
+      path: "",
+      code: "",
+      conponTitle: "",
       isconponStatus: false,
     };
   },
   methods: {
-    ...mapActions(CartStore, ['getCarts']),
-    ...mapActions(CartStore, ['delCart']),
-    ...mapActions(CartStore, ['delAllCart']),
+    ...mapActions(CartStore, ["getCarts"]),
+    ...mapActions(CartStore, ["delCart"]),
+    ...mapActions(CartStore, ["delAllCart"]),
     addCouponCode() {
       const conpon = {
         code: this.code,
       };
-      if (this.code === '') {
+      if (this.code === "") {
         this.$swal({
-          icon: 'error',
-          title: '錯誤',
-          text: '優惠卷欄位不可填空!',
+          icon: "error",
+          title: "錯誤",
+          text: "優惠卷欄位不可填空!",
         });
       } else {
-        this.axios.post(`${this.url}api/${this.path}/coupon`, { data: conpon }).then((res) => {
-          this.$swal({
-            icon: 'success',
-            title: '已成功套用優惠卷',
-            showConfirmButton: false,
-            timer: 1500,
+        this.axios
+          .post(`${this.url}api/${this.path}/coupon`, { data: conpon })
+          .then((res) => {
+            this.$swal({
+              icon: "success",
+              title: "已成功套用優惠卷",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            setTimeout(() => {
+              this.getCarts();
+              this.isconponStatus = true;
+              this.conponTitle = res.data.message;
+            }, 1500);
+          })
+          .catch((error) => {
+            this.$swal({
+              icon: "error",
+              title: "錯誤",
+              text: error.response.data.message,
+            });
           });
-          setTimeout(() => {
-            this.getCarts();
-            this.isconponStatus = true;
-            this.conponTitle = res.data.message;
-          }, 1500);
-        });
       }
+    },
+    thousands(value) {
+      if(value) {
+        const comma=/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g
+        const num = value.toString().replace(comma, ',')
+        return num;
+      }
+        return '';
+      
     },
   },
   components: {
@@ -220,10 +289,10 @@ export default {
     CoursesSwiper,
   },
   computed: {
-    ...mapState(CartStore, ['carts']),
-    ...mapState(CartStore, ['total']),
-    ...mapState(CartStore, ['final_total']),
-    ...mapState(CartStore, ['isLoading']),
+    ...mapState(CartStore, ["carts"]),
+    ...mapState(CartStore, ["total"]),
+    ...mapState(CartStore, ["final_total"]),
+    ...mapState(CartStore, ["isLoading"]),
   },
   mounted() {
     this.url = import.meta.env.VITE_API_URL;

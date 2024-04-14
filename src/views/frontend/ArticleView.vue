@@ -15,17 +15,23 @@
           </ol>
         </nav>
         <h2 class="text-center">{{ article.title }}</h2>
-        <div class="d-flex justify-content-evenly">
-          <p>作者: {{ article.author }}</p>
-          <p>發表於: {{ formatUnixTimestamp(article.create_at) }}</p>
-          <p>
+        <div class="row row-cols-1 row-cols-md-3 g-0 gy-3">
+          <div class="col d-flex justify-content-md-center">
+            <p>作者: {{ article.author }}</p>
+          </div>
+          <div class="col d-flex justify-content-md-center">
+            <p>發表於: {{ formatUnixTimestamp(article.create_at) }}</p>
+          </div>
+          <div class="col d-flex justify-content-md-center">
+            <p>
             分類於:
             <span v-for="(type, index) in article.tag" :key="index">{{ type }}</span>
           </p>
+          </div>
         </div>
       </div>
-      <div class="banner mt-3" :style="{ backgroundImage: 'url(' + image + ')' }"></div>
-      <article class="container" v-html="article.content"></article>
+      <div class="banner my-3" :style="{ backgroundImage: 'url(' + image + ')' }"></div>
+      <article class="container py-5" v-html="article.content"></article>
       <div class="d-flex justify-content-center mt-5 pb-5">
         <button type="button" class="btn btn-outline-danger" @click.prevent="gotoTop">
           返回頂部
