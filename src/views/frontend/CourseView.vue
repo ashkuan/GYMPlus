@@ -31,7 +31,7 @@
               <img :src="product?.imageUrl" class="img-fluid rounded-start" alt="img" />
             </div>
             <div class="col-12 col-lg-6">
-              <div class="card-body d-flex flex-column justify-content-between h-100">
+              <div class="card-body d-flex flex-column justify-content-between h-100 pe-0">
                 <ul>
                   <li>
                     <p class="card-text">開課時間：{{ product?.time }}</p>
@@ -83,10 +83,10 @@
             </div>
           </div>
         </section>
-        <section class="p-5">
-          <h3 class="h4">注意事項</h3>
-          <ul class="row row-cols-1 row-cols-md-2" style="list-style-type: none">
-            <li class="px-3">
+        <section>
+          <h3 class="h4 py-3 mb-0">注意事項</h3>
+          <ul class="row row-cols-1 row-cols-md-2 g-0 gy-3 p-0" style="list-style-type: none">
+            <li class="col">
               <p class="mb-0 font-bold">
                 取消與轉讓政策：
                 <span>
@@ -94,7 +94,7 @@
                 </span>
               </p>
             </li>
-            <li class="px-3">
+            <li class="col ps-md-3">
               <p class="mb-0 font-bold">
                 適合族群與難度：
                 <span>
@@ -102,13 +102,13 @@
                 </span>
               </p>
             </li>
-            <li class="px-3">
-              <p class="mb-0 font-bold">
+            <li>
+              <p class="col mb-0 font-bold">
                 個人裝備需求：
                 <span>請攜帶運動鞋、毛巾和水壺。個人裝備能確保您在課程中舒適，發揮最佳表現。</span>
               </p>
             </li>
-            <li class="px-3">
+            <li class="col ps-md-3">
               <p class="mb-0 font-bold">
                 提供課前諮詢：
                 <span>
