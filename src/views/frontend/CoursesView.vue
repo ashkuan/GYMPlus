@@ -112,7 +112,8 @@
               <img src="@/assets/icon/bookmark.svg" alt="bookmark" />
             </button>
             <a href="#" class="position-relative ground-floor" @click.prevent="pushPage(item.id)">
-              <img
+              <div class="position-relative">
+                <img
                 :src="item.imageUrl"
                 class="card-img-top"
                 style="height: 350px; object-fit: cover"
@@ -124,8 +125,9 @@
                   <h6 class="font-bold text-white">{{ item.coach }} 教練</h6>
                 </div>
               </div>
-            </a>
-            <div class="card-body d-flex justify-content-between align-items-center">
+              </div>
+              
+              <div class="card-body d-flex justify-content-between align-items-center">
               <div class="d-flex flex-column" v-if="item.price !== 0">
                 <p class="card-text mb-0">{{ item.title }}</p>
                 <p class="card-text mb-0">
@@ -139,7 +141,7 @@
               </div>
               <button
                 type="button"
-                class="btn btn-primary"
+                class="btn btn-primary high-floor"
                 disabled
                 v-if="this.carts.some((id) => id.product_id === item.id)"
               >
@@ -147,7 +149,7 @@
               </button>
               <button
                 type="button"
-                class="btn btn-primary"
+                class="btn btn-primary high-floor"
                 v-else
                 :disabled="status.loadingItem === item.id"
                 @click.prevent="addCart(item.id, item.title)"
@@ -162,6 +164,7 @@
                 加入購物車
               </button>
             </div>
+            </a>
           </div>
         </div>
       </section>

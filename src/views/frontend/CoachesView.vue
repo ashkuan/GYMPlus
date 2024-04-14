@@ -17,9 +17,9 @@
         </ol>
       </nav>
       <section class="my-3">
-        <div class="row row-cols-1 row-cols-lg-3 justify-content-center">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5">
           <div
-            class="col-12 col-lg-4 d-flex justify-content-center"
+            class="col-12 col-lg-4 d-flex justify-content-center justify-content-lg-start"
             v-for="(item, index) in coaches"
             :key="index"
             data-aos="flip-left"
