@@ -129,7 +129,7 @@
                   <label for="is_enabled" class="form-label">啟用優惠券</label>
                 </div>
               </div>
-              <button type="submit" class="d-none" ref="submitButton"></button>
+              <button type="submit" class="d-none" ref="submitBtn"></button>
             </VForm>
           </div>
           <div v-show="status === '刪除'" class="row justify-content-center">
@@ -231,7 +231,7 @@ export default {
     },
     activedSubmitBtn() {
       // 透過外部按鈕觸發表單內部 submit button
-      this.$refs.submitButton.click();
+      this.$refs.submitBtn.click();
     },
   },
   computed: {

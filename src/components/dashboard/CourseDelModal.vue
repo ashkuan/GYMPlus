@@ -64,19 +64,24 @@ import { mapActions, mapState } from 'pinia';
 import AdminCourseStore from '@/stores/dashboard/AdminCourseStore';
 
 export default {
+  props: ['courseForm'],
   data() {
     return {
       delModal: null,
     };
   },
   methods: {
-    ...mapActions(AdminCourseStore, ['delCourse']),
+    ...mapActions(AdminCourseStore, ['delCourse', 'resetTemp']),
   },
   computed: {
     ...mapState(AdminCourseStore, ['temp', 'isEditingCourse']),
   },
   mounted() {
     this.delModal = new bootstrap.Modal(this.$refs.courseDelModal);
+    const danglingStr = '_element';
+    this.delModal[danglingStr].addEventListener('hidden.bs.modal', () => {
+      this.resetTemp(this.courseForm);
+    });
   },
 };
 </script>

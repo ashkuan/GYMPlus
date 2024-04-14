@@ -38,8 +38,9 @@ export default defineStore('adminCourseStore', {
         this.temp[name] = course[name];
       });
     },
-    resetTemp() {
+    resetTemp(formDom) {
       this.$reset();
+      formDom.resetForm();
     },
     editCourse(id, modalDom) {
       this.isEditingCourse = !this.isEditingCourse;
@@ -55,7 +56,6 @@ export default defineStore('adminCourseStore', {
           alertStyles.basic.fire({
             ...basicContent(res.data.message, 1),
             didClose: () => {
-              this.resetTemp();
               this.isEditingCourse = !this.isEditingCourse;
               modalDom.hide();
               GetDataStore().getRemoteData('products', 1, false);
@@ -75,7 +75,6 @@ export default defineStore('adminCourseStore', {
           alertStyles.basic.fire({
             ...basicContent(res.data.message, 1),
             didClose: () => {
-              this.resetTemp();
               this.isEditingCourse = !this.isEditingCourse;
               modalDom.hide();
             },
