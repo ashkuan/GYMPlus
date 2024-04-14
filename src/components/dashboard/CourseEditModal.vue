@@ -16,29 +16,46 @@
         </div>
         <div class="modal-body p-5 px-xl-6">
           <div class="container-fluid">
-            <form class="row admin-form gx-6">
+            <VForm
+              class="row admin-form gx-6"
+              @submit="editCourse(temp.id, editModal)"
+              ref="courseForm"
+              v-slot="{ errors }"
+            >
               <div class="col-lg-7 mb-3 mb-lg-0">
                 <div class="row g-3">
                   <div class="col-xl-6">
                     <div class="row g-1 align-items-center">
                       <label for="title" class="col-2 col-xl-3 form-label">課程標題</label>
                       <div class="col">
-                        <input
+                        <VField
+                          name="title"
+                          rules="required"
                           type="text"
                           id="title"
                           class="form-control form-control-sm"
+                          :class="{ 'is-invalid': errors['title'] }"
                           placeholder="請輸入標題"
                           v-model="temp.title"
                         />
                       </div>
+                      <ErrorMessage name="title" v-slot="{ message }" class="invalid-feedback">
+                        <small class="col-9 ms-auto fs-8 mt-1 text-danger">
+                          {{ message.replace('title', '標題') }}
+                        </small>
+                      </ErrorMessage>
                     </div>
                   </div>
                   <div class="col-xl-6">
                     <div class="row g-1 align-items-center">
                       <label for="category" class="col-2 form-label">分類</label>
                       <div class="col">
-                        <select
+                        <VField
+                          name="category"
+                          rules="required"
+                          as="select"
                           class="form-select form-select-sm"
+                          :class="{ 'is-invalid': errors['category'] }"
                           id="category"
                           v-model="temp.category"
                         >
@@ -46,18 +63,26 @@
                           <option :value="category" v-for="category in categories" :key="category">
                             {{ category }}
                           </option>
-                        </select>
+                        </VField>
                       </div>
+                      <ErrorMessage name="category" v-slot="{ message }" class="invalid-feedback">
+                        <small class="col-10 ms-auto fs-8 mt-1 text-danger">
+                          {{ message.replace('category', '分類') }}
+                        </small>
+                      </ErrorMessage>
                     </div>
                   </div>
                   <div class="col-xl-6">
                     <div class="row g-1 align-items-center" ref="dueDate">
                       <label for="time" class="col-2 col-xl-3 form-label">上課日期</label>
                       <div class="col input-group input-group-sm">
-                        <input
+                        <VField
+                          name="dueDateStr"
+                          rules="required"
                           type="text"
                           id="time"
                           class="form-control"
+                          :class="{ 'is-invalid': errors['dueDateStr'] }"
                           placeholder="請輸入上課日期"
                           v-model="temp.time"
                           data-input
@@ -73,19 +98,37 @@
                           <i class="bi bi-x-lg"></i>
                         </button>
                       </div>
+                      <ErrorMessage name="dueDateStr" v-slot="{ message }" class="invalid-feedback">
+                        <small class="col-9 ms-auto fs-8 mt-1 text-danger">
+                          {{ message.replace('dueDateStr', '上課日期') }}
+                        </small>
+                      </ErrorMessage>
                     </div>
                   </div>
                   <div class="col-xl-6">
                     <div class="row g-1 align-items-center">
                       <label for="coach" class="col-2 form-label">教練</label>
                       <div class="col">
-                        <select class="form-select form-select-sm" id="coach" v-model="temp.coach">
+                        <VField
+                          as="select"
+                          name="coach"
+                          rules="required"
+                          class="form-select form-select-sm"
+                          :class="{ 'is-invalid': errors['coach'] }"
+                          id="coach"
+                          v-model="temp.coach"
+                        >
                           <option value="" disabled hidden>選擇開課教練</option>
                           <option :value="coach" v-for="coach in coachs" :key="coach">
                             {{ coach }}
                           </option>
-                        </select>
+                        </VField>
                       </div>
+                      <ErrorMessage name="coach" v-slot="{ message }" class="invalid-feedback">
+                        <small class="col-10 ms-auto fs-8 mt-1 text-danger">
+                          {{ message.replace('coach', '到期日') }}
+                        </small>
+                      </ErrorMessage>
                     </div>
                   </div>
                   <div class="col-xl-6">
@@ -93,15 +136,27 @@
                       <label for="origin_price" class="col-2 form-label">原價</label>
                       <div class="col input-group input-group-sm">
                         <span class="input-group-text fs-8" style="letter-spacing: 0px">NTD</span>
-                        <input
+                        <VField
+                          name="origin_price"
+                          rules="required|min_value:0"
                           type="number"
                           id="origin_price"
                           class="form-control form-control-sm"
+                          :class="{ 'is-invalid': errors['origin_price'] }"
                           placeholder="請輸入原價"
                           v-model.number="temp.origin_price"
                           min="0"
                         />
                       </div>
+                      <ErrorMessage
+                        name="origin_price"
+                        v-slot="{ message }"
+                        class="invalid-feedback"
+                      >
+                        <small class="col-10 ms-auto fs-8 mt-1 text-danger">
+                          {{ message.replace('origin_price', '原價') }}
+                        </small>
+                      </ErrorMessage>
                     </div>
                   </div>
                   <div class="col-xl-6">
@@ -109,15 +164,24 @@
                       <label for="price" class="col-2 form-label">售價</label>
                       <div class="col input-group input-group-sm">
                         <span class="input-group-text" style="letter-spacing: 0px">NTD</span>
-                        <input
+                        <VField
+                          name="price"
+                          :rules="`required|min_value:0|max_value:${temp.origin_price}`"
                           type="number"
                           id="price"
                           class="form-control form-control-sm"
+                          :class="{ 'is-invalid': errors['price'] }"
                           placeholder="請輸入售價"
                           v-model.number="temp.price"
                           min="0"
                         />
                       </div>
+                      <ErrorMessage name="price" v-slot="{ message }" class="invalid-feedback">
+                        <small class="col-10 ms-auto fs-8 mt-1 text-danger">
+                          <span v-if="temp.origin_price < temp.price">售價不得大於原價</span>
+                          <span v-else>{{ message.replace('price', '售價') }}</span>
+                        </small>
+                      </ErrorMessage>
                     </div>
                   </div>
                   <hr class="mt-5" />
@@ -180,7 +244,22 @@
                 </div>
               </div>
               <div class="col-lg-5 d-flex flex-column">
-                <label for="img" class="form-label mb-2">課程圖片</label>
+                <label for="imageUrl" class="form-label mb-2">課程圖片</label>
+                <VField
+                  name="imageUrl"
+                  rules="required"
+                  type="text"
+                  id="imageUrl"
+                  class="form-control form-control-sm mb-1"
+                  :class="{ 'is-invalid': errors['imageUrl'] }"
+                  placeholder="圖片連結顯示位置"
+                  v-model="temp.imageUrl"
+                />
+                <ErrorMessage name="imageUrl" v-slot="{ message }" class="invalid-feedback">
+                  <small class="fs-8 text-danger">
+                    {{ message.replace('imageUrl', '主要圖片') }}
+                  </small>
+                </ErrorMessage>
                 <div class="position-relative mb-2" style="height: 180px">
                   <img
                     v-if="temp.imageUrl"
@@ -269,7 +348,8 @@
                   </div>
                 </div>
               </div>
-            </form>
+              <button type="submit" class="d-none" ref="submitBtn"></button>
+            </VForm>
           </div>
         </div>
         <div class="modal-footer border-0 shadow shadow-top">
@@ -283,7 +363,7 @@
           <button
             type="button"
             class="btn btn-sm btn-gray-1 flex-grow-1 flex-lg-grow-0"
-            @click="editCourse(temp.id, editModal)"
+            @click="activedSubmitBtn"
             :disabled="isEditingCourse"
           >
             <span v-show="isEditingCourse" class="line-loading-loop bg-white"></span>
@@ -314,13 +394,10 @@ export default {
     };
   },
   methods: {
-    ...mapActions(AdminCourseStore, [
-      'getCourse',
-      'resetTemp',
-      'editCourse',
-      'getImgFile',
-      'uploadImg',
-    ]),
+    ...mapActions(AdminCourseStore, ['resetTemp', 'editCourse', 'getImgFile', 'uploadImg']),
+    activedSubmitBtn() {
+      this.$refs.submitBtn.click();
+    },
   },
   computed: {
     ...mapState(AdminCourseStore, ['temp', 'isEditingCourse', 'isAddingImg']),
@@ -340,10 +417,11 @@ export default {
     },
   },
   mounted() {
+    this.$emit('courseForm', this.$refs.courseForm);
     this.editModal = new bootstrap.Modal(this.$refs.courseEditModal);
     const danglingStr = '_element';
     this.editModal[danglingStr].addEventListener('hidden.bs.modal', () => {
-      this.resetTemp();
+      this.resetTemp(this.$refs.courseForm);
     });
     this.dateDom = this.$refs.dueDate;
     flatpickr(this.dateDom, {

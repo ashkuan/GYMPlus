@@ -10,7 +10,7 @@
         data-bs-toggle="modal"
         data-bs-target="#courseEditModal"
       >
-        <span class="icon-base icon-sm icon-add me#-1 bg-white align-text-top"></span>
+        <span class="icon-base icon-sm icon-add me-1 bg-white align-text-top"></span>
         <span>新增課程</span>
       </button>
     </div>
@@ -101,8 +101,8 @@
     </div>
     <PaginationComponent :now-target="'products'" :is-user="false" />
   </div>
-  <CourseEditModal />
-  <CourseDelModal />
+  <CourseEditModal @course-form="getCourseForm" />
+  <CourseDelModal :course-form="courseForm" />
 </template>
 
 <script>
@@ -126,7 +126,7 @@ export default {
         strength: 'bg-gray-1 bg-opacity-50',
         cardio: 'bg-secondary',
       },
-      yoga: 'bg-primary bg-opacity-50',
+      courseForm: null,
     };
   },
   methods: {
@@ -143,6 +143,9 @@ export default {
         default:
           return '';
       }
+    },
+    getCourseForm(dom) {
+      this.courseForm = dom;
     },
   },
   computed: {
