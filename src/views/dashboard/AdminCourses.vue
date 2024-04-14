@@ -116,11 +116,7 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 
 export default {
-<<<<<<< HEAD
-  components: { PaginationComponent, CourseEditModal, CourseDelModal },
-=======
   components: { PaginationComponent, CourseEditModal, CourseDelModal, Loading },
->>>>>>> feedcf59719ea34b4aefaab9457b1a3bf9b4f5f8
   data() {
     return {
       courses: [],
