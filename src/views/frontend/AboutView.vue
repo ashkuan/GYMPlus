@@ -37,10 +37,10 @@
           </Swiper-Slide>
         </Swiper>
       </section>
-      <section class="my-3" data-aos="zoom-in">
+      <section class="my-3 container-lg" data-aos="zoom-in">
         <h2 class="h3">核心理念</h2>
         <div class="row g-0">
-          <div class="col-12 col-lg-6 p-5">
+          <div class="col-12 col-lg-6">
             <h3 class="h6">歡迎來到GYM+，您的身心避風港。</h3>
             <p class="mb-2">
               在GYM+，我們將健身視為生活的藝術，每一次鍛煉都是對自我承諾的體現。我們的空間融合了現代美學與實用性，旨在激發您的每一次運動潛力。
@@ -95,7 +95,8 @@
               </p>
               <p class="fs-5 text-light">
                 <img class="mx-2" src="@/assets/icon/phoneIcon.svg" alt="phoneIcon" />
-                <span>電話:02-1234567</span>
+                <span class="me-2">電話:</span>
+                <a href="tel:02-1234567" class="mb-0 text-white" title="立即撥打">02-1234567</a>
               </p>
               <p class="fs-5 text-light">
                 <img class="mx-2" src="@/assets/icon/dateIcon.svg" alt="dateIcon" />
