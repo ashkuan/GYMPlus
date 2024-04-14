@@ -101,9 +101,9 @@
       </div>
       <section
         class="row row-cols-1 row-cols-lg-3 g-5 gx-lg-4"
-        v-if="filteredProducts.length !== 0"
+        v-if="paginatedData.length !== 0"
       >
-        <div class="col" data-aos="zoom-in" v-for="item in filteredProducts" :key="item.id">
+        <div class="col" data-aos="zoom-in" v-for="item in paginatedData" :key="item.id">
           <div class="card shadow-sm">
             <button
               type="button"
@@ -171,8 +171,8 @@
       <section v-else>
         <p>未查詢到此篩選結果</p>
       </section>
-      <section class="d-flex justify-content-center mt-5" v-if="filteredProducts.length !== 0">
-        <PaginationComponent :now-target="'products'" :isUser="true" />
+      <section class="d-flex justify-content-center mt-5" v-if="paginatedData.length !== 0">
+        <Pagination />
       </section>
       <section class="d-flex justify-content-center mt-5" v-else>
         <nav aria-label="Page navigation example">
@@ -200,9 +200,9 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 import { mapActions, mapState } from 'pinia';
 import CartStore from '@/stores/frontend/CartStore';
-import PaginationComponent from '@/components/PaginationComponent.vue';
+import Pagination from '@/components/frontend/PaginationComponent.vue';
 import FakeDataStore from '@/stores/FakeDataStore';
-import GetDataStore from '@/stores/GetDataStore';
+import coursesDataStore from '@/stores/frontend/coursesDataStore';
 import aos from 'aos';
 import 'aos/dist/aos.css';
 
@@ -212,57 +212,43 @@ export default {
       url: '',
       path: '',
       products: [],
-      coach: [],
-      sortOrder: 'asc', // 默認從小到大
-      category: '全部課程',
-      categorys: ['全部課程', '瑜珈', '有氧運動', '重量訓練'],
       isLoading: true,
+      coach: [],
+      sortOrder: "asc", // 默認從小到大
     };
   },
   methods: {
     pushPage(id) {
       this.$router.push(`course/${id}`);
     },
-    checkCategory(type) {
-      this.category = type;
-    },
     matchingKey(item) {
       const matchingKey = Object.keys(this.coaches).find((key) => key === item);
       return matchingKey ? this.coaches[matchingKey].avatarUrl : '';
     },
     ...mapActions(CartStore, ['addCart']),
-    ...mapActions(GetDataStore, ['getRemoteData']),
+    ...mapActions(coursesDataStore, ['getRemoteData']),
+    ...mapActions(coursesDataStore, ['checkCategory']),
     ...mapActions(CartStore, ['getCarts']),
+    ...mapActions(coursesDataStore, ['checkCoach']),
+    ...mapActions(coursesDataStore, ['checkSortOrder'])
   },
   components: {
     Loading,
-    PaginationComponent,
+    Pagination,
   },
   computed: {
-    filteredProducts() {
-      let filtered = this.products;
-      if (this.category !== '全部課程') {
-        filtered = filtered.filter((item) => item.category === this.category);
-      }
-      if (this.coach.length !== 0) {
-        filtered = filtered.filter((item) => this.coach.includes(item.coach));
-      }
-      if (this.sortOrder === 'asc') {
-        // 判定價格 默認從小到大
-        filtered.sort((a, b) => a.price - b.price);
-      } else {
-        filtered.sort((a, b) => b.price - a.price);
-      }
-      return filtered;
-    },
     ...mapState(CartStore, ['status']),
     ...mapState(CartStore, ['carts']),
-    ...mapState(GetDataStore, ['targetData']),
+    ...mapState(coursesDataStore, ['filteredProducts']),
+    ...mapState(coursesDataStore, ['paginatedData']),
+    ...mapState(coursesDataStore, ['category']),
+    ...mapState(coursesDataStore, ['categorys']),
+    ...mapState(coursesDataStore, ['sortOrder']),
     ...mapState(FakeDataStore, ['coaches']),
   },
   watch: {
-    targetData(vaule) {
-      this.products = vaule;
+    paginatedData(value) {
+      this.products = value;
     },
     filteredProducts() {
       this.isLoading = true;
@@ -270,13 +256,19 @@ export default {
         this.isLoading = false;
       }, 500);
     },
+    coach() {
+      this.checkCoach(this.coach);
+    },
+    sortOrder() {
+      this.checkSortOrder(this.sortOrder);
+    }
   },
   mounted() {
     this.url = import.meta.env.VITE_API_URL;
     this.path = import.meta.env.VITE_API_PATH;
     aos.init({});
     this.getCarts();
-    this.getRemoteData('products', 1);
+    this.getRemoteData('products');
     setTimeout(() => {
       this.isLoading = false;
     }, 1500);
