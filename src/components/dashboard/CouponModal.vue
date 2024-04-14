@@ -20,54 +20,86 @@
         </div>
         <div class="modal-body p-5">
           <div v-show="status !== '刪除'">
-            <form class="admin-form container-fluid px-sm-6 d-flex flex-column">
+            <VForm
+              class="admin-form container-fluid px-sm-6 d-flex flex-column"
+              @submit="editCoupon(coupon.id, $event)"
+              ref="couponForm"
+              v-slot="{ errors }"
+            >
               <div class="row g-3 mb-3 align-items-center">
                 <label for="title" class="col-3 form-label">標題</label>
                 <div class="col">
-                  <input
+                  <VField
+                    name="title"
+                    rules="required"
                     type="text"
                     id="title"
                     class="form-control form-control-sm"
-                    placeholder="請輸入標題"
+                    :class="{ 'is-invalid': errors['title'] }"
                     v-model="coupon.title"
+                    placeholder="請輸入標題"
                   />
                 </div>
+                <ErrorMessage name="title" v-slot="{ message }" class="invalid-feedback">
+                  <small class="col-9 ms-auto fs-8 mt-1 text-danger">
+                    {{ message.replace('title', '標題') }}
+                  </small>
+                </ErrorMessage>
               </div>
               <div class="row g-3 mb-3 align-items-center">
                 <label for="code" class="col-3 form-label">折扣碼</label>
                 <div class="col">
-                  <input
+                  <VField
+                    name="code"
+                    rules="required"
                     type="text"
                     id="code"
                     class="form-control form-control-sm"
-                    placeholder="請輸入折扣代碼"
+                    :class="{ 'is-invalid': errors['code'] }"
                     v-model="coupon.code"
+                    placeholder="請輸入折扣代碼"
                   />
                 </div>
+                <ErrorMessage name="code" v-slot="{ message }" class="invalid-feedback">
+                  <small class="col-9 ms-auto fs-8 mt-1 text-danger">
+                    {{ message.replace('code', '折扣代碼') }}
+                  </small>
+                </ErrorMessage>
               </div>
               <div class="row g-3 mb-3 align-items-center">
                 <label for="percent" class="col-3 form-label">折扣趴數</label>
                 <div class="col">
-                  <input
+                  <VField
+                    name="percent"
+                    rules="required|min_value:0|max_value:100"
                     type="number"
                     id="percent"
                     class="form-control form-control-sm"
-                    placeholder="請輸入折扣趴數"
+                    :class="{ 'is-invalid': errors['percent'] }"
                     v-model.number="coupon.percent"
+                    placeholder="請輸入折扣趴數"
                     min="0"
                   />
                 </div>
+                <ErrorMessage name="percent" v-slot="{ message }" class="invalid-feedback">
+                  <small class="col-9 ms-auto fs-8 mt-1 text-danger">
+                    {{ message.replace('percent', '折扣趴數') }}
+                  </small>
+                </ErrorMessage>
               </div>
               <div class="row g-3 mb-3 align-items-center">
                 <label for="dueDate" class="col-3 form-label">到期日</label>
-                <div class="col input-group input-group-sm" ref="dueDate">
-                  <input
+                <div class="col input-group input-group-sm" ref="dueDateDom">
+                  <VField
+                    name="dueDateStr"
+                    rules="required"
                     type="text"
                     id="dueDate"
                     data-input
                     class="form-control"
+                    :class="{ 'is-invalid': errors['dueDateStr'] }"
+                    v-model="coupon.dueDateStr"
                     placeholder="請輸入到期日"
-                    v-model="coupon.due_date_str"
                   />
                   <button class="btn btn-light" type="button" data-toggle>
                     <i class="bi bi-calendar-plus"></i>
@@ -80,6 +112,11 @@
                     <i class="bi bi-x-lg"></i>
                   </button>
                 </div>
+                <ErrorMessage name="dueDateStr" v-slot="{ message }" class="invalid-feedback">
+                  <small class="col-9 ms-auto fs-8 mt-1 text-danger">
+                    {{ message.replace('dueDateStr', '到期日') }}
+                  </small>
+                </ErrorMessage>
               </div>
               <div class="ms-auto">
                 <div class="form-check">
@@ -88,13 +125,12 @@
                     id="is_enabled"
                     class="form-check-input"
                     v-model="coupon.is_enabled"
-                    true-value="1"
-                    false-value="0"
                   />
                   <label for="is_enabled" class="form-label">啟用優惠券</label>
                 </div>
               </div>
-            </form>
+              <button type="submit" class="d-none" ref="submitButton"></button>
+            </VForm>
           </div>
           <div v-show="status === '刪除'" class="row justify-content-center">
             <div class="col-9">
@@ -107,7 +143,7 @@
                 </li>
                 <li class="list-group-item px-0">
                   到期日：
-                  <span class="ls-0">{{ dueDateStr }}</span>
+                  <span class="ls-0">{{ coupon.dueDateStr }}</span>
                 </li>
               </ul>
             </div>
@@ -124,8 +160,8 @@
           <button
             type="button"
             class="btn btn-sm flex-grow-1 flex-md-grow-0"
+            @click="activedSubmitBtn"
             :class="[status === '刪除' ? 'btn-danger' : 'btn-gray-1']"
-            @click="editCoupon(coupon.id)"
             :disabled="isEniting"
           >
             <span v-show="isEniting" class="line-loading-loop bg-white"></span>
@@ -153,8 +189,9 @@ export default {
       path: '',
       couponModal: null,
       dateDom: null,
+      calendar: null,
       coupon: {
-        is_enabled: 0,
+        is_enabled: false,
       },
       nowStatus: null,
       isEniting: false,
@@ -164,20 +201,19 @@ export default {
     ...mapActions(GetDataStore, ['getRemoteData']),
     ...mapActions(AlertStore, ['basicContent']),
     // 包含新增、編輯、刪除
-    editCoupon(id) {
+    editCoupon(id, value) {
       this.isEniting = !this.isEniting;
-      const { coupon, nowStatus } = this;
-      coupon.is_enabled = parseInt(coupon.is_enabled, 10);
-      coupon.due_date = new Date(coupon.due_date_str).getTime() / 1000;
-      let obj = { data: { ...coupon } };
+      let form = { data: { ...value } };
+      form.data.is_enabled = this.coupon.is_enabled ? 1 : 0;
+      form.data.due_date = new Date(form.data.dueDateStr).getTime() / 1000;
       let method = 'post';
-      if (nowStatus === 2) {
+      if (this.nowStatus === 2) {
         method = `put`;
-      } else if (!nowStatus) {
-        obj = null;
+      } else if (!this.nowStatus) {
+        form = null;
         method = 'delete';
       }
-      this.axios[method](`${this.url}api/${this.path}/admin/coupon${id ? `/${id}` : ''}`, obj)
+      this.axios[method](`${this.url}api/${this.path}/admin/coupon${id ? `/${id}` : ''}`, form)
         .then((res) => {
           this.alertStyles.basic.fire({
             ...this.basicContent(res.data.message, 1),
@@ -193,6 +229,10 @@ export default {
           this.alertStyles.basic.fire(this.basicContent(err.response.data.message, 2));
         });
     },
+    activedSubmitBtn() {
+      // 透過外部按鈕觸發表單內部 submit button
+      this.$refs.submitButton.click();
+    },
   },
   computed: {
     ...mapState(GetDataStore, ['pagination']),
@@ -203,29 +243,32 @@ export default {
       }
       return `刪除`;
     },
-    dueDateStr() {
-      const dateObj = new Date(this.coupon.due_date * 1000);
-      const month = `${dateObj.getMonth() + 1}`.padStart(2, '0');
-      const date = `${dateObj.getDate()}`.padStart(2, '0');
-      return `${dateObj.getFullYear()}-${month}-${date}`;
-    },
   },
   watch: {
     editStatus(status) {
       this.nowStatus = status;
     },
-    couponInfo(newCoupon) {
-      const isAddCoupon = !Object.keys(newCoupon).length;
-      this.coupon = this.$options.data().coupon;
+    couponInfo(nowCoupon) {
+      const objKeys = Object.keys(nowCoupon);
+      const isAddCoupon = !objKeys.length;
+
       if (!isAddCoupon) {
-        this.coupon = { ...this.coupon, ...newCoupon };
+        objKeys.forEach((key) => {
+          this.coupon[key] = nowCoupon[key];
+        });
+        this.coupon.is_enabled = !!this.coupon.is_enabled;
+        this.calendar.jumpToDate(this.coupon.dueDateStr);
+      } else {
+        this.coupon = this.$options.data().coupon;
+        this.$refs.couponForm.resetForm();
+        this.calendar.jumpToDate('today');
       }
     },
   },
   mounted() {
     this.couponModal = new bootstrap.Modal(this.$refs.couponModal);
-    this.dateDom = this.$refs.dueDate;
-    flatpickr(this.dateDom, {
+    this.dateDom = this.$refs.dueDateDom;
+    this.calendar = flatpickr(this.dateDom, {
       minDate: 'today',
       maxDate: new Date().fp_incr(365),
       wrap: true,
