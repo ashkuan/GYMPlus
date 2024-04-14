@@ -10,23 +10,27 @@ export default defineStore('getDataStore', {
   state: () => ({
     pagination: {},
     targetData: [],
+    isGettingData: false,
     singleInfo: '',
     isGettingInfo: false,
   }),
   actions: {
     getRemoteData(target, page = 1, isUser = true) {
+      this.isGettingData = !this.isGettingData;
       const apiPath = `${url}/api/${path}${isUser ? '' : '/admin'}/${target}?page=${page}`;
       axios
         .get(apiPath)
         .then((res) => {
           this.pagination = res.data.pagination;
           this.targetData = res.data[target];
+          this.isGettingData = !this.isGettingData;
         })
         .catch((err) => {
           const { status } = err.response;
           if (isUser) {
             alertStyles.basic.fire(basicContent(`錯誤${status}，請洽客服`, 2));
           }
+          this.isGettingData = !this.isGettingData;
         });
     },
     getSingleInfo(target, id, isUser = true) {

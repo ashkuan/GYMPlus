@@ -58,9 +58,9 @@ export default defineStore('adminCourseStore', {
               this.resetTemp();
               this.isEditingCourse = !this.isEditingCourse;
               modalDom.hide();
+              GetDataStore().getRemoteData('products', 1, false);
             },
           });
-          GetDataStore().getRemoteData('products', 1, false);
         })
         .catch((err) => {
           this.isEditingCourse = !this.isEditingCourse;

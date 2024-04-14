@@ -31,7 +31,7 @@
       <small class="text-muted fs-8 small-md">點擊後可進行編輯或刪除</small>
       <div class="row">
         <div class="col-6">
-          <div class="list-group mb-5">
+          <div class="vl-parent list-group mb-5">
             <button
               type="button"
               class="list-group-item list-group-item-action d-flex align-items-center"
@@ -67,19 +67,31 @@
                 <i class="bi" :class="[article.isPublic ? 'bi-eye-fill' : 'bi-eye-slash']"></i>
               </span>
             </button>
+            <Loading
+              v-model:active="isGettingData"
+              :is-full-page="false"
+              :enforce-focus="false"
+              :z-index="2"
+            />
           </div>
           <PaginationComponent :now-target="'articles'" :is-user="false" />
         </div>
         <div class="col-6">
-          <div class="shadow-sm rounded-3">
+          <div class="vl-parent shadow-sm rounded-3">
             <ArticleEditBlock :is-add-new="isAddNew" :get-new-data="getNewData" />
+            <Loading
+              v-model:active="isGettingInfo"
+              :is-full-page="false"
+              :enforce-focus="false"
+              :z-index="2"
+            />
           </div>
         </div>
       </div>
     </div>
-    <div v-else>
+    <div v-else class="py-6">
       <p class="fs-6 fw-light text-center">
-        <span class="line-loading-loop bg-gray-3 align-top"></span>
+        <span class="line-loading-loop bg-gray-3 align-text-top"></span>
         資料讀取中請稍後
       </p>
     </div>
@@ -92,9 +104,11 @@ import GetDataStore from '@/stores/GetDataStore';
 import FakeDataStore from '@/stores/FakeDataStore';
 import PaginationComponent from '@/components/PaginationComponent.vue';
 import ArticleEditBlock from '@/components/dashboard/ArticleEditBlock.vue';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
 
 export default {
-  components: { ArticleEditBlock, PaginationComponent },
+  components: { ArticleEditBlock, PaginationComponent, Loading },
   data() {
     return {
       articles: [],
@@ -109,7 +123,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(GetDataStore, ['targetData', 'pagination', 'isGettingInfo']),
+    ...mapState(GetDataStore, ['targetData', 'isGettingData', 'pagination', 'isGettingInfo']),
     ...mapState(FakeDataStore, ['coaches', 'articleTags']),
   },
   watch: {

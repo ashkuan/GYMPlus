@@ -309,7 +309,6 @@ export default {
       categories: ['瑜珈', '有氧運動', '重量訓練'],
       coachs: ['Emma', 'Alex', 'Dhalsim', 'Olivia Chang', 'Jackson Liu'],
       targets: ['年長者', '初學者', '親子', '進階', '健力', '復健', '體態維持'],
-      isAddingToCart: false,
       editModal: {},
       dateDom: null,
     };
