@@ -1,97 +1,108 @@
 <template>
-  <Swiper
-    class="course-swiper"
-    ref="swiper"
-    @swiper="onSwiper"
-    :width="255"
-    :slides-per-view="1"
-    :space-between="20"
-    :modules="modules"
-    navigation
-    :autoplay="{
-      delay: 2500,
-      disableOnInteraction: false,
-      pauseOnMouseEnter: true,
-    }"
-    :breakpoints="{
-      '768': {
-        slidesPerView: 2,
-        width: 530,
-      },
-      '992': {
-        slidesPerView: 3,
-        width: 936,
-        spaceBetween: 18,
-      },
-      '1400': {
-        slidesPerView: 3,
-        width: 1296,
-        spaceBetween: 48,
-      },
-    }"
-  >
-    <Swiper-Slide v-for="(course, index) in courses" :key="course.key">
-      <div class="card text-white text-start bg-transparent">
-        <div class="position-relative">
-          <img :src="course.imageUrl" class="card-img-top rounded-4" alt="course.title" />
-          <div class="card-img-overlay d-flex p-2 p-md-3">
-            <div class="d-flex align-items-center mt-auto">
-              <span class="avatar bg-linear rounded-circle me-2">
-                <img
-                  :src="coaches[course.coach].avatarUrl"
-                  alt="course.coach"
-                  class="rounded-circle"
-                />
-              </span>
-              <p class="fs-8 small-lg">{{ course.coach }} 教練</p>
-            </div>
-            <a
-              href="#"
-              class="btn btn-dark rounded-circle border-0 align-self-start p-2 p-lg-3 ms-auto"
-              title="加入收藏"
-            >
-              <img src="/icons/bookmark-outline.svg" alt="收藏icon" />
-            </a>
-          </div>
-        </div>
-        <div class="card-body px-0">
-          <h5 class="card-title mb-1 mb-xxl-0 fs-7 fs-lg-5 lh-base lh-lg-sm fw-medium">
-            <router-link :to="`/course/${course.id}`" class="link-white">
-              {{ course.title }}
-            </router-link>
-          </h5>
-          <div
-            class="d-flex flex-column flex-xxl-row justify-content-xxl-between align-items-xxl-end"
-          >
-            <p class="card-text d-flex align-items-center mb-3 mb-xxl-0">
-              <span class="text-secondary display-3 fs-lg-5 ls-0 me-1">
-                NT${{ course.price === 0 ? '免費體驗' : course.price }}
-              </span>
-              <span
-                v-if="course.price < course.origin_price"
-                class="text-decoration-line-through small"
+  <div v-if="courses.length > 0">
+    <Swiper
+      class="course-swiper"
+      ref="swiper"
+      @swiper="onSwiper"
+      :width="255"
+      :slides-per-view="1"
+      :space-between="20"
+      :modules="modules"
+      :loop="true"
+      :autoplay="{
+        delay: 2500,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
+      }"
+      navigation
+      :breakpoints="{
+        '768': {
+          slidesPerView: 2,
+          width: 530,
+        },
+        '992': {
+          slidesPerView: 3,
+          width: 936,
+          spaceBetween: 18,
+        },
+        '1400': {
+          slidesPerView: 3,
+          width: 1296,
+          spaceBetween: 48,
+        },
+      }"
+    >
+      <Swiper-Slide v-for="(course, index) in courses" :key="course.key">
+        <div class="card text-white text-start bg-transparent overflow-hidden">
+          <div class="position-relative">
+            <img
+              :src="course.imageUrl"
+              class="card-img-top rounded-top-0 rounded-bottom-4"
+              alt="course.title"
+            />
+            <div class="card-img-overlay d-flex p-2 p-md-3 rounded-top-0">
+              <div class="d-flex align-items-center mt-auto">
+                <span class="avatar bg-linear rounded-circle me-2">
+                  <img
+                    :src="coaches[course.coach].avatarUrl"
+                    alt="course.coach"
+                    class="rounded-circle"
+                  />
+                </span>
+                <p class="fs-8 small-lg">{{ course.coach }} 教練</p>
+              </div>
+              <a
+                href="#"
+                class="btn btn-dark rounded-circle border-0 align-self-start p-2 p-lg-3 ms-auto"
+                title="加入收藏"
               >
-                {{ course.origin_price }}
-              </span>
-            </p>
-            <button
-              type="button"
-              class="btn btn-primary btn-sm py-2 py-xxl-3 px-xxl-8 fs-lg-7"
-              title="立即加購"
-              @click.prevent="addCart(course.id, course.title), (isAddingToCart = true)"
-              :disabled="isAddingToCart || isInCartArr[index]"
+                <img src="/icons/bookmark-outline.svg" alt="收藏icon" />
+              </a>
+            </div>
+          </div>
+          <div class="card-body px-0">
+            <h5 class="card-title mb-1 mb-xxl-0 fs-7 fs-lg-5 lh-base lh-lg-sm fw-medium">
+              <router-link :to="`/course/${course.id}`" class="link-white">
+                {{ course.title }}
+              </router-link>
+            </h5>
+            <div
+              class="d-flex flex-column flex-xxl-row justify-content-xxl-between align-items-xxl-end"
             >
-              <span v-if="isAddingToCart" class="line-loading-loop"></span>
-              {{ isInCartArr[index] ? '已在購物車' : '加入購物車' }}
-            </button>
+              <p class="card-text d-flex align-items-center mb-3 mb-xxl-0">
+                <span class="text-secondary display-3 fs-lg-5 ls-0 me-1">
+                  NT${{ course.price === 0 ? '免費體驗' : course.price }}
+                </span>
+                <span
+                  v-if="course.price < course.origin_price"
+                  class="text-decoration-line-through small"
+                >
+                  {{ course.origin_price }}
+                </span>
+              </p>
+              <button
+                type="button"
+                class="btn btn-primary btn-sm py-2 py-xxl-3 px-xxl-8 fs-lg-7"
+                title="立即加購"
+                @click.prevent="addCart(course.id, course.title), (isAddingToCart = true)"
+                :disabled="isAddingToCart || isInCartArr[index]"
+              >
+                <span v-if="isAddingToCart" class="line-loading-loop"></span>
+                {{ isInCartArr[index] ? '已在購物車' : '加入購物車' }}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </Swiper-Slide>
-  </Swiper>
+      </Swiper-Slide>
+    </Swiper>
 
-  <div class="swiper-button-prev" @click="goLeft"></div>
-  <div class="swiper-button-next" @click="goRight"></div>
+    <div class="swiper-button-prev" @click="goLeft"></div>
+    <div class="swiper-button-next" @click="goRight"></div>
+  </div>
+  <p v-else class="fs-6 fw-light text-center">
+    <span class="line-loading-loop bg-gray-3 align-text-top"></span>
+    資料讀取中請稍後
+  </p>
 </template>
 
 <script>
@@ -337,11 +348,4 @@ export default {
     }
   }
 }
-
-@media (min-width: 992px) {
-  .small-lg {
-    font-size: 0.875rem !important;
-  }
-}
 </style>
-@/stores/frontend/CartStore
