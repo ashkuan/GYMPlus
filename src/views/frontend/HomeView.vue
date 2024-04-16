@@ -489,4 +489,3 @@ a,
   }
 }
 </style>
-@/stores/frontend/CartStore

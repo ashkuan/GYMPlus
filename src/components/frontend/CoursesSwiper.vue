@@ -99,7 +99,7 @@
     <div class="swiper-button-prev" @click="goLeft"></div>
     <div class="swiper-button-next" @click="goRight"></div>
   </div>
-  <p v-else class="fs-6 fw-light text-center">
+  <p v-else class="fs-6 fw-light text-center py-6">
     <span class="line-loading-loop bg-gray-3 align-text-top"></span>
     資料讀取中請稍後
   </p>
