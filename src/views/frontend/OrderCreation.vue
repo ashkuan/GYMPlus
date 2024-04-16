@@ -191,13 +191,12 @@ export default {
       });
     },
     thousands(value) {
-      if(value) {
-        const comma=/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g
-        const num = value.toString().replace(comma, ',')
+      if (value) {
+        const comma = /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g;
+        const num = value.toString().replace(comma, ',');
         return num;
       }
-        return '';
-      
+      return '';
     },
   },
   components: {

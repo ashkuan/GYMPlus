@@ -1,5 +1,5 @@
 <template>
-  <div v-if="courses.length > 0">
+  <div v-if="courses.length > 0" class="position-relative" :class="themeName">
     <Swiper
       class="course-swiper"
       ref="swiper"
@@ -119,6 +119,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 export default {
+  props: ['themeName'],
   components: {
     Swiper,
     SwiperSlide,
@@ -280,11 +281,11 @@ export default {
 .swiper-button-prev,
 .swiper-button-next {
   --hover-space: 0px;
-  --base-space: 12px;
+  --base-space: 0px;
   width: 32px;
   height: 32px;
-  transform: translateY(-50%);
-  top: 210px;
+  transform: translateY(50%);
+  top: 83px;
   &::after {
     content: '' !important;
     --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23000' d='M16 5c0 .742.733 1.85 1.475 2.78c.954 1.2 2.094 2.247 3.401 3.046C21.856 11.425 23.044 12 24 12m0 0c-.956 0-2.145.575-3.124 1.174c-1.307.8-2.447 1.847-3.401 3.045C16.733 17.15 16 18.26 16 19m8-7H0'/%3E%3C/svg%3E");
@@ -296,35 +297,39 @@ export default {
     -webkit-mask-size: 100% 100%;
     mask-size: 100% 100%;
   }
-  // 互動樣式
   &:hover {
+    // 互動樣式
     --hover-space: 6px;
     &::after {
       background: #88c0ff;
     }
   }
   @media (min-width: 768px) {
-    top: 265px;
-    --base-space: 52px;
+    --base-space: 32px;
   }
   @media (min-width: 992px) {
-    top: 317.8px;
-    --base-space: -46px;
-    width: 46px;
-    height: 46px;
+    --base-space: -20px;
+    top: 89.5px;
+    width: 40px;
+    height: 40px;
     &:hover {
       --hover-space: 12px;
     }
   }
+  @media (min-width: 1060px) {
+    --base-space: -54px;
+  }
   @media (min-width: 1200px) {
-    --base-space: 44px;
+    --base-space: 34px;
   }
   @media (min-width: 1400px) {
-    --base-space: -34px;
-    top: 357px;
+    --base-space: -28px;
+    top: 124px;
+    width: 46px !important;
+    height: 46px !important;
   }
   @media (min-width: 1488px) {
-    --base-space: -72px;
+    --base-space: -70px;
     width: 60px;
     height: 60px;
     &:hover {
@@ -345,6 +350,43 @@ export default {
     left: calc(var(--base-space) - var(--hover-space));
     &::after {
       transform: rotate(180deg);
+    }
+  }
+}
+
+// swiper theme
+.swiper-lignt {
+  .card-title a {
+    color: #1c1c1c !important;
+    &:hover {
+      color: #002ebc !important;
+    }
+  }
+  .card-text .small {
+    color: #707070;
+  }
+  .card {
+    border: 4px solid #fff;
+    &:hover {
+      border-color: #88c0ff;
+    }
+  }
+  .swiper-button-prev,
+  .swiper-button-next {
+    background: #002ebc;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    padding: 12px;
+    &:hover {
+      background: linear-gradient(110.77deg, #655aea -6.41%, #95e2ff 107.79%);
+      &::after {
+        background: #fff;
+      }
+    }
+    @media (min-width: 1400px) {
+      width: 52px !important;
+      height: 52px !important;
     }
   }
 }
