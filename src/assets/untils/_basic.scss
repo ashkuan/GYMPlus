@@ -30,3 +30,16 @@ table thead th {
 .bg-linear-danger {
   background: linear-gradient(110.77deg, $danger -6.41%, #ff7f7f 107.79%);
 }
+
+// 其他通用設定
+.subtitle-border { // 圓點 border
+  border-bottom: 4px dotted #88c0ff;
+}
+.block-space { // 區塊間格
+  padding-top: 40px;
+  padding-bottom: 40px;
+  @media (min-width: 768px) {
+    padding-top: 60px;
+    padding-bottom: 80px;
+  }
+}

@@ -51,8 +51,8 @@ button.btn,.btn {
 }
 
 // 連結互動效果
-a.link{
-  &-gray-1{
+a.link {
+  &-gray-1 {
     &:hover, &:focus {
       color: $primary !important;
     }
@@ -60,7 +60,8 @@ a.link{
 }
 
 // 按鈕 icon 樣式
-.btn-outline-danger {
+.btn-outline-danger,
+.btn-outline-secondary {
   &:hover,
   &:active,
   &:focus-visible {
