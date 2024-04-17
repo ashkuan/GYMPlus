@@ -69,7 +69,7 @@
             <div
               class="d-flex flex-column flex-xxl-row justify-content-xxl-between align-items-xxl-end"
             >
-              <p class="card-text d-flex align-items-center mb-3 mb-xxl-0">
+              <p class="card-text d-flex align-items-center">
                 <span class="text-secondary display-3 fs-lg-5 ls-0 me-1">
                   NT${{ course.price === 0 ? '免費體驗' : course.price }}
                 </span>
@@ -174,7 +174,11 @@ export default {
   max-width: 255px;
   overflow: visible;
   .card {
+    transition: border-color 0.5s ease-out;
     border: 4px solid #001044;
+    .card-body {
+      transition: all 0.5s ease-out;
+    }
   }
   .card-img {
     &-overlay {
@@ -193,10 +197,17 @@ export default {
   }
   a[title],
   button[title] {
-    transition: all 0.5s ease-out;
-    opacity: 0;
     display: inline-block;
-    visibility: hidden;
+    animation: fadeOut 0.2s linear 0s forwards;
+  }
+  button[title] {
+    margin-top: -12px;
+  }
+  @media (max-width: 1400px) {
+    button[title] {
+      transition: margin-top 0.5s ease-out;
+      margin-top: -40px;
+    }
   }
   // 漸層圓形border
   .avatar {
@@ -246,7 +257,6 @@ export default {
   }
   // 互動樣式
   .card:hover {
-    transition: all 0.5s ease-out;
     border-color: #002ebc;
     .card-img {
       &-top {
@@ -256,15 +266,20 @@ export default {
         background: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.5) 100%);
       }
     }
-    a[title],
-    button[title] {
-      visibility: visible;
-      opacity: 1;
+    a[title] {
+      animation: fade 0.6s linear 0s forwards;
     }
     .card-body {
       transition: all 0.5s ease-out;
       padding-right: 16px !important;
       padding-left: 16px !important;
+      button[title] {
+        transition: margin-top 0.5s ease-out;
+        animation: fade 1.3s linear 0s forwards;
+        @media (max-width: 1400px) {
+          margin-top: 12px;
+        }
+      }
     }
     @media (max-width: 992px) {
       .card-body {
@@ -277,11 +292,28 @@ export default {
     visibility: hidden;
   }
 }
+// 按鈕淡入動畫
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 // 分頁客製化
 .swiper-button-prev,
 .swiper-button-next {
   --hover-space: 0px;
-  --base-space: 0px;
+  --base-space: calc(50% - 127.5px + 3px - 32px - 16px);
   width: 32px;
   height: 32px;
   transform: translateY(50%);
@@ -305,10 +337,11 @@ export default {
     }
   }
   @media (min-width: 768px) {
-    --base-space: 32px;
+    --base-space: calc(50% - 265px + 3px - 32px - 16px);
   }
   @media (min-width: 992px) {
-    --base-space: -20px;
+    --base-space: calc(50% - 468px + 4px - 30px);
+
     top: 89.5px;
     width: 40px;
     height: 40px;
@@ -317,19 +350,16 @@ export default {
     }
   }
   @media (min-width: 1060px) {
-    --base-space: -54px;
-  }
-  @media (min-width: 1200px) {
-    --base-space: 34px;
+    --base-space: calc(50% - 468px + 4px - 40px - 24px);
   }
   @media (min-width: 1400px) {
-    --base-space: -28px;
+    // --base-space: -28px;
+    --base-space: calc(50% - 648px + 4px - 52px - 24px);
     top: 124px;
     width: 46px !important;
     height: 46px !important;
   }
   @media (min-width: 1488px) {
-    --base-space: -70px;
     width: 60px;
     height: 60px;
     &:hover {
