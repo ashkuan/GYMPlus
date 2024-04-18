@@ -52,12 +52,12 @@
                 <p class="fs-8 small-lg">{{ course.coach }} 教練</p>
               </div>
               <a
+                @click.prevent="addToFavourites(course)"
+                class="btn btn-favourite rounded-circle align-self-start p-2 p-lg-3 ms-auto"
+                :class="{ isFavourite: isFavouritesArr[index] }"
+                :title="[isFavouritesArr[index] ? '移除收藏' : '加入收藏']"
                 href="#"
-                class="btn btn-dark rounded-circle border-0 align-self-start p-2 p-lg-3 ms-auto"
-                title="加入收藏"
-              >
-                <img src="/icons/bookmark-outline.svg" alt="收藏icon" />
-              </a>
+              ></a>
             </div>
           </div>
           <div class="card-body px-0">
@@ -112,6 +112,7 @@ import { mapActions, mapState } from 'pinia';
 import GetDataStore from '@/stores/GetDataStore';
 import FakeDataStore from '@/stores/FakeDataStore';
 import CartStore from '@/stores/frontend/CartStore';
+import FavouriteStore from '@/stores/frontend/FavouriteStore';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -134,6 +135,7 @@ export default {
   methods: {
     ...mapActions(GetDataStore, ['getRemoteData']),
     ...mapActions(CartStore, ['addCart']),
+    ...mapActions(FavouriteStore, ['addToFavourites']),
     onSwiper(swiper) {
       this.swiperInstance = swiper;
     },
@@ -148,12 +150,17 @@ export default {
     ...mapState(GetDataStore, ['targetData']),
     ...mapState(FakeDataStore, ['coaches']),
     ...mapState(CartStore, ['isLoading', 'carts']),
+    ...mapState(FavouriteStore, ['favourites']),
     courses() {
       return this.targetData.filter((course, index) => index > 4);
     },
     isInCartArr() {
       const cartIds = this.carts.map((cart) => cart.product_id);
       return this.courses.map((course) => cartIds.some((cartId) => cartId === course.id));
+    },
+    isFavouritesArr() {
+      const favouritesId = this.favourites.map((favourity) => favourity.id);
+      return this.courses.map((course) => favouritesId.some((idName) => course.id === idName));
     },
   },
   watch: {
