@@ -52,10 +52,10 @@
                 <p class="fs-8 small-lg">{{ course.coach }} 教練</p>
               </div>
               <a
-                @click.prevent="addToFavourites(course)"
+                @click.prevent="toggleFavs(isInFavsArr[index] ? course.id : course)"
                 class="btn btn-favourite rounded-circle align-self-start p-2 p-lg-3 ms-auto"
-                :class="{ isFavourite: isFavouritesArr[index] }"
-                :title="[isFavouritesArr[index] ? '移除收藏' : '加入收藏']"
+                :class="{ isFavourite: isInFavsArr[index] }"
+                :title="[isInFavsArr[index] ? '移除收藏' : '加入收藏']"
                 href="#"
               ></a>
             </div>
@@ -135,7 +135,7 @@ export default {
   methods: {
     ...mapActions(GetDataStore, ['getRemoteData']),
     ...mapActions(CartStore, ['addCart']),
-    ...mapActions(FavouriteStore, ['addToFavourites']),
+    ...mapActions(FavouriteStore, ['toggleFavs']),
     onSwiper(swiper) {
       this.swiperInstance = swiper;
     },
@@ -158,8 +158,8 @@ export default {
       const cartIds = this.carts.map((cart) => cart.product_id);
       return this.courses.map((course) => cartIds.some((cartId) => cartId === course.id));
     },
-    isFavouritesArr() {
-      const favouritesId = this.favourites.map((favourity) => favourity.id);
+    isInFavsArr() {
+      const favouritesId = this.favourites.map((favourite) => favourite.id);
       return this.courses.map((course) => favouritesId.some((idName) => course.id === idName));
     },
   },

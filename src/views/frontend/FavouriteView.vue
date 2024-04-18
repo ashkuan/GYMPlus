@@ -10,22 +10,28 @@
           <li class="breadcrumb-item small fs-lg-7 active" aria-current="page">我的最愛</li>
         </ol>
       </nav>
-      <section v-if="favourites.length === 0" class="empty-favourite">
-        <div class="alert alert-primary text-center pb-6 mb-6 mb-lg-7 shadow-sm" role="alert">
-          <span class="test"></span>
-          <p class="alert-heading fs-6 fs-lg-5 fw-bold mb-3">還沒有收藏最愛喔！</p>
-          <p class="small fs-lg-7">
-            立即逛逛有哪些
-            <router-link to="/courses" class="alert-link">
-              <span class="text-decoration-underline fw-medium">健身課程</span>
-            </router-link>
-            <br class="d-md-none" />
-            ，或是參考下方推薦課程。
-          </p>
+      <section v-if="favourites.length === 0" class="empty-favourite row justify-content-center">
+        <div class="col-md-8 col-xl-6">
+          <div class="alert alert-dark text-center pb-6 shadow-sm mb-0" role="alert">
+            <span class="test"></span>
+            <p class="alert-heading fs-6 fs-lg-5 fw-bold mb-3">還沒有收藏最愛喔！</p>
+            <p class="small fs-lg-7">
+              立即逛逛有哪些
+              <router-link to="/courses" class="alert-link">
+                <span class="text-decoration-underline fw-medium">健身課程</span>
+              </router-link>
+              <br class="d-md-none" />
+              ，或是參考下方推薦課程。
+            </p>
+          </div>
         </div>
       </section>
       <section v-else class="row gy-2 gx-3 gx-lg-4">
-        <div v-for="favourite in favourites" :key="favourite.key" class="col-md-6 col-xl-4">
+        <div
+          v-for="(favourite, index) in favourites"
+          :key="favourite.key"
+          class="col-md-6 col-xl-4"
+        >
           <div class="card shadow-sm px-4 py-3" aria-hidden="true">
             <div class="d-flex">
               <router-link :to="`/course/${favourite.id}`">
@@ -56,24 +62,48 @@
                   </p>
                   <div class="ms-auto mt-auto">
                     <a
-                      @click.prevent="console.log('remove')"
+                      @click.prevent="delFromFavs(favourite.id)"
                       class="btn btn-outline-secondary p-0"
                       title="移除收藏"
                     >
                       <span class="icon-base icon-xs icon-bookmark bg-secondary m-2"></span>
                     </a>
-                    <button type="button" class="btn btn-primary p-0 ms-1" title="立即加購">
-                      <span class="icon-base icon-xs icon-cart-empty bg-white m-2"></span>
-                      <!-- @click.prevent="addCart(favourite.id, favourite.title), (isAddingToCart = true)"
-                    :disabled="isAddingToCart || isInCartArr[index]"
-                    <span v-if="isAddingToCart" class="line-loading-loop"></span> -->
-                      <!-- {{ isInCartArr[index] ? '已在購物車' : '加入購物車' }} -->
+                    <button
+                      type="button"
+                      class="btn btn-primary p-0 ms-1"
+                      title="立即加購"
+                      @click.prevent="
+                        addCart(favourite.id, favourite.title),
+                          (targetId = favourite.id),
+                          (isAddingToCart = true)
+                      "
+                      :disabled="isAddingToCart || isInCartArr[index]"
+                    >
+                      <span
+                        v-if="isAddingToCart && targetId === favourite.id"
+                        class="line-loading-loop loading-xs m-2 bg-gray-3"
+                      ></span>
+                      <span
+                        v-else
+                        class="icon-base icon-xs bg-white m-2"
+                        :class="[isInCartArr[index] ? 'icon-cart' : 'icon-cart-empty']"
+                      ></span>
                     </button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        <div class="d-flex justify-content-between mt-5">
+          <router-link to="/courses" class="inline-block fs-8 small-lg">
+            <span class="icon-base icon-sm icon-right-arrow align-bottom"></span>
+            參考其他課程
+          </router-link>
+          <router-link to="/cart" class="inline-block fs-8 small-lg">
+            前往購物車
+            <span class="icon-base icon-sm icon-left-arrow align-bottom"></span>
+          </router-link>
         </div>
       </section>
     </div>
@@ -94,22 +124,47 @@
 import { mapActions, mapState } from 'pinia';
 import FakeDataStore from '@/stores/FakeDataStore';
 import FavouriteStore from '@/stores/frontend/FavouriteStore';
+import CartStore from '@/stores/frontend/CartStore';
 import CoursesSwiper from '@/components/frontend/CoursesSwiper.vue';
 
 export default {
   components: { CoursesSwiper },
   data() {
-    return {};
+    return {
+      targetId: null,
+      isAddingToCart: false,
+      loader: null,
+    };
   },
   methods: {
-    ...mapActions(FavouriteStore, ['getFavourites', 'addToFavourites']),
+    ...mapActions(FavouriteStore, ['getFavs', 'delFromFavs']),
+    ...mapActions(CartStore, ['addCart']),
   },
   computed: {
     ...mapState(FakeDataStore, ['coaches']),
     ...mapState(FavouriteStore, ['favourites']),
+    ...mapState(CartStore, ['isLoading', 'carts']),
+    isInCartArr() {
+      const cartIds = this.carts.map((cart) => cart.product_id);
+      return this.favourites.map((course) => cartIds.some((cartId) => cartId === course.id));
+    },
+  },
+  watch: {
+    loader(now) {
+      if (now) {
+        setTimeout(() => {
+          this.loader.hide();
+          this.loader = null;
+        }, 1000);
+      }
+    },
+    isLoading(boolean) {
+      if (!boolean) this.isAddingToCart = boolean;
+    },
   },
   mounted() {
-    this.getFavourites();
+    this.loader = this.$loading.show();
+    this.getFavs();
   },
 };
 </script>
@@ -131,6 +186,16 @@ export default {
     .btn-outline-secondary:hover {
       .icon-bookmark {
         --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='m17 18l-5-2.18L7 18V5h10m0-2H7a2 2 0 0 0-2 2v16l7-3l7 3V5a2 2 0 0 0-2-2'/%3E%3C/svg%3E");
+      }
+    }
+    a:hover {
+      .icon-left-arrow {
+        margin-right: -4px;
+        margin-left: 4px;
+      }
+      .icon-right-arrow {
+        margin-right: 4px;
+        margin-left: -4px;
       }
     }
   }
