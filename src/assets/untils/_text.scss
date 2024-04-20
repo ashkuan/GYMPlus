@@ -66,6 +66,10 @@ h2,
   letter-spacing: 0 !important;
 }
 
+.ls-1 {
+  letter-spacing: 1px !important;
+}
+
 .ls-2 {
   letter-spacing: 2px !important;
 }
@@ -110,7 +114,7 @@ body {
     }
 
     .display-md-3 {
-      font-size: $font-size-base * 1.5 !important;
+      font-size: $font-size-base * 1.125 !important;
     }
 
     .fw-md-bold {

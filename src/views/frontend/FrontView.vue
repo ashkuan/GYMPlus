@@ -331,6 +331,8 @@ export default {
 }
 // footer 客製化
 footer {
+  position: sticky;
+  top: 100%;
   a,
   a.nav-link {
     color: #fff;
@@ -358,4 +360,3 @@ footer {
   }
 }
 </style>
-@/stores/frontend/CartStore

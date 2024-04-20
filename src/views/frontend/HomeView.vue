@@ -457,18 +457,6 @@ export default {
     margin-top: -13px;
   }
 }
-
-.subtitle-border {
-  border-bottom: 4px dotted #88c0ff;
-}
-.block-space {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  @media (min-width: 768px) {
-    padding-top: 60px;
-    padding-bottom: 80px;
-  }
-}
 /* 編號圖標 */
 .number-shape {
   display: inline-block;
@@ -489,4 +477,3 @@ a,
   }
 }
 </style>
-@/stores/frontend/CartStore
