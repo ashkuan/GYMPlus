@@ -115,6 +115,13 @@ h2.logo {
     right: 0;
   }
 }
+.shopBtn{
+  position: absolute;
+  border: 0;
+  top: 375px;
+  right: 10px;
+  z-index: 1200;
+}
 .overlay-text {
   position: absolute;
   left: 0;

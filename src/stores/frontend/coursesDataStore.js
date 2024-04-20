@@ -15,6 +15,7 @@ export default defineStore("coursesDataStore", {
     category: "全部課程",
     categorys: ["全部課程", "瑜珈", "有氧運動", "重量訓練"],
     sortOrder: "asc", // 默認從小到大
+    coachName: '',
     coach: [],
   }),
   actions: {
@@ -41,6 +42,23 @@ export default defineStore("coursesDataStore", {
     },
     checkCoach(type) {
       this.coach = type;
+    },
+    checkCoachName(name){
+      if(name === this.coachName) {
+        this.coachName = '';
+        setTimeout(() => {
+          this.coachName = name;
+          this.coach = [];
+          this.coach.push(this.coachName);
+        },0);
+        return;
+      }
+      this.coach = [];
+      this.coachName = name;
+      setTimeout(() => {
+        this.coach.push(this.coachName);
+        // this.coachName = '';
+      },0);
     },
     checkSortOrder(type) {
       this.sortOrder = type;

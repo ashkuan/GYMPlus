@@ -110,7 +110,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" @click.prevent="pushPage">
+              <button type="button" class="btn btn-primary" @click.prevent="pushPage(coacheData?.name)">
                 相關課程
               </button>
               <button type="button" class="btn btn-secondary" @click.prevent="hideModal">
@@ -126,7 +126,8 @@
 
 <script>
 import FakeDataStore from '@/stores/FakeDataStore';
-import { mapState } from 'pinia';
+import coursesDataStore from '@/stores/frontend/coursesDataStore';
+import { mapActions, mapState } from 'pinia';
 import { Modal } from 'bootstrap';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
@@ -146,6 +147,7 @@ export default {
     Loading,
   },
   methods: {
+    ...mapActions(coursesDataStore,['checkCoachName']),
     showModal(name) {
       const matchingKey = Object.keys(this.coaches).find((key) => key === name);
       const matchingData = this.coaches[matchingKey];
@@ -158,9 +160,10 @@ export default {
       this.modal.hide();
       this.coacheData = {};
     },
-    pushPage() {
+    pushPage(name) {
       setTimeout(() => {
         this.modal.hide();
+        this.checkCoachName(name);
       }, 50);
       this.$router.push(`/courses`);
     },

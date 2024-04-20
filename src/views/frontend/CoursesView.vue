@@ -82,15 +82,15 @@
       <div class="row justify-content-end align-items-center my-3">
         <div class="col-12 col-md-5">
           <div class="row justify-content-end align-items-center">
-            <div class="col-12 col-md-auto">
-              <label for="class" class="mx-2">排序方式</label>
+            <div class="col-12 col-md-auto my-2">
+              <label for="class" class="mx-2 my-md-0">排序方式</label>
             </div>
             <div class="col-12 col-md-6">
               <select
                 class="form-select"
                 aria-label="Disabled select example"
                 id="class"
-                v-model="sortOrder"
+                @change.prevent="checkSortOrder($event.target.value)"
               >
                 <option value="asc">價格由低到高</option>
                 <option value="desc">價格由高到低</option>
@@ -111,6 +111,20 @@
             >
               <img src="@/assets/icon/bookmark.svg" alt="bookmark" />
             </button>
+            <button type="button" class="btn btn-primary shopBtn" @click.prevent="addCart(item.id, item.title)"
+             :disabled="this.carts.some((id) => id.product_id === item.id) || status.loadingItem === item.id">
+                <p v-if="this.carts.some((id) => id.product_id === item.id)">已加入購物車</p>
+                <div v-else>
+                  <div
+                  class="spinner-border spinner-border-sm text-secondary"
+                  role="status"
+                  v-if="status.loadingItem === item.id"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                加入購物車
+                </div>
+            </button>
             <a href="#" class="position-relative ground-floor" @click.prevent="pushPage(item.id)">
               <div class="position-relative">
                 <img
@@ -127,7 +141,7 @@
               </div>
               </div>
               
-              <div class="card-body d-flex justify-content-between align-items-center">
+              <div class="card-body">
               <div class="d-flex flex-column" v-if="item.price !== 0">
                 <p class="card-text mb-0">{{ item.title }}</p>
                 <p class="card-text mb-0">
@@ -139,30 +153,6 @@
                 <p class="card-text mb-0">{{ item.title }}</p>
                 <p class="card-text mb-0">免費</p>
               </div>
-              <button
-                type="button"
-                class="btn btn-primary high-floor"
-                disabled
-                v-if="this.carts.some((id) => id.product_id === item.id)"
-              >
-                已加入購物車
-              </button>
-              <button
-                type="button"
-                class="btn btn-primary high-floor"
-                v-else
-                :disabled="status.loadingItem === item.id"
-                @click.prevent="addCart(item.id, item.title)"
-              >
-                <div
-                  class="spinner-border spinner-border-sm text-secondary"
-                  role="status"
-                  v-if="status.loadingItem === item.id"
-                >
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-                加入購物車
-              </button>
             </div>
             </a>
           </div>
@@ -212,9 +202,8 @@ export default {
       url: '',
       path: '',
       products: [],
-      isLoading: true,
       coach: [],
-      sortOrder: "asc", // 默認從小到大
+      isLoading: true,
     };
   },
   methods: {
@@ -244,6 +233,7 @@ export default {
     ...mapState(coursesDataStore, ['category']),
     ...mapState(coursesDataStore, ['categorys']),
     ...mapState(coursesDataStore, ['sortOrder']),
+    ...mapState(coursesDataStore, ['coachName']),
     ...mapState(FakeDataStore, ['coaches']),
   },
   watch: {
@@ -257,11 +247,11 @@ export default {
       }, 500);
     },
     coach() {
-      this.checkCoach(this.coach);
+        this.checkCoach(this.coach);
     },
-    sortOrder() {
-      this.checkSortOrder(this.sortOrder);
-    }
+    coachName() {
+      this.coach.push(this.coachName);
+    },
   },
   mounted() {
     this.url = import.meta.env.VITE_API_URL;
