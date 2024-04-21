@@ -25,7 +25,7 @@
             data-aos="flip-left"
             data-aos-duration="500"
           >
-            <div class="card p-1" style="width: 18rem">
+            <div class="coachCard card p-1" style="width: 18rem">
               <div class="w-100 d-flex justify-content-center">
                 <img
                   :src="item.imageUrl"
